@@ -26,5 +26,34 @@ def make_grid(height, width, blocks):
 
 # Returns a list of nodes visited in the shortest route from
 # a chosen square to the exit point.
-def find_route(grid, square, exit_square):
+def find_route(square):
+    global grid
+    global exit_square
     return find_path(grid, square, exit_square)[0]
+
+
+# Returns an initial dictionary of routes from all squares
+def route_list():
+    global grid
+    global exit_square
+    routes = {}
+    for square in grid:
+        routes[square] = find_route(square)
+    return routes
+
+
+# Removes a square from the grid when a tower is built on it
+def block_square(square):
+    global grid
+    grid.remove_node(square)
+
+
+# Updates all routes which pass through a square being built upon
+# Should be run after block_square(new_square)
+def update_routes(new_square):
+    global grid
+    global exit_square
+    global route_list
+    for square in route_list:
+        if new_square in route_list[square]:
+            route_list[square] = find_route(square)

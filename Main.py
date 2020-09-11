@@ -1,5 +1,6 @@
 import pygame
 import grid
+import Draw
 
 WIDTH = None
 HEIGHT = None
@@ -14,7 +15,9 @@ def _initialise_pygame():
 
     pygame.init()
     pygame.display.set_caption('Maths TD')
-    song = pygame.mixer.Sound("BackgroundMusic.wav")
+
+    # Sets the background music
+    song = pygame.mixer.Sound("Data/BackgroundMusic.wav")
     pygame.mixer.Sound.play(song, loops = -1)
 
     # Gets the resolution of the display that's running the game
@@ -24,6 +27,7 @@ def _initialise_pygame():
 
 
 def _game_loop():
+    Draw.create_opening_animation(GAME_DISPLAY, WIDTH, HEIGHT)
     gridSize = 10
     graph = grid.make_grid(gridSize, gridSize, [])
     clock = pygame.time.Clock()

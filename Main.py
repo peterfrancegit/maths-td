@@ -26,12 +26,14 @@ def _initialise_pygame():
     GAME_DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 
 
+# Main game loop for Maths-td
 def _game_loop():
     Draw.create_opening_animation(GAME_DISPLAY, WIDTH, HEIGHT)
     gridSize = 10
     graph = grid.make_grid(gridSize, gridSize, [])
     clock = pygame.time.Clock()
 
+    # Handles events
     hasQuit = False
     while not hasQuit:
         pygame.display.update()

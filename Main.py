@@ -14,6 +14,8 @@ def _initialise_pygame():
 
     pygame.init()
     pygame.display.set_caption('Maths TD')
+    song = pygame.mixer.Sound("BackgroundMusic.wav")
+    pygame.mixer.Sound.play(song, loops = -1)
 
     # Gets the resolution of the display that's running the game
     infoObject = pygame.display.Info()
@@ -24,7 +26,6 @@ def _initialise_pygame():
 def _game_loop():
     gridSize = 10
     graph = grid.make_grid(gridSize, gridSize, [])
-    print(graph)
     clock = pygame.time.Clock()
 
     hasQuit = False

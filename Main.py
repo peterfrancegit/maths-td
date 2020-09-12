@@ -2,13 +2,10 @@ import pygame
 import grid
 import Draw
 from GameState import GameState
-import Window
+from Window import Window
 
-WIDTH = None
-HEIGHT = None
-GAME_DISPLAY = None
+
 CURRENT_WINDOW = None
-SHARED_THREAD_VARIABLE = []
 
 # Mouse buttons
 LEFT = 1
@@ -20,6 +17,7 @@ def _initialise_pygame():
     global WIDTH
     global HEIGHT
     global GAME_DISPLAY
+    global CURRENT_WINDOW
 
     pygame.init()
     pygame.display.set_caption('Maths TD')
@@ -33,6 +31,9 @@ def _initialise_pygame():
     WIDTH, HEIGHT = infoObject.current_w, infoObject.current_h
     GAME_DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT))
 
+    # Initialises the global window object
+    CURRENT_WINDOW = Window(GAME_DISPLAY, WIDTH, HEIGHT)
+
 
 
 # Main game loop for Maths-td
@@ -43,30 +44,28 @@ def _game_loop():
     graph = grid.make_grid(gridSize, gridSize, [])
     clock = pygame.time.Clock()
 
+    #pygame.event.post(pygame.event.Event(pygame.USEREVENT))
     # Handles events
     hasQuit = False
     while not hasQuit:
-        pygame.display.update()
-        for event in pygame.event.get() + [pygame.event.wait()]:
+        for event in pygame.event.get():# + [pygame.event.wait()]:
             if event.type == pygame.QUIT:
                 hasQuit = True
 
             # On start up the opening scene is played
-            elif CURRENT_WINDOW == None:
-                CURRENT_WINDOW = GameState.IN_OPENING_SCENE
-                SHARED_THREAD_VARIABLE.append(CURRENT_WINDOW)
-                Window.run_opening_animation_thread(GAME_DISPLAY, WIDTH, HEIGHT, SHARED_THREAD_VARIABLE)
+            elif CURRENT_WINDOW.state == None:
+                CURRENT_WINDOW.state = GameState.IN_OPENING_SCENE
+                CURRENT_WINDOW.run_opening_animation_thread()
 
             # Deals with user inputs to the opening scene
-            elif CURRENT_WINDOW == GameState.IN_OPENING_SCENE:
+            elif CURRENT_WINDOW.state == GameState.IN_OPENING_SCENE:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     CURRENT_WINDOW = GameState.MAIN_MENU
-                    SHARED_THREAD_VARIABLE[0] = CURRENT_WINDOW
 
             # Deals with user input in the main menu
-            elif CURRENT_WINDOW == GameState.MAIN_MENU:
+            elif CURRENT_WINDOW.state == GameState.MAIN_MENU:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
-                    print("Hello")
+                    mouseClickPos = pygame.mouse.get_pos()
         clock.tick(30)
 
 if __name__ == "__main__":

@@ -56,7 +56,6 @@ def _game_loop():
                 CURRENT_WINDOW = GameState.IN_OPENING_SCENE
                 SHARED_THREAD_VARIABLE.append(CURRENT_WINDOW)
                 Window.run_opening_animation_thread(GAME_DISPLAY, WIDTH, HEIGHT, SHARED_THREAD_VARIABLE)
-                print("Hello")
 
             # Deals with user inputs to the opening scene
             elif CURRENT_WINDOW == GameState.IN_OPENING_SCENE:

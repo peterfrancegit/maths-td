@@ -1,7 +1,7 @@
 import time
 import pygame
 import sys
-from Window import Window
+from GameState import GameState
 
 
 # Creates the opening screne for maths td
@@ -22,7 +22,7 @@ def create_opening_animation(gameDisplay, screenWidth, screenHeight, sharedThrea
         pygame.display.update()
         time.sleep(0.05)
 
-        if sharedThreadVariable[0] != Window.IN_OPENING_SCENE:
+        if sharedThreadVariable[0] != GameState.IN_OPENING_SCENE:
             break
 
     # Draws the opening text into its final position

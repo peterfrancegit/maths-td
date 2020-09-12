@@ -1,14 +1,18 @@
 import pygame
 import grid
 import Draw
-import threading
-from Window import Window
+from GameState import GameState
+import Window
 
 WIDTH = None
 HEIGHT = None
 GAME_DISPLAY = None
 CURRENT_WINDOW = None
 SHARED_THREAD_VARIABLE = []
+
+# Mouse buttons
+LEFT = 1
+RIGHT = 3
 
 
 # Initialises pygame and sets up a window
@@ -30,15 +34,6 @@ def _initialise_pygame():
     GAME_DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
-def run_opening_animation_thread():
-    try:
-        SHARED_THREAD_VARIABLE.append(CURRENT_WINDOW)
-        t = threading.Thread(target = Draw.create_opening_animation, args=(GAME_DISPLAY, WIDTH, HEIGHT, SHARED_THREAD_VARIABLE))
-        t.daemon = True # die when the main thread dies
-        t.start()
-    except Exception as e:
-        print (e)
-
 
 # Main game loop for Maths-td
 def _game_loop():
@@ -58,14 +53,20 @@ def _game_loop():
 
             # On start up the opening scene is played
             elif CURRENT_WINDOW == None:
-                CURRENT_WINDOW = Window.IN_OPENING_SCENE
-                run_opening_animation_thread()
+                CURRENT_WINDOW = GameState.IN_OPENING_SCENE
+                SHARED_THREAD_VARIABLE.append(CURRENT_WINDOW)
+                Window.run_opening_animation_thread(GAME_DISPLAY, WIDTH, HEIGHT, SHARED_THREAD_VARIABLE)
 
             # Deals with user inputs to the opening scene
-            elif CURRENT_WINDOW == Window.IN_OPENING_SCENE:
+            elif CURRENT_WINDOW == GameState.IN_OPENING_SCENE:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    CURRENT_WINDOW = Window.MAIN_MENU
+                    CURRENT_WINDOW = GameState.MAIN_MENU
                     SHARED_THREAD_VARIABLE[0] = CURRENT_WINDOW
+
+            # Deals with user input in the main menu
+            elif CURRENT_WINDOW == GameState.MAIN_MENU:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
+                    print("Hello")
         clock.tick(30)
 
 if __name__ == "__main__":

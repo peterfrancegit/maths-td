@@ -1,10 +1,18 @@
 
 class Numemy:
-    def __init__(self, start_val, coins, speed):
+    def __init__(self, start_val, coins, speed, spawn_square):
         self.value = start_val
         self.coins = coins
         self.speed = speed
+        self.square = spawn_square
         pass
+
+    def next_square(self):
+        global route_list
+        return route_list[self.square][1]
+
+    def move(self):
+        self.square = self.next_square()
 
     def take_damage(self, operation, damage):
         if operation == '+':

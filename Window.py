@@ -5,9 +5,10 @@ import ProcessInput
 from GameState import GameState
 from Button import Button
 
-# Mouse buttons
+
 LEFT = 1
 RIGHT = 3
+
 
 
 class Window():
@@ -34,8 +35,7 @@ class Window():
         # Creates the start game button of the main menu
         button1X = self.width / 10
         button1Y = self.height / 3
-        font = pygame.font.Font("Data/comicsans.ttf", 50)
-        text = font.render("Start Game", True, (0, 128, 0))
+        text = Draw.create_text_object("Start game")
         width = text.get_width()
         height = text.get_height()
         rect = pygame.Rect(button1X, button1Y, width, height)
@@ -73,6 +73,10 @@ class Window():
         if event.type == pygame.MOUSEMOTION:
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_main_menu_hover(self, mouseClickPos)
+        
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
+            mouseClickPos = pygame.mouse.get_pos()
+            ProcessInput.process_main_menu_click(self, mouseClickPos)
 
 
 

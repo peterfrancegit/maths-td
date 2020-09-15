@@ -17,8 +17,8 @@ def _initialise_pygame():
     pygame.display.set_caption('Maths TD')
 
     # Sets the background music
-    song = pygame.mixer.Sound("Data/BackgroundMusic.wav")
-    pygame.mixer.Sound.play(song, loops = -1)
+    #song = pygame.mixer.Sound("Data/BackgroundMusic.wav")
+    #pygame.mixer.Sound.play(song, loops = -1)
 
     # Gets the resolution of the display that's running the game
     infoObject = pygame.display.Info()

@@ -49,4 +49,16 @@ def draw_menu(window, buttons):
     """Draws all of the buttons specified in buttons"""
     for button in buttons:
         draw_button(window, button)
-    
+
+
+def create_text_object(text):
+    """Takes a string and produces a pygame text object with it and return that object"""
+    font = pygame.font.Font("Data/comicsans.ttf", 50)
+    textobj = font.render(text, True, (0, 128, 0))
+    return textobj
+
+def draw_initial_in_game_window(window):
+    """Draws the initial in game window"""
+    window.gameDisplay.fill((255, 255, 255))
+    textobj = create_text_object("You're a wanker")
+    window.gameDisplay.blit(textobj, (300, 300))

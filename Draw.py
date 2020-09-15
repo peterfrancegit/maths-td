@@ -4,8 +4,12 @@ import sys
 from GameState import GameState
 
 
-# Creates the opening screne for maths td
-def create_opening_animation(window):
+
+def create_opening_animation(window, lock):
+    """Creates the opening screne for maths td"""
+
+    lock.acquire()
+
     font = pygame.font.Font("Data/comicsans.ttf", 100)
     text = font.render("Math-TD", True, (0, 128, 0))
 
@@ -16,6 +20,7 @@ def create_opening_animation(window):
     # Sets the ending y coordinate of the opening text
     endYPos = int(window.height / 6)
 
+    skip = False
     for i in range(-text.get_height(), endYPos):
         window.gameDisplay.fill((0, 0, 0))
         window.gameDisplay.blit(text, (xPos, i))
@@ -25,7 +30,23 @@ def create_opening_animation(window):
         if window.state != GameState.IN_OPENING_SCENE:
             break
 
+
     # Draws the opening text into its final position
     window.gameDisplay.fill((0, 0, 0))
     window.gameDisplay.blit(text, (xPos, endYPos))
+
+    pygame.display.update()
+
+    lock.release()
+
+
+def draw_button(window, button):
+    """Draws a button on to the game display"""
+    pygame.draw.rect(window.gameDisplay, button.colour, button.rect)
+    window.gameDisplay.blit(button.text, (button.rect.x, button.rect.y))
+
+def draw_menu(window, buttons):
+    """Draws all of the buttons specified in buttons"""
+    for button in buttons:
+        draw_button(window, button)
     

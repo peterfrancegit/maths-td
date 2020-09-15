@@ -1,23 +1,17 @@
 import pygame
 import grid
-import Draw
+import time
+import threading
 from GameState import GameState
 from Window import Window
 
 
-CURRENT_WINDOW = None
-
-# Mouse buttons
-LEFT = 1
-RIGHT = 3
+current_window = None
 
 
-# Initialises pygame and sets up a window
 def _initialise_pygame():
-    global WIDTH
-    global HEIGHT
-    global GAME_DISPLAY
-    global CURRENT_WINDOW
+    """Initialises pygame and sets up a window"""
+    global current_window
 
     pygame.init()
     pygame.display.set_caption('Maths TD')
@@ -32,40 +26,49 @@ def _initialise_pygame():
     GAME_DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT))
 
     # Initialises the global window object
-    CURRENT_WINDOW = Window(GAME_DISPLAY, WIDTH, HEIGHT)
+    current_window = Window(GAME_DISPLAY, WIDTH, HEIGHT)
 
 
 
 # Main game loop for Maths-td
 def _game_loop():
-    global CURRENT_WINDOW
+    global current_window
 
     gridSize = 10
     graph = grid.make_grid(gridSize, gridSize, [])
     clock = pygame.time.Clock()
 
-    #pygame.event.post(pygame.event.Event(pygame.USEREVENT))
+    # Creates a thread lock that will run the opening animation
+    lock = threading.Lock()
+
+    # Starts the current window in the opening animation thread
+    current_window.state = GameState.IN_OPENING_SCENE
+    obj = current_window.start_opening_thread(lock)
+
     # Handles events
     hasQuit = False
     while not hasQuit:
+        pygame.display.update()
+
         for event in pygame.event.get():# + [pygame.event.wait()]:
             if event.type == pygame.QUIT:
                 hasQuit = True
-
-            # On start up the opening scene is played
-            elif CURRENT_WINDOW.state == None:
-                CURRENT_WINDOW.state = GameState.IN_OPENING_SCENE
-                CURRENT_WINDOW.run_opening_animation_thread()
-
+            
             # Deals with user inputs to the opening scene
-            elif CURRENT_WINDOW.state == GameState.IN_OPENING_SCENE:
+            elif current_window.state == GameState.IN_OPENING_SCENE:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    CURRENT_WINDOW = GameState.MAIN_MENU
+                    current_window.state = GameState.MAIN_MENU
+
+                    # Blocks until the opening animation thread releases the lock
+                    lock.acquire()
+                    lock.release()
+
+                    current_window.create_main_menu()
 
             # Deals with user input in the main menu
-            elif CURRENT_WINDOW.state == GameState.MAIN_MENU:
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
-                    mouseClickPos = pygame.mouse.get_pos()
+            elif current_window.state == GameState.MAIN_MENU:
+                current_window.process_main_menu_event(event)
+
         clock.tick(30)
 
 if __name__ == "__main__":

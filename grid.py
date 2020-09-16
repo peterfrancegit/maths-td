@@ -4,6 +4,9 @@ from dijkstar import Graph, find_path
 square_grid = [[]]
 dijkstra_grid = None
 exit_square = None
+numemy_list = []
+tower_list = []
+route_list = {}
 
 
 # Returns a graph based on a 'height' x 'width' grid, where
@@ -37,16 +40,6 @@ def find_route(square):
     return find_path(grid, square, exit_square)[0]
 
 
-# Returns an initial dictionary of routes from all squares
-def route_list():
-    global grid
-    global exit_square
-    routes = {}
-    for square in grid:
-        routes[square] = find_route(square)
-    return routes
-
-
 # Removes a square from the grid when a tower is built on it
 def block_square(square):
     global grid
@@ -58,6 +51,11 @@ def build_tower(tower):
     global tower_list
     tower_list.append(tower)
     block_square(tower.square)
+
+
+def spawn_numemy(numemy):
+    global numemy_list
+    numemy_list.append(numemy)
 
 
 # Updates all routes which pass through a square being built upon
@@ -77,3 +75,13 @@ def initialise_grid():
     
     blocks = []
     dijkstra_grid = make_grid(10, 10, blocks)
+
+
+def initialise_route_list():
+    """Initialises the global route_list variable"""
+    global dijkstra_grid
+    global exit_square
+    global route_list
+
+    for square in dijkstra_grid:
+        route_list[square] = find_route(square)

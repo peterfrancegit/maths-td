@@ -48,6 +48,13 @@ def block_square(square):
     grid.remove_node(square)
 
 
+# Builds a new Tower and blocks off its square.
+def build_tower(tower):
+    global tower_list
+    tower_list.append(tower)
+    block_square(tower.square)
+
+
 # Updates all routes which pass through a square being built upon
 # Should be run after block_square(new_square)
 def update_routes(new_square):

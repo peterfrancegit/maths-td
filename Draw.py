@@ -11,19 +11,19 @@ def create_opening_animation(window, lock):
     lock.acquire()
 
     font = pygame.font.Font("Data/comicsans.ttf", 100)
-    text = font.render("Math-TD", True, (0, 128, 0))
+    textSurface = font.render("Math-TD", True, (0, 128, 0))
 
 
     # Sets the x coordinate of the opening text
-    xPos = int((window.width / 2) - (text.get_width() / 2))
+    xPos = int((window.width / 2) - (textSurface.get_width() / 2))
 
     # Sets the ending y coordinate of the opening text
     endYPos = int(window.height / 6)
 
     skip = False
-    for i in range(-text.get_height(), endYPos):
+    for i in range(-textSurface.get_height(), endYPos):
         window.gameDisplay.fill((0, 0, 0))
-        window.gameDisplay.blit(text, (xPos, i))
+        window.gameDisplay.blit(textSurface, (xPos, i))
         pygame.display.update()
         time.sleep(0.05)
 
@@ -33,7 +33,7 @@ def create_opening_animation(window, lock):
 
     # Draws the opening text into its final position
     window.gameDisplay.fill((0, 0, 0))
-    window.gameDisplay.blit(text, (xPos, endYPos))
+    window.gameDisplay.blit(textSurface, (xPos, endYPos))
 
     pygame.display.update()
 
@@ -43,7 +43,7 @@ def create_opening_animation(window, lock):
 def draw_button(window, button):
     """Draws a button on to the game display"""
     pygame.draw.rect(window.gameDisplay, button.colour, button.rect)
-    window.gameDisplay.blit(button.text, (button.rect.x, button.rect.y))
+    window.gameDisplay.blit(button.font, (button.rect.x, button.rect.y))
 
 def draw_menu(window, buttons):
     """Draws all of the buttons specified in buttons"""
@@ -51,14 +51,29 @@ def draw_menu(window, buttons):
         draw_button(window, button)
 
 
-def create_text_object(text):
+    mtodd = pygame.image.load("./Data/m-todd.jpg")
+    window.gameDisplay.blit(mtodd, (800, 350))
+
+
+def create_font_object(text):
     """Takes a string and produces a pygame text object with it and return that object"""
     font = pygame.font.Font("Data/comicsans.ttf", 50)
-    textobj = font.render(text, True, (0, 128, 0))
-    return textobj
+    fontobj = font.render(text, True, (0, 128, 0))
+    return fontobj
 
 def draw_initial_in_game_window(window):
     """Draws the initial in game window"""
-    window.gameDisplay.fill((255, 255, 255))
-    textobj = create_text_object("You're a wanker")
-    window.gameDisplay.blit(textobj, (300, 300))
+
+    screenWidth, screenHeight = window.gameDisplay.get_size()
+
+    # Draws a black background
+    window.gameDisplay.fill((0, 0, 0))
+
+    # Draws a grey square at the centre of the screen
+    greySqrWidth = screenHeight
+    greySqrHeight = screenHeight
+    greySqrX = screenWidth / 2 - greySqrWidth / 2
+    greySqrY = 0
+    greySqr = pygame.Rect(greySqrX, greySqrY, greySqrWidth, greySqrHeight)
+    pygame.draw.rect(window.gameDisplay, (128, 128, 128), greySqr)
+    

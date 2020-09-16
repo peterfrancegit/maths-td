@@ -32,17 +32,32 @@ class Window():
     def create_main_menu(self):
         """Sets up the buttons of the main menu and draws them"""
 
+        green = (0, 0, 0)
+
         # Creates the start game button of the main menu
+        text = "Start"
         button1X = self.width / 10
         button1Y = self.height / 3
-        text = Draw.create_text_object("Start game")
-        width = text.get_width()
-        height = text.get_height()
+        font = Draw.create_font_object(text)
+        width = font.get_width()
+        height = font.get_height()
         rect = pygame.Rect(button1X, button1Y, width, height)
 
-        green = (0, 0, 0)
-        button1 = Button(rect, text, green)
-        self.buttons = [button1]
+        startButton = Button(rect, font, green, text)
+
+
+        # Creates the quit game button of the main menu
+        text = "Quit"
+        button2X = button1X
+        button2Y = button1Y + height
+        font = Draw.create_font_object(text)
+        width = font.get_width()
+        height = font.get_height()
+        rect = pygame.Rect(button2X, button2Y, width, height)
+
+        quitButton = Button(rect, font, green, text)
+
+        self.buttons = [startButton, quitButton]
         Draw.draw_menu(self, self.buttons)
 
 
@@ -70,13 +85,30 @@ class Window():
     def process_main_menu_event(self, event):
         """Processes an event that occurred while the window is on the main menu"""
 
+        # Checks if the mouse has hovered over any of the buttons on the main menu
         if event.type == pygame.MOUSEMOTION:
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_main_menu_hover(self, mouseClickPos)
         
+        # Checks if a mouse click has clicked on any of the main menu buttons
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_main_menu_click(self, mouseClickPos)
+
+
+
+    def process_opening_scene_event(self, event, lock):
+        """Processes any events that have occurred during the opening scene of Maths TD"""
+
+        # If space has been pressed the opening scene is skipped
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            self.state = GameState.MAIN_MENU
+
+            # Blocks until the opening animation thread releases the lock
+            lock.acquire()
+            lock.release()
+
+            self.create_main_menu()
 
 
 

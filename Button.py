@@ -2,8 +2,9 @@
 
 class Button:
 
-    def __init__(self, rect, text, colour):
+    def __init__(self, rect, font, colour, text):
         self.rect = rect
-        self.text = text
+        self.font = font
         self.colour = colour
+        self.text = text
         self.highlighted = False

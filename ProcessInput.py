@@ -2,6 +2,7 @@ import Draw
 import pygame
 from Button import Button
 from GameState import GameState
+import grid
 
 
 def process_main_menu_hover(window, mouseClickPos):
@@ -36,6 +37,13 @@ def process_main_menu_click(window, mouseClickPos):
             if button.text == "Start":
                 Draw.draw_initial_in_game_window(window)
                 window.state = GameState.IN_GAME
+
+                pygame.mixer.stop()
+                song = pygame.mixer.Sound("Data/Girlfriendinacoma.wav")
+                pygame.mixer.Sound.play(song, loops = -1)
+
+                grid.initialise_grid()
+                print(grid.dijkstra_grid)
             
             # Checks if the quit button has been pressed
             elif button.text == "Quit":

@@ -50,9 +50,10 @@ def draw_menu(window, buttons):
     for button in buttons:
         draw_button(window, button)
 
-
-    mtodd = pygame.image.load("./Data/m-todd.jpg")
-    window.gameDisplay.blit(mtodd, (800, 350))
+    # Draws the numbers image
+    w, h = window.gameDisplay.get_size()
+    numbers = pygame.image.load("./Data/Numbers.jpg")
+    window.gameDisplay.blit(numbers, (w / 2, h / 3))
 
 
 def create_font_object(text):

@@ -1,11 +1,13 @@
 from numpy import linalg
+from Square import Square
 
 
-class Tower:
+class Tower(Square):
     # 'range' is the radius of the circle the Tower attacks within;
     # 'speed' is how often it attacks; 'square' is the location;
     # 'cost' is removed from player's wealth.
-    def __init__(self, range, speed, square, value, operation, cost):
+    def __init__(self, surface, range, speed, square, value, operation, cost):
+        Square.__init__(self, surface)
         self.range = range
         self.speed = speed
         self.square = square

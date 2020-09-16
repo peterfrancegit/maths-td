@@ -35,16 +35,29 @@ def process_main_menu_click(window, mouseClickPos):
 
             # Checks if the start button has been pressed
             if button.text == "Start":
-                Draw.draw_initial_in_game_window(window)
-                window.state = GameState.IN_GAME
 
+                # Changes the music
                 pygame.mixer.stop()
                 song = pygame.mixer.Sound("Data/Girlfriendinacoma.wav")
                 pygame.mixer.Sound.play(song, loops = -1)
 
-                grid.initialise_grid()
-                print(grid.dijkstra_grid)
+                # Initialises the dijkstra and square grids
+                grid.initialise_grid(window.gameDisplay)
+
+                Draw.draw_initial_in_game_window(window, grid.square_grid)
+
+                window.state = GameState.IN_GAME
             
             # Checks if the quit button has been pressed
             elif button.text == "Quit":
                 pygame.event.post(pygame.event.Event(pygame.QUIT))
+
+
+def process_in_game_click(window, mouseClickPos):
+    """Processes any left mouse clicks while in game"""
+
+    for i, row in enumerate(grid.square_grid):
+        for j, sqr in enumerate(row):
+            if sqr.surface.collidepoint(mouseClickPos):
+                print(j, i)
+

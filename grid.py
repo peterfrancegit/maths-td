@@ -1,7 +1,12 @@
 from dijkstar import Graph, find_path
+from Square import Square
+import pygame
 
+# Dimensions of both the grids
+WIDTH = 10
+HEIGHT = 10
 
-square_grid = [[]]
+square_grid = None
 dijkstra_grid = None
 exit_square = None
 numemy_list = []
@@ -35,15 +40,25 @@ def make_grid(height, width, blocks):
 # Returns a list of nodes visited in the shortest route from
 # a chosen square to the exit point.
 def find_route(square):
-    global grid
+    global dijkstra_grid
     global exit_square
-    return find_path(grid, square, exit_square)[0]
+    return find_path(dijkstra_grid, square, exit_square)[0]
+
+
+# Returns an initial dictionary of routes from all squares
+def route_list():
+    global dijkstra_grid
+    global exit_square
+    routes = {}
+    for square in dijkstra_grid:
+        routes[square] = find_route(square)
+    return routes
 
 
 # Removes a square from the grid when a tower is built on it
 def block_square(square):
-    global grid
-    grid.remove_node(square)
+    global dijkstra_grid
+    dijkstra_grid.remove_node(square)
 
 
 # Builds a new Tower and blocks off its square.
@@ -61,7 +76,7 @@ def spawn_numemy(numemy):
 # Updates all routes which pass through a square being built upon
 # Should be run after block_square(new_square)
 def update_routes(new_square):
-    global grid
+    global dijkstra_grid
     global exit_square
     global route_list
     for square in route_list:
@@ -69,19 +84,46 @@ def update_routes(new_square):
             route_list[square] = find_route(square)
 
 
-def initialise_grid():
-    """Initialises the global grid variable"""
+def initialise_grid(display):
+    """Initialises the global grid variables"""
     global dijkstra_grid
+    global square_grid
     
     blocks = []
-    dijkstra_grid = make_grid(10, 10, blocks)
+    dijkstra_grid = make_grid(WIDTH, HEIGHT, blocks)
+
+    # Initialises the square grid
+
+    screenWidth, screenHeight = display.get_size()
+    squarelen = screenHeight / HEIGHT # Length of each square on the grid
+
+    gridStartX = screenWidth / 2 - screenHeight / 2
+    gridStartY = 0
+
+    square_grid = []
+    for i in range(HEIGHT):
+        row = []
+        for j in range(WIDTH):
+            sqrX = gridStartX + squarelen * j
+            sqrY = gridStartY + squarelen * i
+            greySqr = pygame.Rect(sqrX, sqrY, squarelen, squarelen)
+            sqr = Square(greySqr)
+            row.append(sqr)
+        square_grid.append(row)
 
 
-def initialise_route_list():
+def initialise_route_list(display):
     """Initialises the global route_list variable"""
     global dijkstra_grid
     global exit_square
     global route_list
 
+    block = []
+
+    dijkstra_grid = make_grid(WIDTH, HEIGHT, blocks)
+
     for square in dijkstra_grid:
         route_list[square] = find_route(square)
+
+
+

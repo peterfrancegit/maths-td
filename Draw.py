@@ -62,7 +62,7 @@ def create_font_object(text):
     fontobj = font.render(text, True, (0, 128, 0))
     return fontobj
 
-def draw_initial_in_game_window(window):
+def draw_initial_in_game_window(window, grid):
     """Draws the initial in game window"""
 
     screenWidth, screenHeight = window.gameDisplay.get_size()
@@ -71,10 +71,16 @@ def draw_initial_in_game_window(window):
     window.gameDisplay.fill((0, 0, 0))
 
     # Draws a grey square at the centre of the screen
-    greySqrWidth = screenHeight
-    greySqrHeight = screenHeight
-    greySqrX = screenWidth / 2 - greySqrWidth / 2
-    greySqrY = 0
-    greySqr = pygame.Rect(greySqrX, greySqrY, greySqrWidth, greySqrHeight)
-    pygame.draw.rect(window.gameDisplay, (128, 128, 128), greySqr)
+    # greySqrWidth = screenHeight
+    # greySqrHeight = screenHeight
+    # greySqrX = screenWidth / 2 - greySqrWidth / 2
+    # greySqrY = 0
+    # greySqr = pygame.Rect(greySqrX, greySqrY, greySqrWidth, greySqrHeight)
+    # pygame.draw.rect(window.gameDisplay, (128, 128, 128), greySqr)
+
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            pygame.draw.rect(window.gameDisplay, (128, 128, 128), grid[i][j].surface)
+            print(grid[i][j].surface.x, grid[i][j].surface.y)
+
     

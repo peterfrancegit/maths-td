@@ -111,6 +111,15 @@ class Window():
             self.create_main_menu()
 
 
+    def process_in_game_event(self, event):
+        """Processes an event that occurred while the window is in game"""
+
+        # Checks if a mouse click has clicked on any of the main menu buttons
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
+            mouseClickPos = pygame.mouse.get_pos()
+            ProcessInput.process_in_game_click(self, mouseClickPos)
+
+
 
 
         

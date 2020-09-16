@@ -62,6 +62,10 @@ def _game_loop():
             elif current_window.state == GameState.MAIN_MENU:
                 current_window.process_main_menu_event(event)
 
+            # Deals with user input in game
+            elif current_window.state == GameState.IN_GAME:
+                current_window.process_in_game_event(event)
+
         clock.tick(30)
 
 if __name__ == "__main__":

@@ -1,6 +1,11 @@
 from dijkstar import Graph, find_path
 
 
+square_grid = [[]]
+dijkstra_grid = None
+exit_square = None
+
+
 # Returns a graph based on a 'height' x 'width' grid, where
 # 'blocks' is a list of the indices of walled off squares.
 def make_grid(height, width, blocks):
@@ -57,3 +62,11 @@ def update_routes(new_square):
     for square in route_list:
         if new_square in route_list[square]:
             route_list[square] = find_route(square)
+
+
+def initialise_grid():
+    """Initialises the global grid variable"""
+    global dijkstra_grid
+    
+    blocks = []
+    dijkstra_grid = make_grid(10, 10, blocks)

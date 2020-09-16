@@ -1,11 +1,12 @@
+from Square import Square
 
-class Numemy:
-    def __init__(self, start_val, coins, speed, spawn_square):
+class Numemy(Square):
+    def __init__(self, surface, start_val, coins, speed, spawn_square):
+        Square.__init__(self, surface)
         self.value = start_val
         self.coins = coins
         self.speed = speed
         self.square = spawn_square
-        pass
 
     def next_square(self):
         global route_list
@@ -23,4 +24,3 @@ class Numemy:
             self.value /= damage
         elif operation == '*':
             self.value *= damage
-        pass

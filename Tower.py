@@ -1,8 +1,10 @@
 from numpy import linalg
+from Square import Square
 
 
-class Tower:
-    def __init__(self, range, speed, square, value, operation):
+class Tower(Square):
+    def __init__(self, surface, range, speed, square, value, operation):
+        Square.__init__(self, surface)
         self.range = range
         self.speed = speed
         self.square = square

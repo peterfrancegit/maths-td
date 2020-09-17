@@ -6,17 +6,18 @@ class Numemy(Square):
     # 'start_val'; 'coins' is added to player wealth when Numemy
     # is killed; 'speed' is movement speed; 'square' is the current
     # location, initiated at 'spawn_square'.
-    def __init__(self, surface, start_val, coins, speed, spawn_square):
+    def __init__(self, surface, start_val, coins, speed, spawn_square, weight):
         Square.__init__(self, surface)
         self.value = start_val
         self.coins = coins
         self.speed = speed
         self.square = spawn_square
+        self.weight = weight
 
     # Returns the next square on the route from a starting square.
     def next_square(self):
-        global route_list
-        return route_list[self.square][1]
+        global route_dict
+        return route_dict[self.square][1]
 
     # Moves Numemy to next square in its route.
     def move(self):

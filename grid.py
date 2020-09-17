@@ -6,12 +6,13 @@ import pygame
 WIDTH = 10
 HEIGHT = 10
 
+LIVES = 20
 square_grid = None
 dijkstra_grid = None
 exit_square = None
 numemy_list = []
 tower_list = []
-route_list = {}
+route_dict = {}
 
 
 # Returns a graph based on a 'height' x 'width' grid, where
@@ -46,16 +47,15 @@ def find_route(square):
 
 
 # Returns an initial dictionary of routes from all squares
-def route_list():
+def route_dict():
     global dijkstra_grid
-    global exit_square
     routes = {}
     for square in dijkstra_grid:
         routes[square] = find_route(square)
     return routes
 
 
-# Removes a square from the grid when a tower is built on it
+# Removes a square from the grid when a Tower is built on it
 def block_square(square):
     global dijkstra_grid
     dijkstra_grid.remove_node(square)
@@ -68,6 +68,7 @@ def build_tower(tower):
     block_square(tower.square)
 
 
+# Spawns a new Numemy and adds it to the list
 def spawn_numemy(numemy):
     global numemy_list
     numemy_list.append(numemy)
@@ -77,11 +78,10 @@ def spawn_numemy(numemy):
 # Should be run after block_square(new_square)
 def update_routes(new_square):
     global dijkstra_grid
-    global exit_square
-    global route_list
-    for square in route_list:
-        if new_square in route_list[square]:
-            route_list[square] = find_route(square)
+    global route_dict
+    for square in route_dict:
+        if new_square in route_dict[square]:
+            route_dict[square] = find_route(square)
 
 
 def initialise_grid(display):
@@ -112,18 +112,9 @@ def initialise_grid(display):
         square_grid.append(row)
 
 
-def initialise_route_list(display):
+def initialise_route_dict():
     """Initialises the global route_list variable"""
     global dijkstra_grid
-    global exit_square
-    global route_list
-
-    blocks = []
-
-    dijkstra_grid = make_grid(WIDTH, HEIGHT, blocks)
-
+    global route_dict
     for square in dijkstra_grid:
-        route_list[square] = find_route(square)
-
-
-
+        route_dict[square] = find_route(square)

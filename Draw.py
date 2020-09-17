@@ -78,7 +78,7 @@ def draw_square(display, square):
     elif isinstance(square, Tower):
         pygame.draw.rect(display, (32, 15, 100), square.surface)
         text = square.operation + str(square.value)
-        size = square.surface.height - 15
+        size = square.surface.height - 30
         font = create_font_object(text, size)
         w, h = font.get_size()
         display.blit(font, (square.surface.x + w / 2, square.surface.y))

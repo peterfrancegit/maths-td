@@ -38,7 +38,7 @@ class Window():
         text = "Start"
         button1X = self.width / 10
         button1Y = self.height / 3
-        font = Draw.create_font_object(text)
+        font = Draw.create_font_object(text, 50)
         width = font.get_width()
         height = font.get_height()
         rect = pygame.Rect(button1X, button1Y, width, height)
@@ -50,7 +50,7 @@ class Window():
         text = "Quit"
         button2X = button1X
         button2Y = button1Y + height
-        font = Draw.create_font_object(text)
+        font = Draw.create_font_object(text, 50)
         width = font.get_width()
         height = font.get_height()
         rect = pygame.Rect(button2X, button2Y, width, height)

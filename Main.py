@@ -35,7 +35,7 @@ def _game_loop():
     global current_window
 
     gridSize = 10
-    graph = grid.make_grid(gridSize, gridSize, [])
+    graph = Grid.make_grid(gridSize, gridSize, [])
     clock = pygame.time.Clock()
 
     # Creates a thread lock that will run the opening animation

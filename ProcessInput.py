@@ -3,8 +3,8 @@ import pygame
 from Button import Button
 from GameState import GameState
 from Tower import Tower
-from numemy import Numemy
-import grid
+from Numemy import Numemy
+import Grid
 
 
 def process_main_menu_hover(window, mouseClickPos):
@@ -44,21 +44,27 @@ def process_main_menu_click(window, mouseClickPos):
                 pygame.mixer.Sound.play(song, loops = -1)
 
                 # Initialises the dijkstra and square grids
-                grid.initialise_grid(window.gameDisplay)
+                Grid.initialise_grid(window.gameDisplay)
 
                 # Creates a numemy with the value 6 and puts it into square_grid
-                sqr = grid.square_grid[4][0]
+                sqr = Grid.square_grid[4][0]
                 w, h = sqr.surface.width, sqr.surface.height
                 rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-                grid.square_grid[4][0] = Numemy(rect, 6, 0, 3, [])
+                Grid.square_grid[4][0] = Numemy(rect, 6, 0, 3, [], 5)
 
                 # Creates a numemy with the value 3 and puts it into square_grid
-                sqr = grid.square_grid[4][1]
+                sqr = Grid.square_grid[4][1]
                 w, h = sqr.surface.width, sqr.surface.height
                 rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-                grid.square_grid[4][1] = Numemy(rect, 3, 0, 3, [])
+                Grid.square_grid[4][1] = Numemy(rect, 3, 0, 3, [], 1)
 
-                Draw.draw_initial_in_game_window(window, grid.square_grid)
+                # Creates a tower with the gun +1 and puts it into square_grid
+                sqr = Grid.square_grid[6][2]
+                w, h = sqr.surface.width, sqr.surface.height
+                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+                Grid.square_grid[6][2] = Tower(rect, 2, 2, 10, '+', 50, (6, 2))
+
+                Draw.draw_initial_in_game_window(window, Grid.square_grid)
 
                 window.state = GameState.IN_GAME
 
@@ -72,7 +78,7 @@ def process_main_menu_click(window, mouseClickPos):
 def process_in_game_click(window, mouseClickPos):
     """Processes any left mouse clicks while in game"""
 
-    for i, row in enumerate(grid.square_grid):
+    for i, row in enumerate(Grid.square_grid):
         for j, sqr in enumerate(row):
             if sqr.surface.collidepoint(mouseClickPos):
                 print(j, i)

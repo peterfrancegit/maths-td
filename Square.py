@@ -8,3 +8,7 @@ class Square():
 
 class Block(Square):
     pass
+
+
+class Exit(Square):
+    pass

@@ -23,6 +23,13 @@ class Numemy(Square):
         """Moves Numemy to next square in its route"""
         self.location = self.next_square()
 
+    # For when a Numemy reaches the exit_square
+    def escape(self):
+        global lives
+        global square_grid
+        lives -= self.weight
+        square_grid[self.location[0]][self.location[1]] = Square(EXIT_SQUARE_SURFACE)
+
     def take_damage(self, operation, damage):
         """When a Numemy is hit"""
         if operation == '+':

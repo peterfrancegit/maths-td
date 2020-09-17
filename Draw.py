@@ -2,7 +2,7 @@ import time
 import pygame
 import sys
 from GameState import GameState
-from Square import Square, Block
+from Square import Square, Block, Exit
 from Tower import Tower
 from Numemy import Numemy
 
@@ -84,6 +84,8 @@ def draw_square(display, square):
         display.blit(font, (square.surface.x + w / 2, square.surface.y))
     elif isinstance(square, Block):
         pygame.draw.rect(display, (200, 13, 52), square.surface)
+    elif isinstance(square, Exit):
+        pygame.draw.circle(display, (255, 0, 0), square.surface, width=0)
     elif isinstance(square, Square):
         pygame.draw.rect(display, (128, 128, 128), square.surface)
 

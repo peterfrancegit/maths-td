@@ -6,12 +6,10 @@ import pygame
 WIDTH = 10
 HEIGHT = 10
 
-LIVES = 20
+Lives = None
 square_grid = None
 dijkstra_grid = None
 exit_square = None
-numemy_list = []
-tower_list = []
 route_dict = {}
 
 
@@ -54,21 +52,20 @@ def block_square(square):
 
 def build_tower(tower):
     """Builds a new Tower and blocks off its square"""
-    global tower_list
-    tower_list.append(tower)
-    block_square(tower.square)
+    global square_grid
+    square_grid[tower.location[0]][tower.location[1]] = tower
+    block_square(tower.location)
 
 
 def spawn_numemy(numemy):
     """Spawns a new Numemy object"""
-    global numemy_list
-    numemy_list.append(numemy)
+    global square_grid
+    square_grid[numemy.location[0]][numemy.location[1]] = numemy
 
 
-# Should be run after block_square(new_square)
+# Should be called after block_square and build_tower
 def update_routes(new_square):
     """Updates all routes which pass through a square being built upon"""
-    global dijkstra_grid
     global route_dict
     for square in route_dict:
         if new_square in route_dict[square]:

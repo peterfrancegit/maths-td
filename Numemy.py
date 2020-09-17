@@ -11,17 +11,17 @@ class Numemy(Square):
         self.value = start_val
         self.coins = coins
         self.speed = speed
-        self.square = spawn_square
+        self.location = spawn_square
         self.weight = weight
 
     # Returns the next square on the route from a starting square.
     def next_square(self):
         global route_dict
-        return route_dict[self.square][1]
+        return route_dict[self.location][1]
 
     # Moves Numemy to next square in its route.
     def move(self):
-        self.square = self.next_square()
+        self.location = self.next_square()
 
     # Used when a Tower damages a Numemy.
     def take_damage(self, operation, damage):

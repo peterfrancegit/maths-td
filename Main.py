@@ -1,5 +1,5 @@
 import pygame
-import grid
+import Grid
 import time
 import threading
 from GameState import GameState

@@ -38,45 +38,36 @@ def make_grid(height, width, blocks):
     return grid
 
 
-# Returns a list of nodes visited in the shortest route from
-# a chosen square to the exit point.
 def find_route(square):
+    """Returns list of nodes visited in shortest route from square
+    to the exit point"""
     global dijkstra_grid
     global exit_square
     return find_path(dijkstra_grid, square, exit_square)[0]
 
 
-# Returns an initial dictionary of routes from all squares
-def route_dict():
-    global dijkstra_grid
-    routes = {}
-    for square in dijkstra_grid:
-        routes[square] = find_route(square)
-    return routes
-
-
-# Removes a square from the grid when a Tower is built on it
 def block_square(square):
+    """Removes a square from the grid when a Tower is built on it"""
     global dijkstra_grid
     dijkstra_grid.remove_node(square)
 
 
-# Builds a new Tower and blocks off its square.
 def build_tower(tower):
+    """Builds a new Tower and blocks off its square"""
     global tower_list
     tower_list.append(tower)
     block_square(tower.square)
 
 
-# Spawns a new Numemy and adds it to the list
 def spawn_numemy(numemy):
+    """Spawns a new Numemy object"""
     global numemy_list
     numemy_list.append(numemy)
 
 
-# Updates all routes which pass through a square being built upon
 # Should be run after block_square(new_square)
 def update_routes(new_square):
+    """Updates all routes which pass through a square being built upon"""
     global dijkstra_grid
     global route_dict
     for square in route_dict:
@@ -113,7 +104,7 @@ def initialise_grid(display):
 
 
 def initialise_route_dict():
-    """Initialises the global route_list variable"""
+    """Initialises the global route_dict variable"""
     global dijkstra_grid
     global route_dict
     for square in dijkstra_grid:

@@ -2,14 +2,13 @@ import time
 import pygame
 import sys
 from GameState import GameState
-from Square import Square
+from Square import Square, Block
 from Tower import Tower
-from numemy import Numemy
-
+from Numemy import Numemy
 
 
 def create_opening_animation(window, lock):
-    """Creates the opening screne for maths td"""
+    """Creates the opening screen for maths td"""
 
     lock.acquire()
 
@@ -48,6 +47,7 @@ def draw_button(window, button):
     pygame.draw.rect(window.gameDisplay, button.colour, button.rect)
     window.gameDisplay.blit(button.font, (button.rect.x, button.rect.y))
 
+
 def draw_menu(window, buttons):
     """Draws all of the buttons specified in buttons"""
     for button in buttons:
@@ -68,15 +68,24 @@ def create_font_object(text, size):
 
 def draw_square(display, square):
     """Draws the square object unto the display object"""
-    if isinstance(square, Square) and not isinstance(square, Numemy):
-        pygame.draw.rect(display, (128, 128, 128), square.surface)
-    elif isinstance(square, Numemy):
+    if isinstance(square, Numemy):
         pygame.draw.rect(display, (128, 128, 128), square.surface)
         text = str(square.value)
         size = square.surface.height - 15
         font = create_font_object(text, size)
         w, h = font.get_size()
         display.blit(font, (square.surface.x + w / 2, square.surface.y))
+    elif isinstance(square, Tower):
+        pygame.draw.rect(display, (32, 15, 100), square.surface)
+        text = square.operation + str(square.value)
+        size = square.surface.height - 15
+        font = create_font_object(text, size)
+        w, h = font.get_size()
+        display.blit(font, (square.surface.x + w / 2, square.surface.y))
+    elif isinstance(square, Block):
+        pygame.draw.rect(display, (200, 13, 52), square.surface)
+    elif isinstance(square, Square):
+        pygame.draw.rect(display, (128, 128, 128), square.surface)
 
 
 def draw_initial_in_game_window(window, grid):

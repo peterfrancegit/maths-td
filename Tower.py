@@ -15,15 +15,15 @@ class Tower(Square):
         self.level = 1
         self.cost = cost
 
-    # Damages a Numemy, and kills it if health is 0
     def attack(self, numemy):
+        """Damages a Numemy, and kills it if health is 0"""
         global numemy_list
         numemy.take_damage(self.operation, self.value)
         if numemy.value == 0:
             numemy_list.remove(numemy)
 
-    # Returns a Numemy within range, if one exists
     def find_target(self):
+        """Returns a Numemy within range, if one exists"""
         global numemy_list
         for numemy in numemy_list:
             if linalg.norm(numemy.square - self.square) <= self.range:

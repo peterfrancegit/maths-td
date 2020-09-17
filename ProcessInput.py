@@ -2,6 +2,8 @@ import Draw
 import pygame
 from Button import Button
 from GameState import GameState
+from Tower import Tower
+from numemy import Numemy
 import grid
 
 
@@ -44,9 +46,23 @@ def process_main_menu_click(window, mouseClickPos):
                 # Initialises the dijkstra and square grids
                 grid.initialise_grid(window.gameDisplay)
 
+                # Creates a numemy with the value 6 and puts it into square_grid
+                sqr = grid.square_grid[4][0]
+                w, h = sqr.surface.width, sqr.surface.height
+                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+                grid.square_grid[4][0] = Numemy(rect, 6, 0, 3, [])
+
+                # Creates a numemy with the value 3 and puts it into square_grid
+                sqr = grid.square_grid[4][1]
+                w, h = sqr.surface.width, sqr.surface.height
+                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+                grid.square_grid[4][1] = Numemy(rect, 3, 0, 3, [])
+
                 Draw.draw_initial_in_game_window(window, grid.square_grid)
 
                 window.state = GameState.IN_GAME
+
+
             
             # Checks if the quit button has been pressed
             elif button.text == "Quit":

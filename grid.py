@@ -118,7 +118,7 @@ def initialise_route_list(display):
     global exit_square
     global route_list
 
-    block = []
+    blocks = []
 
     dijkstra_grid = make_grid(WIDTH, HEIGHT, blocks)
 

@@ -2,6 +2,9 @@ import time
 import pygame
 import sys
 from GameState import GameState
+from Square import Square
+from Tower import Tower
+from numemy import Numemy
 
 
 
@@ -56,11 +59,25 @@ def draw_menu(window, buttons):
     window.gameDisplay.blit(numbers, (w / 2, h / 3))
 
 
-def create_font_object(text):
+def create_font_object(text, size):
     """Takes a string and produces a pygame text object with it and return that object"""
-    font = pygame.font.Font("Data/comicsans.ttf", 50)
+    font = pygame.font.Font("Data/comicsans.ttf", size)
     fontobj = font.render(text, True, (0, 128, 0))
     return fontobj
+
+
+def draw_square(display, square):
+    """Draws the square object unto the display object"""
+    if isinstance(square, Square) and not isinstance(square, Numemy):
+        pygame.draw.rect(display, (128, 128, 128), square.surface)
+    elif isinstance(square, Numemy):
+        pygame.draw.rect(display, (128, 128, 128), square.surface)
+        text = str(square.value)
+        size = square.surface.height - 15
+        font = create_font_object(text, size)
+        w, h = font.get_size()
+        display.blit(font, (square.surface.x + w / 2, square.surface.y))
+
 
 def draw_initial_in_game_window(window, grid):
     """Draws the initial in game window"""
@@ -80,7 +97,6 @@ def draw_initial_in_game_window(window, grid):
 
     for i in range(len(grid)):
         for j in range(len(grid)):
-            pygame.draw.rect(window.gameDisplay, (128, 128, 128), grid[i][j].surface)
-            print(grid[i][j].surface.x, grid[i][j].surface.y)
+            draw_square(window.gameDisplay, grid[i][j])
 
     

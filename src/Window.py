@@ -2,8 +2,8 @@ import threading
 import src.Draw as Draw
 import pygame
 import src.ProcessInput as ProcessInput
-from src.GameState import GameState
-from src.Button import Button
+from GameState import GameState
+from Button import Button
 
 
 LEFT = 1

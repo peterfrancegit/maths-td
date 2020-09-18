@@ -18,6 +18,7 @@ class Window():
         self.gameDisplay = gameDisplay
         self.width = width
         self.height = height
+        self.screenRatio = int(self.height / 1080)
         self.buttons = []
         self.state = None
 
@@ -65,6 +66,7 @@ class Window():
 
         self.buttons = [startButton, quitButton]
         Draw.draw_menu(self, self.buttons)
+        Draw.draw_image(self.gameDisplay, "Numbers.jpg", self.width / 2, self.height / 3)
 
 
     def start_opening(self, lock):

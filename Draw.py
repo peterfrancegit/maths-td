@@ -10,9 +10,9 @@ from Numemy import Numemy
 def create_opening_animation(window, lock):
     """Creates the opening screen for maths td"""
 
-    lock.acquire()
+    lock.acquire() # Locks is used from thread communication
 
-    font = pygame.font.Font("Data/comicsans.ttf", 100)
+    font = pygame.font.Font("Data/Fonts/comicsans.ttf", 100 * window.screenRatio)
     textSurface = font.render("Math-TD", True, (0, 128, 0))
 
 
@@ -48,26 +48,27 @@ def draw_button(window, button):
     window.gameDisplay.blit(button.font, (button.rect.x, button.rect.y))
 
 
+def draw_image(display, imagename, x, y):
+    """Draws an image specified on the given x y coordinates"""
+    numbers = pygame.image.load("./Data/Images/" + imagename)
+    display.blit(numbers, (x, y))
+
 def draw_menu(window, buttons):
     """Draws all of the buttons specified in buttons"""
     for button in buttons:
         draw_button(window, button)
 
-    # Draws the numbers image
-    w, h = window.gameDisplay.get_size()
-    numbers = pygame.image.load("./Data/Numbers.jpg")
-    window.gameDisplay.blit(numbers, (w / 2, h / 3))
-
 
 def create_font_object(text, size):
     """Takes a string and produces a pygame text object with it and return that object"""
-    font = pygame.font.Font("Data/comicsans.ttf", size)
+    font = pygame.font.Font("Data/Fonts/comicsans.ttf", size)
     fontobj = font.render(text, True, (0, 128, 0))
     return fontobj
 
 
 def draw_square(display, square):
     """Draws the square object unto the display object"""
+
     if isinstance(square, Numemy):
         pygame.draw.rect(display, (128, 128, 128), square.surface)
         text = str(square.value)
@@ -75,6 +76,7 @@ def draw_square(display, square):
         font = create_font_object(text, size)
         w, h = font.get_size()
         display.blit(font, (square.surface.x + w / 2, square.surface.y))
+
     elif isinstance(square, Tower):
         pygame.draw.rect(display, (32, 15, 100), square.surface)
         text = square.operation + str(square.value)
@@ -82,10 +84,21 @@ def draw_square(display, square):
         font = create_font_object(text, size)
         w, h = font.get_size()
         display.blit(font, (square.surface.x + w / 2, square.surface.y))
+
     elif isinstance(square, Block):
         pygame.draw.rect(display, (200, 13, 52), square.surface)
+
     elif isinstance(square, Exit):
-        pygame.draw.circle(display, (255, 0, 0), square.surface, width=0)
+        # Draws the background of the exit
+        pygame.draw.rect(display, (128, 128, 128), square.surface)
+
+        # Draws the exit
+        squareSideLen = square.surface.width
+        circleX = int(square.surface.x + squareSideLen / 2)
+        circleY = int(square.surface.y + squareSideLen / 2)
+        radius = int(square.surface.width / 2)
+        pygame.draw.circle(display, (255, 0, 0), (circleX, circleY), radius, 0)
+
     elif isinstance(square, Square):
         pygame.draw.rect(display, (128, 128, 128), square.surface)
 

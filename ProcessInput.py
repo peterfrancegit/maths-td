@@ -4,6 +4,7 @@ from Button import Button
 from GameState import GameState
 from Tower import Tower
 from Numemy import Numemy
+from Square import Exit
 import Grid
 
 
@@ -40,7 +41,7 @@ def process_main_menu_click(window, mouseClickPos):
 
                 # Changes the music
                 pygame.mixer.stop()
-                song = pygame.mixer.Sound("Data/Girlfriendinacoma.wav")
+                song = pygame.mixer.Sound("Data/Music/Girlfriendinacoma.wav")
                 pygame.mixer.Sound.play(song, loops = -1)
 
                 # Initialises the dijkstra and square grids
@@ -63,6 +64,12 @@ def process_main_menu_click(window, mouseClickPos):
                 w, h = sqr.surface.width, sqr.surface.height
                 rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
                 Grid.square_grid[6][2] = Tower(rect, 2, 2, 10, '+', 50, (6, 2))
+
+                # Creates an exit and puts it into the square_grid
+                sqr = Grid.square_grid[4][9]
+                w, h = sqr.surface.width, sqr.surface.height
+                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+                Grid.square_grid[4][9] = Exit(rect)
 
                 Draw.draw_initial_in_game_window(window, Grid.square_grid)
 

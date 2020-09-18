@@ -4,7 +4,7 @@ from src.Button import Button
 from src.GameState import GameState
 from src.Tower import Tower
 from src.Numemy import Numemy
-from src.Square import Exit
+from src.Square import Exit, Spawner
 import src.Grid as Grid
 
 
@@ -65,11 +65,17 @@ def process_main_menu_click(window, mouseClickPos):
                 rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
                 Grid.square_grid[6][2] = Tower(rect, 2, 2, 10, '+', 50, (6, 2))
 
-                # Creates an exit and puts it into the square_grid
+                # Creates an Exit and puts it into the square_grid
                 sqr = Grid.square_grid[4][9]
                 w, h = sqr.surface.width, sqr.surface.height
                 rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
                 Grid.square_grid[4][9] = Exit(rect)
+
+                # Creates a Spawner and puts it into the square_grid
+                sqr = Grid.square_grid[5][5]
+                w, h = sqr.surface.width, sqr.surface.height
+                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+                Grid.square_grid[5][5] = Spawner(rect)
 
                 Draw.draw_initial_in_game_window(window, Grid.square_grid)
 

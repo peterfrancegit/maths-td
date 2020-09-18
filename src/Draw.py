@@ -2,7 +2,7 @@ import time
 import pygame
 import sys
 from src.GameState import GameState
-from src.Square import Square, Block, Exit
+from src.Square import Square, Block, Exit, Spawner
 from src.Tower import Tower
 from src.Numemy import Numemy
 from src.Exceptions.TextTooBig import TextTooBig
@@ -87,7 +87,7 @@ def get_fitted_size(text, surface):
 
 def draw_square(display, square):
     """Draws the square object unto the display object"""
-
+    print(square.surface)
     if isinstance(square, Tower):
         pygame.draw.rect(display, (32, 15, 100), square.surface)
         text = square.operation + str(square.value)
@@ -104,6 +104,7 @@ def draw_square(display, square):
     elif isinstance(square, Square):
         # Draws background
         pygame.draw.rect(display, (128, 128, 128), square.surface)
+        pygame.draw.rect(display, (0, 0, 0), square.surface, 1)
 
         if isinstance(square, Numemy):
             text = str(square.value)
@@ -119,6 +120,13 @@ def draw_square(display, square):
             radius = int(square.surface.width / 2)
             pygame.draw.circle(display, (255, 0, 0), (circleX, circleY), radius, 0)
 
+        elif isinstance(square, Spawner):
+            squareSideLen = square.surface.width
+            circleX = int(square.surface.x + squareSideLen / 2)
+            circleY = int(square.surface.y + squareSideLen / 2)
+            radius = int(square.surface.width / 2)
+            pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
+
 
 def draw_initial_in_game_window(window, grid):
     """Draws the initial in game window"""
@@ -130,7 +138,7 @@ def draw_initial_in_game_window(window, grid):
 
     # Draws each of the squares in square_grid
     for i in range(len(grid)):
-        for j in range(len(grid)):
+        for j in range(len(grid[0])):
             draw_square(window.gameDisplay, grid[i][j])
 
     

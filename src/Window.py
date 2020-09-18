@@ -1,5 +1,5 @@
 import threading
-import src.Draw as Draw
+import Draw as Draw
 import pygame
 import src.ProcessInput as ProcessInput
 from GameState import GameState

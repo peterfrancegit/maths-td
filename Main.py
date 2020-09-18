@@ -23,7 +23,7 @@ def _initialise_pygame():
     pygame.display.set_caption('Maths TD')
 
     # Sets the background music
-    song = pygame.mixer.Sound("Data/Music/BackgroundMusic.wav")
+    song = pygame.mixer.Sound("Data/Music/ThisCharmingMan.wav")
     pygame.mixer.Sound.play(song, loops = -1)
 
     # Gets the resolution of the display that's running the game
@@ -51,6 +51,7 @@ def _game_loop():
     current_window.state = GameState.IN_OPENING_SCENE
     obj = current_window.start_opening_thread(lock)
 
+    counter = 0
     # Handles events
     hasQuit = False
     while not hasQuit:
@@ -73,6 +74,8 @@ def _game_loop():
                 current_window.process_in_game_event(event)
 
         clock.tick(30)
+        print(counter)
+        counter += 1
 
 if __name__ == "__main__":
     _initialise_pygame()

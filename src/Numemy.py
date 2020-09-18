@@ -1,4 +1,4 @@
-from src.Square import Square
+from Square import Square
 
 
 class Numemy(Square):

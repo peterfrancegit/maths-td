@@ -7,8 +7,8 @@ sys.path.insert(1, './src')
 import src.Grid as Grid
 import time
 import threading
-from src.GameState import GameState
-from src.Window import Window
+from GameState import GameState
+from Window import Window
 
 
 
@@ -29,6 +29,8 @@ def _initialise_pygame():
     # Gets the resolution of the display that's running the game
     infoObject = pygame.display.Info()
     WIDTH, HEIGHT = infoObject.current_w, infoObject.current_h
+    WIDTH = 1280
+    HEIGHT = 720
     GAME_DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT))
 
     # Initialises the global window object
@@ -74,7 +76,8 @@ def _game_loop():
                 current_window.process_in_game_event(event)
 
         clock.tick(30)
-        print(counter)
+        if current_window.state == GameState.IN_GAME and counter % 30 == 0:
+            print("Move numemy!")
         counter += 1
 
 if __name__ == "__main__":

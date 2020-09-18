@@ -1,0 +1,4 @@
+
+
+class TextTooBig(Exception):
+    pass

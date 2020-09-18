@@ -5,6 +5,7 @@ from GameState import GameState
 from Square import Square, Block, Exit
 from Tower import Tower
 from Numemy import Numemy
+from src.Exceptions.TextTooBig import TextTooBig
 
 
 def create_opening_animation(window, lock):
@@ -66,6 +67,24 @@ def create_font_object(text, size):
     return fontobj
 
 
+def get_fitted_size(text, surface):
+    """Takes a piece of text and a surface and gets the max size of text that can fit the surface"""
+    counter = 1
+    font = create_font_object(text, counter)
+    w, h = font.get_size()
+    while (w < surface.width and h < surface.height):
+        font = create_font_object(text, counter)
+        w, h = font.get_size()
+        counter += 1
+    
+    # Reducing counter by 1 will give the last text size that could fit in the surface
+    counter -= 1
+    if counter == 0:
+        raise TextTooBig("Text can not be fitted to the given surface")
+    else:
+        return counter
+    
+
 def draw_square(display, square):
     """Draws the square object unto the display object"""
 
@@ -80,10 +99,12 @@ def draw_square(display, square):
     elif isinstance(square, Tower):
         pygame.draw.rect(display, (32, 15, 100), square.surface)
         text = square.operation + str(square.value)
-        size = square.surface.height - 30
+        size = get_fitted_size(text, square.surface)
         font = create_font_object(text, size)
         w, h = font.get_size()
-        display.blit(font, (square.surface.x + w / 2, square.surface.y))
+        textX = square.surface.x + ((square.surface.width - w) / 2)
+        textY = square.surface.y + ((square.surface.height - h) / 2)
+        display.blit(font, (textX, textY))
 
     elif isinstance(square, Block):
         pygame.draw.rect(display, (200, 13, 52), square.surface)
@@ -111,14 +132,7 @@ def draw_initial_in_game_window(window, grid):
     # Draws a black background
     window.gameDisplay.fill((0, 0, 0))
 
-    # Draws a grey square at the centre of the screen
-    # greySqrWidth = screenHeight
-    # greySqrHeight = screenHeight
-    # greySqrX = screenWidth / 2 - greySqrWidth / 2
-    # greySqrY = 0
-    # greySqr = pygame.Rect(greySqrX, greySqrY, greySqrWidth, greySqrHeight)
-    # pygame.draw.rect(window.gameDisplay, (128, 128, 128), greySqr)
-
+    # Draws each of the squares in square_grid
     for i in range(len(grid)):
         for j in range(len(grid)):
             draw_square(window.gameDisplay, grid[i][j])

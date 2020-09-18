@@ -7,8 +7,8 @@ from Numemy import Numemy
 
 
 class TestNextSquare(unittest.TestCase):
-    route_dict = {(1, 1): [(1, 1), (1, 2)]}
-    def test_next_square(self):
+    def test_next_square_simple(self):
+        route_dict = {(1, 1): [(1, 1), (1, 2)]}
         numemy = Numemy(None, None, None, None, (1, 1), None)
         numemy.next_square()
         self.assertEqual(numemy.location, (1, 2))

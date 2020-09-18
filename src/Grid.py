@@ -1,5 +1,5 @@
 from dijkstar import Graph, find_path
-from src.Square import Square
+from Square import Square
 import pygame
 
 # Dimensions of both the grids

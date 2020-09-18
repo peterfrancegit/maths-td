@@ -1,10 +1,10 @@
 import time
 import pygame
 import sys
-from src.GameState import GameState
-from src.Square import Square, Block, Exit, Spawner
-from src.Tower import Tower
-from src.Numemy import Numemy
+from GameState import GameState
+from Square import Square, Block, Exit, Spawner
+from Tower import Tower
+from Numemy import Numemy
 from src.Exceptions.TextTooBig import TextTooBig
 
 

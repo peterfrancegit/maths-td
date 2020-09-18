@@ -1,10 +1,10 @@
 import src.Draw as Draw
 import pygame
-from src.Button import Button
-from src.GameState import GameState
-from src.Tower import Tower
-from src.Numemy import Numemy
-from src.Square import Exit, Spawner
+from Button import Button
+from GameState import GameState
+from Tower import Tower
+from Numemy import Numemy
+from Square import Exit, Spawner
 import src.Grid as Grid
 
 

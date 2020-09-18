@@ -88,15 +88,7 @@ def get_fitted_size(text, surface):
 def draw_square(display, square):
     """Draws the square object unto the display object"""
 
-    if isinstance(square, Numemy):
-        pygame.draw.rect(display, (128, 128, 128), square.surface)
-        text = str(square.value)
-        size = square.surface.height - 15
-        font = create_font_object(text, size)
-        w, h = font.get_size()
-        display.blit(font, (square.surface.x + w / 2, square.surface.y))
-
-    elif isinstance(square, Tower):
+    if isinstance(square, Tower):
         pygame.draw.rect(display, (32, 15, 100), square.surface)
         text = square.operation + str(square.value)
         size = get_fitted_size(text, square.surface)
@@ -109,19 +101,23 @@ def draw_square(display, square):
     elif isinstance(square, Block):
         pygame.draw.rect(display, (200, 13, 52), square.surface)
 
-    elif isinstance(square, Exit):
-        # Draws the background of the exit
-        pygame.draw.rect(display, (128, 128, 128), square.surface)
-
-        # Draws the exit
-        squareSideLen = square.surface.width
-        circleX = int(square.surface.x + squareSideLen / 2)
-        circleY = int(square.surface.y + squareSideLen / 2)
-        radius = int(square.surface.width / 2)
-        pygame.draw.circle(display, (255, 0, 0), (circleX, circleY), radius, 0)
-
     elif isinstance(square, Square):
+        # Draws background
         pygame.draw.rect(display, (128, 128, 128), square.surface)
+
+        if isinstance(square, Numemy):
+            text = str(square.value)
+            size = square.surface.height - 15
+            font = create_font_object(text, size)
+            w, h = font.get_size()
+            display.blit(font, (square.surface.x + w / 2, square.surface.y))
+
+        elif isinstance(square, Exit):
+            squareSideLen = square.surface.width
+            circleX = int(square.surface.x + squareSideLen / 2)
+            circleY = int(square.surface.y + squareSideLen / 2)
+            radius = int(square.surface.width / 2)
+            pygame.draw.circle(display, (255, 0, 0), (circleX, circleY), radius, 0)
 
 
 def draw_initial_in_game_window(window, grid):

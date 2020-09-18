@@ -5,7 +5,7 @@ from GameState import GameState
 from Tower import Tower
 from Numemy import Numemy
 from Square import Exit, Spawner
-import src.Grid as Grid
+import Grid as Grid
 
 
 def process_main_menu_hover(window, mouseClickPos):

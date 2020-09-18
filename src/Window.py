@@ -18,7 +18,7 @@ class Window():
         self.gameDisplay = gameDisplay
         self.width = width
         self.height = height
-        self.screenRatio = int(self.height / 1080)
+        self.screenRatio = self.height / 1080
         self.buttons = []
         self.state = None
 

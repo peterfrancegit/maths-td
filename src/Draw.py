@@ -13,7 +13,7 @@ def create_opening_animation(window, lock):
 
     lock.acquire() # Locks is used from thread communication
 
-    font = pygame.font.Font("Data/Fonts/comicsans.ttf", 100 * window.screenRatio)
+    font = pygame.font.Font("Data/Fonts/Oswald-Regular.ttf", int(100 * window.screenRatio))
     textSurface = font.render("Math-TD", True, (0, 128, 0))
 
 
@@ -62,7 +62,7 @@ def draw_menu(window, buttons):
 
 def create_font_object(text, size):
     """Takes a string and produces a pygame text object with it and return that object"""
-    font = pygame.font.Font("Data/Fonts/comicsans.ttf", size)
+    font = pygame.font.Font("Data/Fonts/Oswald-Regular.ttf", size)
     fontobj = font.render(text, True, (0, 128, 0))
     return fontobj
 
@@ -87,7 +87,7 @@ def get_fitted_size(text, surface):
 
 def draw_square(display, square):
     """Draws the square object unto the display object"""
-    print(square.surface)
+    
     if isinstance(square, Tower):
         pygame.draw.rect(display, (32, 15, 100), square.surface)
         text = square.operation + str(square.value)

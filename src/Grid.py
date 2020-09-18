@@ -1,5 +1,5 @@
 from dijkstar import Graph, find_path
-from Square import Square
+from src.Square import Square
 import pygame
 
 # Dimensions of both the grids
@@ -13,26 +13,20 @@ exit_square = None
 route_dict = {}
 
 
-# Returns a graph based on a 'height' x 'width' grid, where
-# 'blocks' is a list of the indices of walled off squares.
 def make_grid(height, width, blocks):
+    """Returns graph of a 'height' x 'width' grid with edges between
+    neighbouring squares and where nodes in 'blocks' are excluded"""
     grid = Graph()
-    for i in range(height - 1):
-        if (i, width - 1) and (i + 1, width - 1) not in blocks:
-            grid.add_edge((i, width - 1), (i + 1, width - 1), 1)
-            grid.add_edge((i + 1, width - 1), (i, width - 1), 1)
-        for j in range(width - 1):
-            if (i, j) not in blocks:
-                if (i, j + 1) not in blocks:
-                    grid.add_edge((i, j), (i, j + 1), 1)
-                    grid.add_edge((i, j + 1), (i, j), 1)
-                if (i + 1, j) not in blocks:
-                    grid.add_edge((i, j), (i + 1, j), 1)
-                    grid.add_edge((i + 1, j), (i, j), 1)
-    for j in range(width - 1):
-        if (height - 1, j) and (height - 1, j + 1) not in blocks:
-            grid.add_edge((height - 1, j), (height - 1, j + 1), 1)
-            grid.add_edge((height - 1, j + 1), (height - 1, j), 1)
+    for i in range(height):
+        for j in range(width):
+            if i < height - 1:
+                grid.add_edge((i, j), (i + 1, j), 1)
+                grid.add_edge((i + 1, j), (i, j), 1)
+            if j < width - 1:
+                grid.add_edge((i, j), (i, j + 1), 1)
+                grid.add_edge((i, j + 1), (i, j), 1)
+    for node in blocks:
+        grid.remove_node(node)
     return grid
 
 

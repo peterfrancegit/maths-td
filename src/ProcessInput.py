@@ -1,11 +1,11 @@
-import Draw
+import src.Draw as Draw
 import pygame
-from Button import Button
-from GameState import GameState
-from Tower import Tower
-from Numemy import Numemy
-from Square import Exit
-import Grid
+from src.Button import Button
+from src.GameState import GameState
+from src.Tower import Tower
+from src.Numemy import Numemy
+from src.Square import Exit
+import src.Grid as Grid
 
 
 def process_main_menu_hover(window, mouseClickPos):

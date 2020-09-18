@@ -4,11 +4,11 @@ import sys
 # Make program search in the src directory for files
 sys.path.insert(1, './src')
 
-import Grid
+import src.Grid as Grid
 import time
 import threading
-from GameState import GameState
-from Window import Window
+from src.GameState import GameState
+from src.Window import Window
 
 
 

@@ -1,5 +1,5 @@
 from numpy import linalg
-from Square import Square
+from src.Square import Square
 
 
 class Tower(Square):

@@ -75,6 +75,8 @@ def initialise_grid(display):
     """Initialises the global grid variables"""
     global dijkstra_grid
     global square_grid
+    global exit_square
+    global all_numemies
     
     blocks = []
     dijkstra_grid = make_grid(WIDTH, HEIGHT, blocks)
@@ -134,7 +136,6 @@ def initialise_grid(display):
 
 def initialise_route_dict():
     """Initialises the global route_dict variable"""
-    global dijkstra_grid
     global route_dict
     for square in dijkstra_grid:
         route_dict[square] = find_route(square)

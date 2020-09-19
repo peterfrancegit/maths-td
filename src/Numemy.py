@@ -16,7 +16,6 @@ class Numemy(Square):
 
     def next_square(self):
         """Returns the next square on the route from a starting square"""
-        global route_dict
         return route_dict[self.location][1]
 
     def move(self):

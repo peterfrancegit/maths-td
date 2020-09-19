@@ -25,7 +25,6 @@ class Tower(Square):
 
     def find_target(self):
         """Returns a Numemy within range, if one exists"""
-        global square_grid
         for square in square_grid:
             if isinstance(square, Numemy):
                 if linalg.norm(numemy.location - self.location) <= self.range:

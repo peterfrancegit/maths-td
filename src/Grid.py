@@ -59,7 +59,9 @@ def build_tower(tower):
 def spawn_numemy(numemy):
     """Spawns a new Numemy object"""
     global square_grid
+    global all_numemies
     square_grid[numemy.location[0]][numemy.location[1]] = numemy
+    all_numemies.append(numemy.location)
 
 
 # Should be called after block_square and build_tower
@@ -102,17 +104,15 @@ def initialise_grid(display):
 
     # Creates a numemy with the value 6 and puts it into square_grid
     sqr = square_grid[4][0]
-    all_numemies.append((4, 0))
     w, h = sqr.surface.width, sqr.surface.height
     rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-    square_grid[4][0] = Numemy(rect, 6, 0, 3, [], 5)
+    spawn_numemy(Numemy(rect, 6, 0, 3, (4, 0), 5))
 
     # Creates a numemy with the value 3 and puts it into square_grid
     sqr = square_grid[4][1]
-    all_numemies.append((4, 1))
     w, h = sqr.surface.width, sqr.surface.height
     rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-    square_grid[4][1] = Numemy(rect, 3, 0, 3, [], 1)
+    spawn_numemy(Numemy(rect, 3, 0, 3, (4, 1), 1))
 
     # Creates a tower with the gun +1 and puts it into square_grid
     sqr = square_grid[6][2]

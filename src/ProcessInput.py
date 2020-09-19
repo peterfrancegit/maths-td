@@ -1,10 +1,7 @@
-import src.Draw as Draw
+import Draw as Draw
 import pygame
 from Button import Button
 from GameState import GameState
-from Tower import Tower
-from Numemy import Numemy
-from Square import Exit, Spawner
 import Grid as Grid
 
 
@@ -46,36 +43,6 @@ def process_main_menu_click(window, mouseClickPos):
 
                 # Initialises the dijkstra and square grids
                 Grid.initialise_grid(window.gameDisplay)
-
-                # Creates a numemy with the value 6 and puts it into square_grid
-                sqr = Grid.square_grid[4][0]
-                w, h = sqr.surface.width, sqr.surface.height
-                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-                Grid.square_grid[4][0] = Numemy(rect, 6, 0, 3, [], 5)
-
-                # Creates a numemy with the value 3 and puts it into square_grid
-                sqr = Grid.square_grid[4][1]
-                w, h = sqr.surface.width, sqr.surface.height
-                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-                Grid.square_grid[4][1] = Numemy(rect, 3, 0, 3, [], 1)
-
-                # Creates a tower with the gun +1 and puts it into square_grid
-                sqr = Grid.square_grid[6][2]
-                w, h = sqr.surface.width, sqr.surface.height
-                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-                Grid.square_grid[6][2] = Tower(rect, 2, 2, 10, '+', 50, (6, 2))
-
-                # Creates an Exit and puts it into the square_grid
-                sqr = Grid.square_grid[4][9]
-                w, h = sqr.surface.width, sqr.surface.height
-                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-                Grid.square_grid[4][9] = Exit(rect)
-
-                # Creates a Spawner and puts it into the square_grid
-                sqr = Grid.square_grid[5][5]
-                w, h = sqr.surface.width, sqr.surface.height
-                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-                Grid.square_grid[5][5] = Spawner(rect)
 
                 Draw.draw_initial_in_game_window(window, Grid.square_grid)
 

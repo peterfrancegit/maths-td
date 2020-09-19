@@ -29,8 +29,6 @@ def _initialise_pygame():
     # Gets the resolution of the display that's running the game
     infoObject = pygame.display.Info()
     WIDTH, HEIGHT = infoObject.current_w, infoObject.current_h
-    WIDTH = 1280
-    HEIGHT = 720
     GAME_DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT))
 
     # Initialises the global window object
@@ -77,7 +75,7 @@ def _game_loop():
 
         clock.tick(30)
         if current_window.state == GameState.IN_GAME and counter % 30 == 0:
-            print("Move numemy!")
+            current_window.move_numemies()
         counter += 1
 
 if __name__ == "__main__":

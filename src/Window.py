@@ -1,9 +1,10 @@
 import threading
 import Draw as Draw
 import pygame
-import src.ProcessInput as ProcessInput
+import ProcessInput as ProcessInput
 from GameState import GameState
 from Button import Button
+import Grid
 
 
 LEFT = 1
@@ -126,6 +127,14 @@ class Window():
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_in_game_click(self, mouseClickPos)
+
+
+    def move_numemies(self):
+        """Moves the numemies by one"""
+
+        numemy = Grid.all_numemies[0]
+        print(numemy)
+        print(Grid.find_route(numemy))
 
 
 

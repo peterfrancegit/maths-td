@@ -13,6 +13,7 @@ HEIGHT = 10
 Lives = None
 square_grid = None
 dijkstra_grid = None
+blocks = []
 all_numemies = []
 exit_square = None
 route_dict = {}
@@ -38,8 +39,6 @@ def make_grid(height, width, blocks):
 def find_route(square):
     """Returns list of nodes visited in shortest route from square
     to the exit point"""
-    global dijkstra_grid
-    global exit_square
     return find_path(dijkstra_grid, square, exit_square)[0]
 
 
@@ -79,8 +78,7 @@ def initialise_grid(display):
     global square_grid
     global exit_square
     global all_numemies
-    
-    blocks = []
+
     dijkstra_grid = make_grid(WIDTH, HEIGHT, blocks)
 
     # Initialises the square grid

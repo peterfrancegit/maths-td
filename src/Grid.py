@@ -89,6 +89,13 @@ def initialise_grid(display):
             row.append(sqr)
         square_grid.append(row)
 
+    # Creates an Exit and puts it into the square_grid
+    sqr = square_grid[4][9]
+    exit_square = (4, 9)
+    w, h = sqr.surface.width, sqr.surface.height
+    rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+    square_grid[4][9] = Exit(rect)
+
     # Initialises the route dictionary
     initialise_route_dict()
 
@@ -109,13 +116,6 @@ def initialise_grid(display):
     w, h = sqr.surface.width, sqr.surface.height
     rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
     build_tower(Tower(rect, 2, 2, 10, '+', 50, (6, 2)))
-
-    # Creates an Exit and puts it into the square_grid
-    sqr = square_grid[4][9]
-    exit_square = (4, 9)
-    w, h = sqr.surface.width, sqr.surface.height
-    rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-    square_grid[4][9] = Exit(rect)
 
     # Creates a Spawner and puts it into the square_grid
     sqr = square_grid[5][5]

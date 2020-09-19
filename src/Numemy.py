@@ -1,4 +1,5 @@
 from Square import Square
+from Globals import *
 
 
 class Numemy(Square):

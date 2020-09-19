@@ -4,6 +4,7 @@ import pygame
 import ProcessInput as ProcessInput
 from GameState import GameState
 from Button import Button
+from Globals import *
 import Grid
 
 
@@ -132,9 +133,9 @@ class Window():
     def move_numemies(self):
         """Moves the numemies by one"""
 
-        numemy = Grid.all_numemies[0]
-        print(numemy)
-        print(Grid.find_route(numemy))
+        for numemy in Grid.numemy_list:
+            numemy.location = numemy.next_square()
+            print(numemy.location)
 
 
 

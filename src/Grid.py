@@ -4,19 +4,8 @@ from Numemy import Numemy
 from Tower import Tower
 from Square import Exit
 from Square import Spawner
+from Globals import *
 import pygame
-
-# Dimensions of both the grids
-WIDTH = 10
-HEIGHT = 10
-
-Lives = None
-square_grid = None
-dijkstra_grid = None
-blocks = []
-all_numemies = []
-exit_square = None
-route_dict = {}
 
 
 def make_grid(height, width, blocks):
@@ -60,7 +49,7 @@ def spawn_numemy(numemy):
     global square_grid
     global all_numemies
     square_grid[numemy.location[0]][numemy.location[1]] = numemy
-    all_numemies.append(numemy.location)
+    numemy_list.append(numemy)
 
 
 # Should be called after block_square and build_tower
@@ -77,7 +66,7 @@ def initialise_grid(display):
     global dijkstra_grid
     global square_grid
     global exit_square
-    global all_numemies
+    global route_dict
 
     dijkstra_grid = make_grid(WIDTH, HEIGHT, blocks)
 
@@ -99,6 +88,9 @@ def initialise_grid(display):
             sqr = Square(greySqr)
             row.append(sqr)
         square_grid.append(row)
+
+    # Initialises the route dictionary
+    initialise_route_dict()
 
     # Creates a numemy with the value 6 and puts it into square_grid
     sqr = square_grid[4][0]

@@ -48,6 +48,11 @@ def process_main_menu_click(window, mouseClickPos, grid):
                 grid.initialise_spawner()
                 # Initialises the dijk_grid
                 grid.initialise_dijk_grid()
+                # Initialises the route_dict
+                grid.initialise_route_dict()
+
+                # Adds a Numemy
+                grid.spawn_numemy(10, 10, 10, 10)
 
                 Draw.draw_initial_in_game_window(window, grid.square_grid)
 

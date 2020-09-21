@@ -6,12 +6,12 @@ class Numemy(Square):
     # 'start_val'; 'coins' is added to player wealth when Numemy
     # is killed; 'speed' is movement speed; 'square' is the current
     # location, initiated at 'spawn_square'.
-    def __init__(self, surface, start_val, coins, speed, spawn_square, weight):
+    def __init__(self, surface, start_val, coins, speed, weight):
         Square.__init__(self, surface)
         self.value = start_val
         self.coins = coins
         self.speed = speed
-        self.location = spawn_square
+        self.location = None
         self.weight = weight
 
     def next_square(self, grid):

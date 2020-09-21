@@ -120,5 +120,5 @@ class Window:
     def move_numemies(self, grid):
         """Moves the numemies by one"""
         for numemy in grid.numemy_list:
-            numemy.location = numemy.next_square()
+            numemy.location = numemy.next_square(grid)
             print(numemy.location)

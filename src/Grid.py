@@ -77,13 +77,22 @@ class Grid:
         """Removes a square from dijk_grid when a Tower is built on it"""
         self.dijk_grid.remove_node(square)
 
-    def build_tower(self, tower):
+    def build_tower(self, range, speed, value, operation, cost, location):
         """Builds a new Tower and blocks off its dijk_grid square"""
+        sqr = self.square_grid[location[0]][location[1]]
+        w, h = sqr.surface.width, sqr.surface.height
+        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+        tower = Tower(rect, range, speed, value, operation, cost, location)
         self.square_grid[tower.location[0]][tower.location[1]] = tower
         self.block_square(tower.location)
 
-    def spawn_numemy(self, numemy):
+    def spawn_numemy(self, start_val, coins, speed, weight):
         """Spawns a new Numemy object"""
+        sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]]
+        w, h = sqr.surface.width, sqr.surface.height
+        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+        numemy = Numemy(rect, start_val, coins, speed, weight)
+        numemy.location = self.spawner_square
         self.square_grid[numemy.location[0]][numemy.location[1]] = numemy
         self.numemy_list.append(numemy)
 
@@ -93,21 +102,3 @@ class Grid:
         for square in self.route_dict:
             if new_square in self.route_dict[square]:
                 self.route_dict[square] = find_route(square)
-
-        # Creates a numemy with the value 6 and puts it into square_grid
-        sqr = square_grid[4][0]
-        w, h = sqr.surface.width, sqr.surface.height
-        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        spawn_numemy(Numemy(rect, 6, 0, 3, (4, 0), 5))
-
-        # Creates a numemy with the value 3 and puts it into square_grid
-        sqr = square_grid[4][1]
-        w, h = sqr.surface.width, sqr.surface.height
-        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        spawn_numemy(Numemy(rect, 3, 0, 3, (4, 1), 1))
-
-        # Creates a tower with the gun +1 and puts it into square_grid
-        sqr = square_grid[6][2]
-        w, h = sqr.surface.width, sqr.surface.height
-        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        build_tower(Tower(rect, 2, 2, 10, '+', 50, (6, 2)))

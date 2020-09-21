@@ -2,7 +2,6 @@ import Draw as Draw
 import pygame
 from Button import Button
 from GameState import GameState
-import Grid
 
 
 def process_main_menu_hover(window, mouseClickPos):
@@ -18,7 +17,7 @@ def process_main_menu_hover(window, mouseClickPos):
             Draw.draw_button(window, highlightedButton)
             button.highlighted = True
         elif button.highlighted:
-            # Unhighlights the button when the mouse is no longer hovering over it
+            # Lowlights the button when the mouse is no longer hovering over it
             highlight = (0, 0, 0)
             rect = pygame.Rect(button.rect.x, button.rect.y, button.rect.width, button.rect.height)
             highlightedButton = Button(rect, button.font, highlight, button.text)
@@ -27,7 +26,7 @@ def process_main_menu_hover(window, mouseClickPos):
             button.highlighted = False
 
 
-def process_main_menu_click(window, mouseClickPos):
+def process_main_menu_click(window, mouseClickPos, grid):
     """Checks if any of the buttons in the window have been clicked on"""
 
     for button in window.buttons:
@@ -41,25 +40,28 @@ def process_main_menu_click(window, mouseClickPos):
                 song = pygame.mixer.Sound("Data/Music/Girlfriendinacoma.wav")
                 pygame.mixer.Sound.play(song, loops = -1)
 
-                # Initialises the dijkstra and square grids
-                Grid.initialise_grid(window.gameDisplay)
+                # Initialises the square_grid
+                grid.initialise_square_grid(window.gameDisplay)
+                # Adds the Exit
+                grid.initialise_exit()
+                # Adds the Spawner
+                grid.initialise_spawner()
+                # Initialises the dijk_grid
+                grid.initialise_dijk_grid()
 
-                Draw.draw_initial_in_game_window(window, Grid.square_grid)
+                Draw.draw_initial_in_game_window(window, grid.square_grid)
 
                 window.state = GameState.IN_GAME
 
-
-            
             # Checks if the quit button has been pressed
             elif button.text == "Quit":
                 pygame.event.post(pygame.event.Event(pygame.QUIT))
 
 
-def process_in_game_click(window, mouseClickPos):
+def process_in_game_click(window, mouseClickPos, grid):
     """Processes any left mouse clicks while in game"""
 
-    for i, row in enumerate(Grid.square_grid):
+    for i, row in enumerate(grid.square_grid):
         for j, sqr in enumerate(row):
             if sqr.surface.collidepoint(mouseClickPos):
                 print(j, i)
-

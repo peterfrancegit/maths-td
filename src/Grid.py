@@ -12,11 +12,12 @@ def find_route(dijk_grid, square, exit_square):
 
 
 class Grid:
-    def __init__(self, height, width, blocks, exit_square):
+    def __init__(self, height, width, blocks, spawner_square, exit_square):
         self.route_dict = {}
         self.height = height
         self.width = width
         self.blocks = blocks
+        self.spawner_square = spawner_square
         self.exit_square = exit_square
         self.dijk_grid = Graph()
         self.numemy_list = []
@@ -58,6 +59,20 @@ class Grid:
                 row.append(sqr)
             self.square_grid.append(row)
 
+    def initialise_exit(self):
+        """Adds the Exit to the square_grid"""
+        sqr = self.square_grid[self.exit_square[0]][self.exit_square[1]]
+        w, h = sqr.surface.width, sqr.surface.height
+        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+        self.square_grid[self.exit_square[0]][self.exit_square[1]] = Exit(rect)
+
+    def initialise_spawner(self):
+        """Adds the Spawner to the square_grid"""
+        sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]]
+        w, h = sqr.surface.width, sqr.surface.height
+        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+        self.square_grid[self.spawner_square[0]][self.spawner_square[1]] = Spawner(rect)
+
     def block_square(self, square):
         """Removes a square from dijk_grid when a Tower is built on it"""
         self.dijk_grid.remove_node(square)
@@ -79,14 +94,6 @@ class Grid:
             if new_square in self.route_dict[square]:
                 self.route_dict[square] = find_route(square)
 
-
-        # Creates an Exit and puts it into the square_grid
-        sqr = square_grid[4][9]
-        exit_square = (4, 9)
-        w, h = sqr.surface.width, sqr.surface.height
-        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        square_grid[4][9] = Exit(rect)
-
         # Creates a numemy with the value 6 and puts it into square_grid
         sqr = square_grid[4][0]
         w, h = sqr.surface.width, sqr.surface.height
@@ -104,9 +111,3 @@ class Grid:
         w, h = sqr.surface.width, sqr.surface.height
         rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
         build_tower(Tower(rect, 2, 2, 10, '+', 50, (6, 2)))
-
-        # Creates a Spawner and puts it into the square_grid
-        sqr = square_grid[5][5]
-        w, h = sqr.surface.width, sqr.surface.height
-        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        square_grid[5][5] = Spawner(rect)

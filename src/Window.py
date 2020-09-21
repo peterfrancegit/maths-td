@@ -4,14 +4,13 @@ import pygame
 import ProcessInput as ProcessInput
 from GameState import GameState
 from Button import Button
-import Grid
 
 
 LEFT = 1
 RIGHT = 3
 
 
-class Window():
+class Window:
     """Deals with what is displayed on a window as well as any user inputs into that window"""
 
     def __init__(self, gameDisplay, width, height):
@@ -22,13 +21,11 @@ class Window():
         self.buttons = []
         self.state = None
 
-
     def change_state_to(self, newState):
         """Changes the state of the window object to the given state and draws the appropriate window"""
         self.state = newState
         if newState == GameState.MAIN_MENU:
             self.draw_main_menu()
-
 
     def create_main_menu(self):
         """Sets up the buttons of the main menu and draws them"""
@@ -68,7 +65,6 @@ class Window():
         Draw.draw_menu(self, self.buttons)
         Draw.draw_image(self.gameDisplay, "Numbers.jpg", self.width / 2, self.height / 3)
 
-
     def start_opening(self, lock):
         """Plays the intro then draws the main menu"""
 
@@ -76,7 +72,6 @@ class Window():
         if self.state == GameState.IN_OPENING_SCENE:
             self.state = GameState.MAIN_MENU
             self.create_main_menu()
-
 
     def start_opening_thread(self, lock):
         """Creates a thread that will run the opening sequence"""
@@ -86,11 +81,9 @@ class Window():
             t.start()
 
         except Exception as e:
-            print (e)
+            print(e)
 
-
-
-    def process_main_menu_event(self, event):
+    def process_main_menu_event(self, event, grid):
         """Processes an event that occurred while the window is on the main menu"""
 
         # Checks if the mouse has hovered over any of the buttons on the main menu
@@ -101,9 +94,7 @@ class Window():
         # Checks if a mouse click has clicked on any of the main menu buttons
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             mouseClickPos = pygame.mouse.get_pos()
-            ProcessInput.process_main_menu_click(self, mouseClickPos)
-
-
+            ProcessInput.process_main_menu_click(self, mouseClickPos, grid)
 
     def process_opening_scene_event(self, event, lock):
         """Processes any events that have occurred during the opening scene of Maths TD"""
@@ -118,8 +109,7 @@ class Window():
 
             self.create_main_menu()
 
-
-    def process_in_game_event(self, event):
+    def process_in_game_event(self, event, grid):
         """Processes an event that occurred while the window is in game"""
 
         # Checks if a mouse click has clicked on any of the main menu buttons
@@ -127,19 +117,8 @@ class Window():
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_in_game_click(self, mouseClickPos)
 
-
-    def move_numemies(self):
+    def move_numemies(self, grid):
         """Moves the numemies by one"""
-
-        for numemy in Grid.numemy_list:
+        for numemy in grid.numemy_list:
             numemy.location = numemy.next_square()
             print(numemy.location)
-
-
-
-
-
-
-        
-        
-

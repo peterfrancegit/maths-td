@@ -6,7 +6,7 @@ sys.path.insert(1, './src')
 
 import time
 import threading
-import Grid
+from Grid import Grid
 from GameState import GameState
 from Window import Window
 
@@ -35,13 +35,14 @@ def _initialise_pygame():
     current_window = Window(GAME_DISPLAY, WIDTH, HEIGHT)
 
 
-
 # Main game loop for Maths-td
 def _game_loop():
     global current_window
 
     gridSize = 10
-    graph = Grid.make_grid(gridSize, gridSize, [])
+    spawner_square = (5, 5)
+    exit_square = (9, 9)
+    grid = Grid(gridSize, gridSize, [], spawner_square, exit_square)
     clock = pygame.time.Clock()
 
     # Creates a thread lock that will run the opening animation
@@ -67,16 +68,17 @@ def _game_loop():
 
             # Deals with user input in the main menu
             elif current_window.state == GameState.MAIN_MENU:
-                current_window.process_main_menu_event(event)
+                current_window.process_main_menu_event(event, grid)
 
             # Deals with user input in game
             elif current_window.state == GameState.IN_GAME:
-                current_window.process_in_game_event(event)
+                current_window.process_in_game_event(event, grid)
 
         clock.tick(30)
         if current_window.state == GameState.IN_GAME and counter % 30 == 0:
-            current_window.move_numemies()
+            current_window.move_numemies(grid)
         counter += 1
+
 
 if __name__ == "__main__":
     _initialise_pygame()

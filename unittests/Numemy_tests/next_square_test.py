@@ -8,8 +8,8 @@ from Numemy import Numemy
 
 class TestNextSquare(unittest.TestCase):
     def setUp(self):
-        self.grid = Grid(10, 10, [], None)
-        self.numemy = Numemy(None, None, None, None, None, None)
+        self.grid = Grid(None, None, None, None, None)
+        self.numemy = Numemy(None, None, None, None, None)
 
     def test_next_square_simple(self):
         self.numemy.location = (1, 1)

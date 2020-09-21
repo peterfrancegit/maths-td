@@ -4,13 +4,11 @@ import pygame
 import ProcessInput as ProcessInput
 from GameState import GameState
 from Button import Button
-from Globals import *
 import Grid
 
 
 LEFT = 1
 RIGHT = 3
-
 
 
 class Window():

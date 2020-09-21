@@ -2,7 +2,7 @@ import Draw as Draw
 import pygame
 from Button import Button
 from GameState import GameState
-import Grid as Grid
+import Grid
 
 
 def process_main_menu_hover(window, mouseClickPos):

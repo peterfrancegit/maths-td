@@ -1,5 +1,4 @@
 from Square import Square
-from Globals import *
 
 
 class Numemy(Square):
@@ -22,16 +21,14 @@ class Numemy(Square):
         else:
             return grid.route_dict[self.location][1]
 
-    def move(self):
+    def move(self, grid):
         """Moves Numemy to next square in its route"""
-        self.location = self.next_square()
+        self.location = self.next_square(grid)
 
     # For when a Numemy reaches the exit_square
-    def escape(self):
-        global lives
-        global square_grid
-        lives -= self.weight
-        square_grid[self.location[0]][self.location[1]] = Square(EXIT_SQUARE_SURFACE)
+    def escape(self, grid):
+        grid.lives -= self.weight
+        grid.square_grid[self.location[0]][self.location[1]] = Square(EXIT_SQUARE_SURFACE)
 
     def take_damage(self, operation, damage):
         """When a Numemy is hit"""

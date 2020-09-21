@@ -1,10 +1,7 @@
 from dijkstar import Graph, find_path
-from Square import Square
+from Square import Square, Exit, Spawner
 from Numemy import Numemy
 from Tower import Tower
-from Square import Exit
-from Square import Spawner
-from Globals import *
 import pygame
 
 
@@ -83,14 +80,7 @@ class Grid:
                 self.route_dict[square] = find_route(square)
 
 
-    def initialise_grid(display):
-        """Initialises the global grid variables"""
-        global dijkstra_grid
-        global square_grid
-        global exit_square
-        global route_dict
-
-    # Creates an Exit and puts it into the square_grid
+        # Creates an Exit and puts it into the square_grid
         sqr = square_grid[4][9]
         exit_square = (4, 9)
         w, h = sqr.surface.width, sqr.surface.height

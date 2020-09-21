@@ -16,16 +16,15 @@ class Tower(Square):
         self.cost = cost
         self.location = location
 
-    def attack(self, numemy):
+    def attack(self, grid, numemy):
         """Damages a Numemy, and kills it if health is 0"""
-        global square_grid
         numemy.take_damage(self.operation, self.value)
         if numemy.value == 0:
-            square_grid[numemy.location[0]][numemy.location[1]] = Square(EMPTY_SURFACE)
+            grid.square_grid[numemy.location[0]][numemy.location[1]] = Square(EMPTY_SURFACE)
 
-    def find_target(self):
+    def find_target(self, grid):
         """Returns a Numemy within range, if one exists"""
-        for square in square_grid:
+        for square in grid.square_grid:
             if isinstance(square, Numemy):
-                if linalg.norm(numemy.location - self.location) <= self.range:
-                    return numemy
+                if linalg.norm(square.location - self.location) <= self.range:
+                    return square

@@ -5,7 +5,7 @@ from GameState import GameState
 from Square import Square, Block, Exit, Spawner
 from Tower import Tower
 from Numemy import Numemy
-from src.Exceptions.TextTooBig import TextTooBig
+from Exceptions.TextTooBig import TextTooBig
 
 
 def create_opening_animation(window, lock):

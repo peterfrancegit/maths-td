@@ -29,7 +29,7 @@ def _initialise_pygame():
     # Gets the resolution of the display that's running the game
     infoObject = pygame.display.Info()
     WIDTH, HEIGHT = infoObject.current_w, infoObject.current_h
-    GAME_DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT))
+    GAME_DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 
     # Initialises the global window object
     current_window = Window(GAME_DISPLAY, WIDTH, HEIGHT)

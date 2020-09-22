@@ -62,6 +62,7 @@ def _game_loop():
             if event.type == pygame.QUIT:
                 hasQuit = True
             
+            # Makes the game exit when escape has been pressed
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 hasQuit = True
             

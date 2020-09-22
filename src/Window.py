@@ -115,7 +115,7 @@ class Window:
         # Checks if a mouse click has clicked on any of the main menu buttons
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             mouseClickPos = pygame.mouse.get_pos()
-            ProcessInput.process_in_game_click(self, mouseClickPos)
+            ProcessInput.process_in_game_click(self, mouseClickPos, grid)
 
     def move_numemies(self, grid):
         """Moves the numemies by one"""

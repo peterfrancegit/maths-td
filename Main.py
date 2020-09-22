@@ -62,6 +62,9 @@ def _game_loop():
             if event.type == pygame.QUIT:
                 hasQuit = True
             
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                hasQuit = True
+            
             # Deals with user inputs to the opening scene
             elif current_window.state == GameState.IN_OPENING_SCENE:
                 current_window.process_opening_scene_event(event, lock)

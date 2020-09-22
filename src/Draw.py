@@ -108,10 +108,11 @@ def draw_square(display, square):
 
         if isinstance(square, Numemy):
             text = str(square.value)
-            size = square.surface.height - 15
+            size = get_fitted_size(text, square.surface)
             font = create_font_object(text, size)
             w, h = font.get_size()
-            display.blit(font, (square.surface.x + w / 2, square.surface.y))
+            lengthDiff = int(square.surface.width - w)
+            display.blit(font, (square.surface.x + lengthDiff / 2, square.surface.y))
 
         elif isinstance(square, Exit):
             squareSideLen = square.surface.width

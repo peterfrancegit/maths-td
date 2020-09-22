@@ -111,8 +111,9 @@ def draw_square(display, square):
             size = get_fitted_size(text, square.surface)
             font = create_font_object(text, size)
             w, h = font.get_size()
-            lengthDiff = int(square.surface.width - w)
-            display.blit(font, (square.surface.x + lengthDiff / 2, square.surface.y))
+            widthLengthDiff = int(square.surface.width - w)
+            heightLengthDiff = int(square.surface.height - h)
+            display.blit(font, (square.surface.x + widthLengthDiff / 2, square.surface.y + heightLengthDiff / 2))
 
         elif isinstance(square, Exit):
             squareSideLen = square.surface.width

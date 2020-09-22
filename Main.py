@@ -79,7 +79,7 @@ def _game_loop():
                 current_window.process_in_game_event(event, grid)
 
         clock.tick(30)
-        if current_window.state == GameState.IN_GAME and counter % 30 == 0:
+        if current_window.state == GameState.IN_GAME and counter % 30 == 0 and counter != 0:
             current_window.move_numemies(grid)
         counter += 1
 

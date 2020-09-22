@@ -120,5 +120,11 @@ class Window:
     def move_numemies(self, grid):
         """Moves the numemies by one"""
         for numemy in grid.numemy_list:
+            oldLocation = numemy.location
             numemy.location = numemy.next_square(grid)
-            print(numemy.location)
+            w, h = self.gameDisplay.get_size()
+            squarelen = int(h / grid.height)
+            gridStartingX = int(w / 2 - h / 2)
+            grid.update_square(oldLocation, numemy.location, squarelen, gridStartingX)
+
+            Draw.draw_initial_in_game_window(self, grid.square_grid)

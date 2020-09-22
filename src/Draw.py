@@ -130,7 +130,7 @@ def draw_square(display, square):
             pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
 
 
-def draw_initial_in_game_window(window, grid):
+def draw_initial_in_game_window(window, squareGrid):
     """Draws the initial in game window"""
 
     screenWidth, screenHeight = window.gameDisplay.get_size()
@@ -139,8 +139,8 @@ def draw_initial_in_game_window(window, grid):
     window.gameDisplay.fill((0, 0, 0))
 
     # Draws each of the squares in square_grid
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            draw_square(window.gameDisplay, grid[i][j])
+    for i in range(len(squareGrid)):
+        for j in range(len(squareGrid[0])):
+            draw_square(window.gameDisplay, squareGrid[i][j])
 
     

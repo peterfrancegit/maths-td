@@ -44,9 +44,9 @@ class Grid:
     def initialise_square_grid(self, display):
         """Initialises the square_grid attribute"""
         screenWidth, screenHeight = display.get_size()
-        squarelen = screenHeight / self.height  # Length of each square on the grid
+        squarelen = int(screenHeight / self.height)  # Length of each square on the grid
 
-        gridStartX = screenWidth / 2 - screenHeight / 2
+        gridStartX = int(screenWidth / 2 - screenHeight / 2)
         gridStartY = 0
 
         for i in range(self.height):

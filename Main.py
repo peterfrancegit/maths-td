@@ -42,7 +42,7 @@ def _game_loop():
     gridSize = 10
     spawner_square = (5, 5)
     exit_square = (9, 9)
-    grid = Grid(gridSize, gridSize, [], spawner_square, exit_square)
+    grid = Grid(gridSize, gridSize, [(5, 6), (6, 6), (6, 5)], spawner_square, exit_square)
     clock = pygame.time.Clock()
 
     # Creates a thread lock that will run the opening animation

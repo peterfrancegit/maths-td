@@ -28,7 +28,7 @@ class Numemy(Square):
         sqr = grid.square_grid[self.location[0]][self.location[1]]
         surface = pygame.Rect(sqr.surface.x, sqr.surface.y, sqr.surface.width, sqr.surface.height)
         greySqr = Square(surface)
-        grid.square_grid[self.location[0]][self.location[1]] = greySqr 
+        grid.square_grid[self.location[0]][self.location[1]] = greySqr
         del self
 
     def take_damage(self, operation, damage):

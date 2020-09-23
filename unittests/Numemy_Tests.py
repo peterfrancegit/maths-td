@@ -26,6 +26,13 @@ class TestNextSquare(unittest.TestCase):
         self.grid.route_dict = {(1, 2): [(1, 2), (1, 3)]}
         self.assertRaises(KeyError, self.numemy.next_square, self.grid)
 
+    def test_escape_simple(self):
+        self.grid.lives = 20
+        self.numemy.weight = 5
+        self.grid.initialise_square_grid()
+        self.numemy.escape(self.grid)
+        self.assertEqual(self.grid.lives, 15)
+
     def test_take_damage_add(self):
         self.numemy.value = 10
         self.numemy.take_damage('+', 10)

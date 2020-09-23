@@ -133,5 +133,4 @@ class Window:
                 squaresToDraw.append(numemy.location)
             squaresToDraw.append(oldLocation)
         Draw.draw_initial_in_game_window(self, grid.square_grid)
-
         Draw.draw_squares(self, grid.square_grid, squaresToDraw)

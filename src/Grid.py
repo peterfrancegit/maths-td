@@ -22,6 +22,7 @@ class Grid:
         self.dijk_grid = Graph()
         self.numemy_list = []
         self.square_grid = []
+        self.lives = 20
 
     def initialise_dijk_grid(self):
         """Initialises the dijk_grid attribute for routing"""
@@ -89,10 +90,6 @@ class Grid:
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
             self.square_grid[block[0]][block[1]] = Block(rect)
 
-    def block_square(self, square):
-        """Removes a square from dijk_grid when a Tower is built on it"""
-        self.dijk_grid.remove_node(square)
-
     def build_tower(self, range, speed, value, operation, cost, location):
         """Builds a new Tower and blocks off its dijk_grid square"""
         sqr = self.square_grid[location[0]][location[1]]
@@ -100,7 +97,7 @@ class Grid:
         rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
         tower = Tower(rect, range, speed, value, operation, cost, location)
         self.square_grid[tower.location[0]][tower.location[1]] = tower
-        self.block_square(tower.location)
+        self.dijk_grid.remove_node(tower.location)
 
     def spawn_numemy(self, start_val, coins, speed, weight):
         """Spawns a new Numemy object"""
@@ -116,8 +113,10 @@ class Grid:
     def update_routes(self, new_square):
         """Updates all routes which pass through a new_square being built upon"""
         for square in self.route_dict:
-            if new_square in self.route_dict[square]:
-                self.route_dict[square] = find_route(square)
+            if square not in self.dijk_grid:
+                self.route_dict.pop(square)
+            elif new_square in self.route_dict[square]:
+                self.route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
 
     def move_square(self, oldSquarePos, newSquarePos, squarelen, widthStartingX):
         """Moves the square specified by oldSquarePos to newSquarePos"""
@@ -130,6 +129,6 @@ class Grid:
         greySqr = Square(surface)
         self.square_grid[oldSquarePos[0]][oldSquarePos[1]] = greySqr
 
-        
-        sqr.surface = pygame.Rect(newSquarePos[1] * squarelen + widthStartingX, newSquarePos[0] * squarelen, sqr.surface.width, sqr.surface.height)
+        sqr.surface = pygame.Rect(newSquarePos[1] * squarelen + widthStartingX, newSquarePos[0] * squarelen,
+                                  sqr.surface.width, sqr.surface.height)
         self.square_grid[newSquarePos[0]][newSquarePos[1]] = sqr

@@ -1,4 +1,5 @@
 from Square import Square
+import pygame
 
 
 class Numemy(Square):
@@ -21,14 +22,14 @@ class Numemy(Square):
         else:
             return grid.route_dict[self.location][1]
 
-    def move(self, grid):
-        """Moves Numemy to next square in its route"""
-        self.location = self.next_square(grid)
-
     # For when a Numemy reaches the exit_square
     def escape(self, grid):
         grid.lives -= self.weight
-        grid.square_grid[self.location[0]][self.location[1]] = Square(EXIT_SQUARE_SURFACE)
+        sqr = grid.square_grid[self.location[0]][self.location[1]]
+        surface = pygame.Rect(sqr.surface.x, sqr.surface.y, sqr.surface.width, sqr.surface.height)
+        greySqr = Square(surface)
+        grid.square_grid[self.location[0]][self.location[1]] = greySqr
+        del self
 
     def take_damage(self, operation, damage):
         """When a Numemy is hit"""

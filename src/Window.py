@@ -121,10 +121,13 @@ class Window:
         """Moves the numemies by one"""
         for numemy in grid.numemy_list:
             oldLocation = numemy.location
-            numemy.location = numemy.next_square(grid)
-            w, h = self.gameDisplay.get_size()
-            squarelen = int(h / grid.height)
-            gridStartingX = int(w / 2 - h / 2)
-            grid.move_square(oldLocation, numemy.location, squarelen, gridStartingX)
+            if numemy.next_square(grid) == grid.exit_square:
+                numemy.escape(grid)
+            else:
+                numemy.location = numemy.next_square(grid)
+                w, h = self.gameDisplay.get_size()
+                squarelen = int(h / grid.height)
+                gridStartingX = int(w / 2 - h / 2)
+                grid.move_square(oldLocation, numemy.location, squarelen, gridStartingX)
 
             Draw.draw_initial_in_game_window(self, grid.square_grid)

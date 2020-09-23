@@ -2,6 +2,7 @@ import Draw as Draw
 import pygame
 from Button import Button
 from GameState import GameState
+from Tower import Tower
 
 
 def process_main_menu_hover(window, mouseClickPos):
@@ -69,4 +70,5 @@ def process_in_game_click(window, mouseClickPos, grid):
     for i, row in enumerate(grid.square_grid):
         for j, sqr in enumerate(row):
             if sqr.surface.collidepoint(mouseClickPos):
-                print(j, i)
+                grid.build_tower(3, 1, 1, "+", 5, (i, j))
+                Draw.draw_initial_in_game_window(window, grid.square_grid)

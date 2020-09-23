@@ -107,7 +107,7 @@ class Grid:
                 self.route_dict[square] = find_route(square)
 
 
-    def update_square(self, oldSquarePos, newSquarePos, squarelen, widthStartingX):
+    def move_square(self, oldSquarePos, newSquarePos, squarelen, widthStartingX):
         """Moves the square specified by oldSquarePos to newSquarePos"""
 
         # Sets the specified square to its new position

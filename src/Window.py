@@ -125,6 +125,6 @@ class Window:
             w, h = self.gameDisplay.get_size()
             squarelen = int(h / grid.height)
             gridStartingX = int(w / 2 - h / 2)
-            grid.update_square(oldLocation, numemy.location, squarelen, gridStartingX)
+            grid.move_square(oldLocation, numemy.location, squarelen, gridStartingX)
 
             Draw.draw_initial_in_game_window(self, grid.square_grid)

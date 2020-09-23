@@ -43,6 +43,8 @@ def process_main_menu_click(window, mouseClickPos, grid):
 
                 # Initialises the square_grid
                 grid.initialise_square_grid(window.gameDisplay)
+                # Initialises any blocks
+                grid.initialise_blocks()
                 # Adds the Exit
                 grid.initialise_exit()
                 # Adds the Spawner

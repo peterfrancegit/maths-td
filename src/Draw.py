@@ -54,6 +54,7 @@ def draw_image(display, imagename, x, y):
     numbers = pygame.image.load("./Data/Images/" + imagename)
     display.blit(numbers, (x, y))
 
+
 def draw_menu(window, buttons):
     """Draws all of the buttons specified in buttons"""
     for button in buttons:
@@ -99,12 +100,19 @@ def draw_square(display, square):
         display.blit(font, (textX, textY))
 
     elif isinstance(square, Block):
-        pygame.draw.rect(display, (200, 13, 52), square.surface)
+        pygame.draw.rect(display, (139, 69, 19), square.surface)
 
     elif isinstance(square, Square):
         # Draws background
         pygame.draw.rect(display, (128, 128, 128), square.surface)
         pygame.draw.rect(display, (0, 0, 0), square.surface, 1)
+
+        if isinstance(square, Spawner):
+            squareSideLen = square.surface.width
+            circleX = int(square.surface.x + squareSideLen / 2)
+            circleY = int(square.surface.y + squareSideLen / 2)
+            radius = int(square.surface.width / 2)
+            pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
 
         if isinstance(square, Numemy):
             text = str(square.value)
@@ -121,13 +129,6 @@ def draw_square(display, square):
             circleY = int(square.surface.y + squareSideLen / 2)
             radius = int(square.surface.width / 2)
             pygame.draw.circle(display, (255, 0, 0), (circleX, circleY), radius, 0)
-
-        elif isinstance(square, Spawner):
-            squareSideLen = square.surface.width
-            circleX = int(square.surface.x + squareSideLen / 2)
-            circleY = int(square.surface.y + squareSideLen / 2)
-            radius = int(square.surface.width / 2)
-            pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
 
 
 def draw_initial_in_game_window(window, squareGrid):

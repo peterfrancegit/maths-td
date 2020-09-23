@@ -1,5 +1,5 @@
 from dijkstar import Graph, find_path
-from Square import Square, Exit, Spawner
+from Square import Square, Block, Exit, Spawner
 from Numemy import Numemy
 from Tower import Tower
 import pygame
@@ -67,14 +67,27 @@ class Grid:
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
             self.square_grid[self.exit_square[0]][self.exit_square[1]] = Exit(rect)
         except(IndexError):
-            print("Instance variable square_grid has not been intialised properly.  Please call the method initialise_square_grid to initialise it.")
+            print("Instance variable square_grid has not been intialised properly."
+                  "Please call the method initialise_square_grid to initialise it.")
 
     def initialise_spawner(self):
         """Adds the Spawner to the square_grid"""
-        sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]]
-        w, h = sqr.surface.width, sqr.surface.height
-        rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        self.square_grid[self.spawner_square[0]][self.spawner_square[1]] = Spawner(rect)
+        try:
+            sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]]
+            w, h = sqr.surface.width, sqr.surface.height
+            rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+            self.square_grid[self.spawner_square[0]][self.spawner_square[1]] = Spawner(rect)
+        except(IndexError):
+            print("Instance variable square_grid has not been intialised properly."
+                  "Please call the method initialise_square_grid to initialise it.")
+
+    def initialise_blocks(self):
+        """Adds the Blocks the square_grid"""
+        for block in self.blocks:
+            sqr = self.square_grid[block[0]][block[1]]
+            w, h = sqr.surface.width, sqr.surface.height
+            rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+            self.square_grid[block[0]][block[1]] = Block(rect)
 
     def block_square(self, square):
         """Removes a square from dijk_grid when a Tower is built on it"""
@@ -105,7 +118,6 @@ class Grid:
         for square in self.route_dict:
             if new_square in self.route_dict[square]:
                 self.route_dict[square] = find_route(square)
-
 
     def move_square(self, oldSquarePos, newSquarePos, squarelen, widthStartingX):
         """Moves the square specified by oldSquarePos to newSquarePos"""

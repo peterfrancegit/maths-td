@@ -118,7 +118,8 @@ class Window:
             ProcessInput.process_in_game_click(self, mouseClickPos, grid)
 
     def move_numemies(self, grid):
-        """Moves the numemies by one"""
+        """Moves the Numemies by one"""
+        squaresToDraw = []
         for numemy in grid.numemy_list:
             oldLocation = numemy.location
             if numemy.next_square(grid) == grid.exit_square:
@@ -129,5 +130,8 @@ class Window:
                 squarelen = int(h / grid.height)
                 gridStartingX = int(w / 2 - h / 2)
                 grid.move_square(oldLocation, numemy.location, squarelen, gridStartingX)
+                squaresToDraw.append(numemy.location)
+            squaresToDraw.append(oldLocation)
+        Draw.draw_initial_in_game_window(self, grid.square_grid)
 
-            Draw.draw_initial_in_game_window(self, grid.square_grid)
+        Draw.draw_squares(self, grid.square_grid, squaresToDraw)

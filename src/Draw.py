@@ -144,4 +144,10 @@ def draw_initial_in_game_window(window, squareGrid):
         for j in range(len(squareGrid[0])):
             draw_square(window.gameDisplay, squareGrid[i][j])
 
+
+def draw_squares(window, squareGrid, squaresToDraw):
+    """Takes a list of square positions in squareGrid which will be redrawn later"""
+    for pos in squaresToDraw:
+        draw_square(window.gameDisplay, squareGrid[pos[0]][pos[0]])
+
     

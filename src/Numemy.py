@@ -5,8 +5,8 @@ import pygame
 class Numemy(Square):
     # 'value' is the current health of the Numemy, initiated at
     # 'start_val'; 'coins' is added to player wealth when Numemy
-    # is killed; 'speed' is movement speed; 'square' is the current
-    # location, initiated at 'spawn_square'.
+    # is killed; 'speed' is movement speed; 'weight' is subtracted
+    # from player lives if the Numemy escapes.
     def __init__(self, surface, start_val, coins, speed, weight):
         Square.__init__(self, surface)
         self.value = start_val
@@ -14,6 +14,7 @@ class Numemy(Square):
         self.speed = speed
         self.location = None
         self.weight = weight
+        self.atSpawner = True
 
     def next_square(self, grid):
         """Returns the next square on the route from a starting square"""

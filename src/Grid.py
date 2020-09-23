@@ -68,7 +68,7 @@ class Grid:
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
             self.square_grid[self.exit_square[0]][self.exit_square[1]] = Exit(rect)
         except(IndexError):
-            print("Instance variable square_grid has not been intialised properly."
+            print("Instance variable square_grid has not been initialised properly."
                   "Please call the method initialise_square_grid to initialise it.")
 
     def initialise_spawner(self):
@@ -79,7 +79,7 @@ class Grid:
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
             self.square_grid[self.spawner_square[0]][self.spawner_square[1]] = Spawner(rect)
         except(IndexError):
-            print("Instance variable square_grid has not been intialised properly."
+            print("Instance variable square_grid has not been initialised properly."
                   "Please call the method initialise_square_grid to initialise it.")
 
     def initialise_blocks(self):

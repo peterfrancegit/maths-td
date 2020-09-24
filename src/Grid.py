@@ -59,62 +59,62 @@ class Grid:
                 sqrY = gridStartY + squarelen * i
                 greySqr = pygame.Rect(sqrX, sqrY, squarelen, squarelen)
                 sqr = Square(greySqr)
-                row.append(sqr)
+                row.append([sqr])
             self.square_grid.append(row)
 
 
     def initialise_exit(self):
-        """Adds the Exit to the square_grid"""
+        """Adds the Exit to its square_grid square"""
         try:
-            sqr = self.square_grid[self.exit_square[0]][self.exit_square[1]]
+            sqr = self.square_grid[self.exit_square[0]][self.exit_square[1]][0]
             w, h = sqr.surface.width, sqr.surface.height
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-            self.square_grid[self.exit_square[0]][self.exit_square[1]] = Exit(rect)
+            self.square_grid[self.exit_square[0]][self.exit_square[1]].append(Exit(rect))
         except(IndexError):
             print("Instance variable square_grid has not been initialised properly."
                   "Please call the method initialise_square_grid to initialise it.")
 
 
     def initialise_spawner(self):
-        """Adds the Spawner to the square_grid"""
+        """Adds the Spawner to its square_grid square"""
         try:
-            sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]]
+            sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]][0]
             w, h = sqr.surface.width, sqr.surface.height
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-            self.square_grid[self.spawner_square[0]][self.spawner_square[1]] = Spawner(rect)
+            self.square_grid[self.spawner_square[0]][self.spawner_square[1]].append(Spawner(rect))
         except(IndexError):
             print("Instance variable square_grid has not been initialised properly."
                   "Please call the method initialise_square_grid to initialise it.")
 
 
     def initialise_blocks(self):
-        """Adds the Blocks the square_grid"""
+        """Adds the Blocks to its square_grid square"""
         for block in self.blocks:
-            sqr = self.square_grid[block[0]][block[1]]
+            sqr = self.square_grid[block[0]][block[1]][0]
             w, h = sqr.surface.width, sqr.surface.height
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-            self.square_grid[block[0]][block[1]] = Block(rect)
+            self.square_grid[block[0]][block[1]].append(Block(rect))
 
 
     def build_tower(self, range, speed, value, operation, cost, location):
-        """Builds a new Tower and blocks off its dijk_grid square"""
-        sqr = self.square_grid[location[0]][location[1]]
+        """Adds a new Tower to a square_grid square and blocks off its dijk_grid square"""
+        sqr = self.square_grid[location[0]][location[1]][0]
         w, h = sqr.surface.width, sqr.surface.height
         rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
         tower = Tower(rect, range, speed, value, operation, cost, location)
-        self.square_grid[tower.location[0]][tower.location[1]] = tower
+        self.square_grid[tower.location[0]][tower.location[1]].append(tower)
         self.dijk_grid.remove_node(tower.location)
 
 
     def spawn_numemy(self, start_val, coins, speed, weight):
-        """Spawns a new Numemy object"""
-        sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]]
+        """Adds a new Numemy object to the square_grid spawner_square"""
+        sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]][0]
         w, h = sqr.surface.width, sqr.surface.height
         rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
         numemy = Numemy(rect, start_val, coins, speed, weight)
         numemy.location = self.spawner_square
-        self.square_grid[numemy.location[0]][numemy.location[1]] = numemy
-        self.numemy_list.append(numemy)
+        self.square_grid[numemy.location[0]][numemy.location[1]].append(numemy)
+        self.numemy_list.append(numemy.location)
 
 
     # Should be called after build_tower
@@ -127,25 +127,25 @@ class Grid:
                 self.route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
 
 
-    def move_square(self, oldSquarePos, newSquarePos, display):
-        """Moves the square specified by oldSquarePos to newSquarePos"""
-
-        # Gets the length of each square in the grid and the x coordinate of the left most square in the grid
-        w, h = display.get_size()
-        squarelen = int(h / self.height)
-        gridStartingX = int(w / 2 - h / 2)
-
-        # Sets the specified square to its new position
-        sqr = self.square_grid[oldSquarePos[0]][oldSquarePos[1]]
-
-        if (isinstance(sqr, Numemy)):
-            print("Numemy")
-
-        # Sets the old position of the square to a square with a rectangle background
-        surface = pygame.Rect(sqr.surface.x, sqr.surface.y, sqr.surface.width, sqr.surface.height)
-        greySqr = Square(surface)
-        self.square_grid[oldSquarePos[0]][oldSquarePos[1]] = greySqr
-
-        sqr.surface = pygame.Rect(newSquarePos[1] * squarelen + gridStartingX, newSquarePos[0] * squarelen,
-                                  sqr.surface.width, sqr.surface.height)
-        self.square_grid[newSquarePos[0]][newSquarePos[1]] = sqr
+    # def move_square(self, oldSquarePos, newSquarePos, display):
+    #     """Moves the square specified by oldSquarePos to newSquarePos"""
+    #
+    #     # Gets the length of each square in the grid and the x coordinate of the left most square in the grid
+    #     w, h = display.get_size()
+    #     squarelen = int(h / self.height)
+    #     gridStartingX = int(w / 2 - h / 2)
+    #
+    #     # Sets the specified square to its new position
+    #     sqr = self.square_grid[oldSquarePos[0]][oldSquarePos[1]]
+    #
+    #     if (isinstance(sqr, Numemy)):
+    #         print("Numemy")
+    #
+    #     # Sets the old position of the square to a square with a rectangle background
+    #     surface = pygame.Rect(sqr.surface.x, sqr.surface.y, sqr.surface.width, sqr.surface.height)
+    #     greySqr = Square(surface)
+    #     self.square_grid[oldSquarePos[0]][oldSquarePos[1]] = greySqr
+    #
+    #     sqr.surface = pygame.Rect(newSquarePos[1] * squarelen + gridStartingX, newSquarePos[0] * squarelen,
+    #                               sqr.surface.width, sqr.surface.height)
+    #     self.square_grid[newSquarePos[0]][newSquarePos[1]] = sqr

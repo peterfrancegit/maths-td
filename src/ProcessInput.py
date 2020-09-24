@@ -48,7 +48,7 @@ def process_main_menu_click(window, mouseClickPos, grid):
                 # Adds the Exit
                 grid.initialise_exit()
                 # Adds the Spawner
-                #grid.initialise_spawner()
+                grid.initialise_spawner()
                 # Initialises the dijk_grid
                 grid.initialise_dijk_grid()
                 # Initialises the route_dict

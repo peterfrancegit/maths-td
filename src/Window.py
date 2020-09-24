@@ -4,6 +4,7 @@ import pygame
 import ProcessInput as ProcessInput
 from GameState import GameState
 from Button import Button
+from Numemy import Numemy
 
 
 LEFT = 1
@@ -120,22 +121,20 @@ class Window:
     def move_numemies(self, grid):
         """Moves the Numemies by one"""
         squaresToDraw = []
-        for numemy in grid.numemy_list:
-            numemy.atSpawner = False
-            oldLocation = numemy.location
-
-            # To make the Numemy disappear at the Exit
-            if numemy.next_square(grid) == grid.exit_square:
-                numemy.escape(grid)
-            else:
-                numemy.location = numemy.next_square(grid)
-                grid.move_square(oldLocation, numemy.location, self.gameDisplay)
-
-                # To keep the Spawner after a Numemy leaves
-                if oldLocation == grid.spawner_square:
-                    grid.initialise_spawner()
-                squaresToDraw.append(numemy.location)
-            squaresToDraw.append(oldLocation)
+        new_numemy_list = []
+        for num_loc in grid.numemy_list:
+            squaresToDraw.append(num_loc)
+            for object in grid.square_grid[num_loc[0]][num_loc[1]]:
+                if isinstance(object, Numemy):
+                    grid.square_grid[num_loc[0]][num_loc[1]].remove(object)
+                    if object.next_square(grid) == grid.exit_square:
+                        object.escape(grid)
+                    else:
+                        object.location = object.next_square(grid)
+                        new_numemy_list.append(object.location)
+                        squaresToDraw.append(object.location)
+                        grid.square_grid[object.location[0]][object.location[1]].append(object)
+        grid.numemy_list = new_numemy_list
 
         #Draw.draw_initial_in_game_window(self, grid.square_grid)
         Draw.draw_squares(self, grid.square_grid, squaresToDraw)

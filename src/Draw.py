@@ -87,52 +87,45 @@ def get_fitted_size(text, surface):
     
 
 def draw_square(display, square):
-    """Draws the square object unto the display object"""
-    
-    if isinstance(square, Tower):
-        pygame.draw.rect(display, (32, 15, 100), square.surface)
-        text = square.operation + str(square.value)
-        size = get_fitted_size(text, square.surface)
-        font = create_font_object(text, size)
-        w, h = font.get_size()
-        textX = square.surface.x + ((square.surface.width - w) / 2)
-        textY = square.surface.y + ((square.surface.height - h) / 2)
-        display.blit(font, (textX, textY))
+    """Draws each object in a square unto the display object"""
+    for object in square:
+        if isinstance(object, Tower):
+            pygame.draw.rect(display, (32, 15, 100), square[0].surface)
+            text = square[0].operation + str(square[0].value)
+            size = get_fitted_size(text, square[0].surface)
+            font = create_font_object(text, size)
+            w, h = font.get_size()
+            textX = square[0].surface.x + ((square[0].surface.width - w) / 2)
+            textY = square[0].surface.y + ((square[0].surface.height - h) / 2)
+            display.blit(font, (textX, textY))
 
-    elif isinstance(square, Block):
-        pygame.draw.rect(display, (139, 69, 19), square.surface)
+        elif isinstance(object, Block):
+            pygame.draw.rect(display, (139, 69, 19), square[0].surface)
 
-    elif isinstance(square, Square):
-        # Draws background
-        pygame.draw.rect(display, (128, 128, 128), square.surface)
-        pygame.draw.rect(display, (0, 0, 0), square.surface, 1)
-        if isinstance(square, Numemy):
-            if square.atSpawner:
-                squareSideLen = square.surface.width
-                circleX = int(square.surface.x + squareSideLen / 2)
-                circleY = int(square.surface.y + squareSideLen / 2)
-                radius = int(square.surface.width / 2)
-                pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
-            else:
-                text = str(square.value)
-                size = get_fitted_size(text, square.surface)
+        elif isinstance(object, Square):
+            # Draws background
+            pygame.draw.rect(display, (128, 128, 128), square[0].surface)
+            pygame.draw.rect(display, (0, 0, 0), square[0].surface, 1)
+            if isinstance(object, Numemy):
+                text = str(object.value)
+                size = get_fitted_size(text, square[0].surface)
                 font = create_font_object(text, size)
                 w, h = font.get_size()
-                widthLengthDiff = int(square.surface.width - w)
-                heightLengthDiff = int(square.surface.height - h)
-                display.blit(font, (square.surface.x + widthLengthDiff / 2, square.surface.y + heightLengthDiff / 2))
-        elif isinstance(square, Spawner):
-            squareSideLen = square.surface.width
-            circleX = int(square.surface.x + squareSideLen / 2)
-            circleY = int(square.surface.y + squareSideLen / 2)
-            radius = int(square.surface.width / 2)
-            pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
-        elif isinstance(square, Exit):
-            squareSideLen = square.surface.width
-            circleX = int(square.surface.x + squareSideLen / 2)
-            circleY = int(square.surface.y + squareSideLen / 2)
-            radius = int(square.surface.width / 2)
-            pygame.draw.circle(display, (255, 0, 0), (circleX, circleY), radius, 0)
+                widthLengthDiff = int(square[0].surface.width - w)
+                heightLengthDiff = int(square[0].surface.height - h)
+                display.blit(font, (square[0].surface.x + widthLengthDiff / 2, square[0].surface.y + heightLengthDiff / 2))
+            elif isinstance(object, Spawner):
+                squareSideLen = square[0].surface.width
+                circleX = int(square[0].surface.x + squareSideLen / 2)
+                circleY = int(square[0].surface.y + squareSideLen / 2)
+                radius = int(square[0].surface.width / 2)
+                pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
+            elif isinstance(object, Exit):
+                squareSideLen = square[0].surface.width
+                circleX = int(square[0].surface.x + squareSideLen / 2)
+                circleY = int(square[0].surface.y + squareSideLen / 2)
+                radius = int(square[0].surface.width / 2)
+                pygame.draw.circle(display, (255, 0, 0), (circleX, circleY), radius, 0)
 
 
 def draw_initial_in_game_window(window, squareGrid):

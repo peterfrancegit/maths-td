@@ -14,7 +14,6 @@ class Numemy(Square):
         self.speed = speed
         self.location = None
         self.weight = weight
-        self.atSpawner = True
 
     def next_square(self, grid):
         """Returns the next square on the route from a starting square"""
@@ -26,10 +25,6 @@ class Numemy(Square):
     # For when a Numemy reaches the exit_square
     def escape(self, grid):
         grid.lives -= self.weight
-        sqr = grid.square_grid[self.location[0]][self.location[1]]
-        surface = pygame.Rect(sqr.surface.x, sqr.surface.y, sqr.surface.width, sqr.surface.height)
-        greySqr = Square(surface)
-        grid.square_grid[self.location[0]][self.location[1]] = greySqr
         del self
 
     def take_damage(self, operation, damage):

@@ -113,13 +113,14 @@ def draw_square(display, square):
                 circleY = int(square.surface.y + squareSideLen / 2)
                 radius = int(square.surface.width / 2)
                 pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
-            text = str(square.value)
-            size = get_fitted_size(text, square.surface)
-            font = create_font_object(text, size)
-            w, h = font.get_size()
-            widthLengthDiff = int(square.surface.width - w)
-            heightLengthDiff = int(square.surface.height - h)
-            display.blit(font, (square.surface.x + widthLengthDiff / 2, square.surface.y + heightLengthDiff / 2))
+            else:
+                text = str(square.value)
+                size = get_fitted_size(text, square.surface)
+                font = create_font_object(text, size)
+                w, h = font.get_size()
+                widthLengthDiff = int(square.surface.width - w)
+                heightLengthDiff = int(square.surface.height - h)
+                display.blit(font, (square.surface.x + widthLengthDiff / 2, square.surface.y + heightLengthDiff / 2))
         elif isinstance(square, Spawner):
             squareSideLen = square.surface.width
             circleX = int(square.surface.x + squareSideLen / 2)
@@ -151,6 +152,6 @@ def draw_initial_in_game_window(window, squareGrid):
 def draw_squares(window, squareGrid, squaresToDraw):
     """Takes a list of square positions in squareGrid which will be redrawn later"""
     for pos in squaresToDraw:
-        draw_square(window.gameDisplay, squareGrid[pos[0]][pos[0]])
+        draw_square(window.gameDisplay, squareGrid[pos[0]][pos[1]])
 
     

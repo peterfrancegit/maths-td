@@ -37,10 +37,12 @@ class Grid:
         for node in self.blocks:
             self.dijk_grid.remove_node(node)
 
+
     def initialise_route_dict(self):
         """Initialises the route_dict attribute"""
         for square in self.dijk_grid:
             self.route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
+
 
     def initialise_square_grid(self, display):
         """Initialises the square_grid attribute"""
@@ -60,6 +62,7 @@ class Grid:
                 row.append(sqr)
             self.square_grid.append(row)
 
+
     def initialise_exit(self):
         """Adds the Exit to the square_grid"""
         try:
@@ -70,6 +73,7 @@ class Grid:
         except(IndexError):
             print("Instance variable square_grid has not been initialised properly."
                   "Please call the method initialise_square_grid to initialise it.")
+
 
     def initialise_spawner(self):
         """Adds the Spawner to the square_grid"""
@@ -82,6 +86,7 @@ class Grid:
             print("Instance variable square_grid has not been initialised properly."
                   "Please call the method initialise_square_grid to initialise it.")
 
+
     def initialise_blocks(self):
         """Adds the Blocks the square_grid"""
         for block in self.blocks:
@@ -89,6 +94,7 @@ class Grid:
             w, h = sqr.surface.width, sqr.surface.height
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
             self.square_grid[block[0]][block[1]] = Block(rect)
+
 
     def build_tower(self, range, speed, value, operation, cost, location):
         """Builds a new Tower and blocks off its dijk_grid square"""
@@ -98,6 +104,7 @@ class Grid:
         tower = Tower(rect, range, speed, value, operation, cost, location)
         self.square_grid[tower.location[0]][tower.location[1]] = tower
         self.dijk_grid.remove_node(tower.location)
+
 
     def spawn_numemy(self, start_val, coins, speed, weight):
         """Spawns a new Numemy object"""
@@ -109,6 +116,7 @@ class Grid:
         self.square_grid[numemy.location[0]][numemy.location[1]] = numemy
         self.numemy_list.append(numemy)
 
+
     # Should be called after build_tower
     def update_routes(self, new_square):
         """Updates all routes which pass through a new_square being built upon"""
@@ -117,6 +125,7 @@ class Grid:
                 self.route_dict.pop(square)
             elif new_square in self.route_dict[square]:
                 self.route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
+
 
     def move_square(self, oldSquarePos, newSquarePos, display):
         """Moves the square specified by oldSquarePos to newSquarePos"""
@@ -128,6 +137,9 @@ class Grid:
 
         # Sets the specified square to its new position
         sqr = self.square_grid[oldSquarePos[0]][oldSquarePos[1]]
+
+        if (isinstance(sqr, Numemy)):
+            print("Numemy")
 
         # Sets the old position of the square to a square with a rectangle background
         surface = pygame.Rect(sqr.surface.x, sqr.surface.y, sqr.surface.width, sqr.surface.height)

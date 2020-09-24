@@ -123,16 +123,19 @@ class Window:
         for numemy in grid.numemy_list:
             numemy.atSpawner = False
             oldLocation = numemy.location
+
             # To make the Numemy disappear at the Exit
             if numemy.next_square(grid) == grid.exit_square:
                 numemy.escape(grid)
             else:
                 numemy.location = numemy.next_square(grid)
                 grid.move_square(oldLocation, numemy.location, self.gameDisplay)
+
                 # To keep the Spawner after a Numemy leaves
                 if oldLocation == grid.spawner_square:
                     grid.initialise_spawner()
                 squaresToDraw.append(numemy.location)
             squaresToDraw.append(oldLocation)
-        Draw.draw_initial_in_game_window(self, grid.square_grid)
+
+        #Draw.draw_initial_in_game_window(self, grid.square_grid)
         Draw.draw_squares(self, grid.square_grid, squaresToDraw)

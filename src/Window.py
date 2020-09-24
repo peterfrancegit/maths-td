@@ -128,10 +128,7 @@ class Window:
                 numemy.escape(grid)
             else:
                 numemy.location = numemy.next_square(grid)
-                w, h = self.gameDisplay.get_size()
-                squarelen = int(h / grid.height)
-                gridStartingX = int(w / 2 - h / 2)
-                grid.move_square(oldLocation, numemy.location, squarelen, gridStartingX)
+                grid.move_square(oldLocation, numemy.location, self.gameDisplay)
                 # To keep the Spawner after a Numemy leaves
                 if oldLocation == grid.spawner_square:
                     grid.initialise_spawner()

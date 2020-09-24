@@ -118,8 +118,13 @@ class Grid:
             elif new_square in self.route_dict[square]:
                 self.route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
 
-    def move_square(self, oldSquarePos, newSquarePos, squarelen, widthStartingX):
+    def move_square(self, oldSquarePos, newSquarePos, display):
         """Moves the square specified by oldSquarePos to newSquarePos"""
+
+        # Gets the length of each square in the grid and the x coordinate of the left most square in the grid
+        w, h = display.get_size()
+        squarelen = int(h / self.height)
+        gridStartingX = int(w / 2 - h / 2)
 
         # Sets the specified square to its new position
         sqr = self.square_grid[oldSquarePos[0]][oldSquarePos[1]]
@@ -129,6 +134,6 @@ class Grid:
         greySqr = Square(surface)
         self.square_grid[oldSquarePos[0]][oldSquarePos[1]] = greySqr
 
-        sqr.surface = pygame.Rect(newSquarePos[1] * squarelen + widthStartingX, newSquarePos[0] * squarelen,
+        sqr.surface = pygame.Rect(newSquarePos[1] * squarelen + gridStartingX, newSquarePos[0] * squarelen,
                                   sqr.surface.width, sqr.surface.height)
         self.square_grid[newSquarePos[0]][newSquarePos[1]] = sqr

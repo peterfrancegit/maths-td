@@ -91,7 +91,7 @@ def draw_square(display, square):
     for object in square:
         if isinstance(object, Tower):
             pygame.draw.rect(display, (32, 15, 100), square[0].surface)
-            text = square[0].operation + str(square[0].value)
+            text = object.operation + str(object.value)
             size = get_fitted_size(text, square[0].surface)
             font = create_font_object(text, size)
             w, h = font.get_size()

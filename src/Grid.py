@@ -120,11 +120,14 @@ class Grid:
     # Should be called after build_tower
     def update_routes(self, new_square):
         """Updates all routes which pass through a new_square being built upon"""
-        for square in self.route_dict:
-            if square not in self.dijk_grid:
-                self.route_dict.pop(square)
-            elif new_square in self.route_dict[square]:
-                self.route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
+        new_route_dict = {}
+        for square, route in self.route_dict.items():
+            if square in self.dijk_grid:
+                if new_square in self.route_dict[square]:
+                    new_route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
+                else:
+                    new_route_dict[square] = route
+        self.route_dict = new_route_dict
 
 
     # def move_square(self, oldSquarePos, newSquarePos, display):

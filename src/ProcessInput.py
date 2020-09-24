@@ -73,4 +73,5 @@ def process_in_game_click(window, mouseClickPos, grid):
         for j, sqr in enumerate(row):
             if sqr[0].surface.collidepoint(mouseClickPos):
                 grid.build_tower(3, 1, 1, "+", 5, (i, j))
+                grid.update_routes((i, j))
                 Draw.draw_initial_in_game_window(window, grid.square_grid)

@@ -135,6 +135,4 @@ class Window:
                         squaresToDraw.append(object.location)
                         grid.square_grid[object.location[0]][object.location[1]].append(object)
         grid.numemy_list = new_numemy_list
-
-        #Draw.draw_initial_in_game_window(self, grid.square_grid)
         Draw.draw_squares(self, grid.square_grid, squaresToDraw)

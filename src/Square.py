@@ -14,3 +14,5 @@ class Exit(Square):
 
 class Spawner(Square):
     pass
+
+

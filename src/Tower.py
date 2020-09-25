@@ -31,8 +31,8 @@ class Tower(Square):
     def find_targets(self, grid):
         """Returns a Numemy within range, if one exists"""
         targets = []
-        for numemyloc in grid.numemy_list:
-            square = grid.square_grid[numemyloc[0]][numemyloc[1]]
+        for num_loc in grid.num_loc_list:
+            square = grid.square_grid[num_loc[0]][num_loc[1]]
             for entity in square:
                 if isinstance(entity, Numemy):
                     dist = self.calculate_dist(entity.location, self.location)

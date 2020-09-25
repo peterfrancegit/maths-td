@@ -121,8 +121,8 @@ class Window:
     def move_numemies(self, grid):
         """Moves the Numemies by one"""
         squaresToDraw = []
-        new_numemy_list = []
-        for num_loc in grid.numemy_list:
+        new_num_loc_list = []
+        for num_loc in grid.num_loc_list:
             squaresToDraw.append(num_loc)
             for object in grid.square_grid[num_loc[0]][num_loc[1]]:
                 if isinstance(object, Numemy):
@@ -131,10 +131,10 @@ class Window:
                         object.escape(grid)
                     else:
                         object.location = object.next_square(grid)
-                        new_numemy_list.append(object.location)
+                        new_num_loc_list.append(object.location)
                         squaresToDraw.append(object.location)
                         grid.square_grid[object.location[0]][object.location[1]].append(object)
-        grid.numemy_list = new_numemy_list
+        grid.num_loc_list = new_num_loc_list
         Draw.draw_squares(self, grid.square_grid, squaresToDraw)
 
 

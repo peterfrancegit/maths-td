@@ -3,6 +3,7 @@ from Square import Square, Block, Exit, Spawner
 from Numemy import Numemy
 from Tower import Tower
 import pygame
+import copy
 
 
 def find_route(dijk_grid, square, exit_square):
@@ -20,10 +21,11 @@ class Grid:
         self.spawner_square = spawner_square
         self.exit_square = exit_square
         self.dijk_grid = Graph()
-        self.numemy_list = []
+        self.num_loc_list = []
         self.tower_list = []
         self.square_grid = []
         self.lives = 20
+        self.forbidden_squares = []
 
     def initialise_dijk_grid(self):
         """Initialises the dijk_grid attribute for routing"""
@@ -115,16 +117,31 @@ class Grid:
         numemy = Numemy(rect, start_val, coins, speed, weight)
         numemy.location = self.spawner_square
         self.square_grid[numemy.location[0]][numemy.location[1]].append(numemy)
-        self.numemy_list.append(numemy.location)
+        self.num_loc_list.append(numemy.location)
 
 
-    # Should be called after build_tower
+    # Should be called after build_tower() and move_numemies()
     def update_routes(self):
         """Updates all routes which pass through a new_square being built upon"""
         new_route_dict = {self.spawner_square: find_route(self.dijk_grid, self.spawner_square, self.exit_square)}
-        for num_loc in self.numemy_list:
+        for num_loc in self.num_loc_list:
             new_route_dict[num_loc] = find_route(self.dijk_grid, num_loc, self.exit_square)
         self.route_dict = new_route_dict
+
+    # Should be called after update_routes()
+    def update_forbidden_squares(self):
+        self.forbidden_squares = []
+        for square in self.dijk_grid:
+            test_grid = copy.deepcopy(self.dijk_grid)
+            test_grid.remove_node(square)
+            for num_loc in self.num_loc_list:
+                try:
+                    find_route(test_grid, num_loc, self.exit_square)
+                except:
+                    self.forbidden_squares.append(square)
+
+
+
 
 
     # def move_square(self, oldSquarePos, newSquarePos, display):

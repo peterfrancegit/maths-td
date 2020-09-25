@@ -136,3 +136,17 @@ class Window:
                         grid.square_grid[object.location[0]][object.location[1]].append(object)
         grid.numemy_list = new_numemy_list
         Draw.draw_squares(self, grid.square_grid, squaresToDraw)
+
+
+    def shoot_towers(self, grid, counter, framerate):
+        squaresToDraw = []
+        for tower in grid.tower_list:
+            if counter % (framerate / tower.speed) == 0:
+                targets = tower.find_targets(grid)
+                if len(targets) > 0:
+                    for numemy in targets:
+                        tower.attack(grid, numemy)
+                        squaresToDraw.append(numemy.location)
+        if len(squaresToDraw) > 0:
+            Draw.draw_squares(self, grid.square_grid, squaresToDraw)
+

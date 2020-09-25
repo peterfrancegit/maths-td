@@ -1,5 +1,7 @@
 from numpy import linalg
 from Square import Square
+from Numemy import Numemy
+import math
 
 
 class Tower(Square):
@@ -16,15 +18,24 @@ class Tower(Square):
         self.cost = cost
         self.location = location
 
+    def calculate_dist(self, numemyPos, towerPos):
+        dist = math.sqrt((towerPos[0] - numemyPos[0])**2 + (towerPos[1] - numemyPos[1])**2)
+        return abs(dist)
+
     def attack(self, grid, numemy):
         """Damages a Numemy, and kills it if health is 0"""
         numemy.take_damage(self.operation, self.value)
-        if numemy.value == 0:
-            grid.square_grid[numemy.location[0]][numemy.location[1]] = Square(EMPTY_SURFACE)
+        if numemy.value <= 0:
+            grid.square_grid[numemy.location[0]][numemy.location[1]].remove(numemy)
 
-    def find_target(self, grid):
+    def find_targets(self, grid):
         """Returns a Numemy within range, if one exists"""
-        for square in grid.square_grid:
-            if isinstance(square, Numemy):
-                if linalg.norm(square.location - self.location) <= self.range:
-                    return square
+        targets = []
+        for numemyloc in grid.numemy_list:
+            square = grid.square_grid[numemyloc[0]][numemyloc[1]]
+            for entity in square:
+                if isinstance(entity, Numemy):
+                    dist = self.calculate_dist(entity.location, self.location)
+                    if dist <= self.range:
+                        targets.append(entity)
+        return targets

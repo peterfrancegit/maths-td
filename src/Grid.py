@@ -21,6 +21,7 @@ class Grid:
         self.exit_square = exit_square
         self.dijk_grid = Graph()
         self.numemy_list = []
+        self.tower_list = []
         self.square_grid = []
         self.lives = 20
 
@@ -104,6 +105,7 @@ class Grid:
         tower = Tower(rect, range, speed, value, operation, cost, location)
         self.square_grid[tower.location[0]][tower.location[1]].append(tower)
         self.dijk_grid.remove_node(tower.location)
+        self.tower_list.append(tower)
 
 
     def spawn_numemy(self, start_val, coins, speed, weight):

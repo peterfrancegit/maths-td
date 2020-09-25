@@ -13,6 +13,7 @@ from Window import Window
 
 
 current_window = None
+FRAMERATE = 30
 
 
 def _initialise_pygame():
@@ -79,9 +80,11 @@ def _game_loop():
             elif current_window.state == GameState.IN_GAME:
                 current_window.process_in_game_event(event, grid)
 
-        clock.tick(30)
-        if current_window.state == GameState.IN_GAME and counter % 30 == 0 and counter != 0:
-            current_window.move_numemies(grid)
+        clock.tick(FRAMERATE)
+        if current_window.state == GameState.IN_GAME:
+            current_window.shoot_towers(grid, counter, FRAMERATE)
+            if counter % 30 == 0 and counter != 0:
+                current_window.move_numemies(grid)
         counter += 1
 
 

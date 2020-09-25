@@ -121,8 +121,7 @@ class Grid:
     # Should be called after build_tower
     def update_routes(self):
         """Updates all routes which pass through a new_square being built upon"""
-        new_route_dict = {}
-        new_route_dict[self.spawner_square] = find_route(self.dijk_grid, self.spawner_square, self.exit_square)
+        new_route_dict = {self.spawner_square: find_route(self.dijk_grid, self.spawner_square, self.exit_square)}
         for num_loc in self.numemy_list:
             new_route_dict[num_loc] = find_route(self.dijk_grid, num_loc, self.exit_square)
         self.route_dict = new_route_dict

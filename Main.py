@@ -85,6 +85,7 @@ def _game_loop():
             current_window.shoot_towers(grid, counter, FRAMERATE)
             if counter % 30 == 0 and counter != 0:
                 current_window.move_numemies(grid)
+                grid.update_routes() 
         counter += 1
 
 

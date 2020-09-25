@@ -76,5 +76,5 @@ def process_in_game_click(window, mouseClickPos, grid):
             if len(sqr) == 1:
                 if sqr[0].surface.collidepoint(mouseClickPos) and isinstance(sqr[0], Square) and not isinstance(sqr, Numemy) and not isinstance(sqr, Tower):
                     grid.build_tower(3, 2, 1, "-", 5, (i, j))
-                    grid.update_routes((i, j))
+                    grid.update_routes()
                     Draw.draw_squares(window, grid.square_grid, [(i, j)])

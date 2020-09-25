@@ -41,8 +41,7 @@ class Grid:
 
     def initialise_route_dict(self):
         """Initialises the route_dict attribute"""
-        for square in self.dijk_grid:
-            self.route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
+        self.route_dict[self.spawner_square] = find_route(self.dijk_grid, self.spawner_square, self.exit_square)
 
 
     def initialise_square_grid(self, display):
@@ -120,15 +119,12 @@ class Grid:
 
 
     # Should be called after build_tower
-    def update_routes(self, new_square):
+    def update_routes(self):
         """Updates all routes which pass through a new_square being built upon"""
         new_route_dict = {}
-        for square, route in self.route_dict.items():
-            if square in self.dijk_grid:
-                if new_square in self.route_dict[square]:
-                    new_route_dict[square] = find_route(self.dijk_grid, square, self.exit_square)
-                else:
-                    new_route_dict[square] = route
+        new_route_dict[self.spawner_square] = find_route(self.dijk_grid, self.spawner_square, self.exit_square)
+        for num_loc in self.numemy_list:
+            new_route_dict[num_loc] = find_route(self.dijk_grid, num_loc, self.exit_square)
         self.route_dict = new_route_dict
 
 

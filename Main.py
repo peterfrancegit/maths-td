@@ -86,7 +86,6 @@ def _game_loop():
             if counter % 30 == 0 and counter != 0:
                 current_window.move_numemies(grid)
                 grid.update_routes()
-                grid.update_forbidden_squares()
         counter += 1
 
 

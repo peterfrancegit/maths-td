@@ -86,8 +86,10 @@ def get_fitted_size(text, surface):
         return counter
     
 
-def draw_square(display, square):
+def draw_square(display, square, spawnerSqr):
     """Draws each object in a square unto the display object"""
+
+    numemyInSpawn = False
     for object in square:
         if isinstance(object, Tower):
             pygame.draw.rect(display, (32, 15, 100), square[0].surface)
@@ -101,6 +103,11 @@ def draw_square(display, square):
         elif isinstance(object, Block):
             pygame.draw.rect(display, (139, 69, 19), square[0].surface)
         elif isinstance(object, Numemy):
+            if object.location == spawnerSqr:
+                if not numemyInSpawn:
+                    numemyInSpawn = True
+                else:
+                    continue
             text = str(object.value)
             size = get_fitted_size(text, square[0].surface)
             font = create_font_object(text, size)
@@ -126,7 +133,7 @@ def draw_square(display, square):
             pygame.draw.rect(display, (0, 0, 0), square[0].surface, 1)
 
 
-def draw_initial_in_game_window(window, squareGrid):
+def draw_initial_in_game_window(window, grid):
     """Draws the initial in game window"""
 
     screenWidth, screenHeight = window.gameDisplay.get_size()
@@ -135,14 +142,14 @@ def draw_initial_in_game_window(window, squareGrid):
     window.gameDisplay.fill((0, 0, 0))
 
     # Draws each of the squares in square_grid
-    for i in range(len(squareGrid)):
-        for j in range(len(squareGrid[0])):
-            draw_square(window.gameDisplay, squareGrid[i][j])
+    for i in range(len(grid.square_grid)):
+        for j in range(len(grid.square_grid[0])):
+            draw_square(window.gameDisplay, grid.square_grid[i][j], grid.spawner_square)
 
 
-def draw_squares(window, squareGrid, squaresToDraw):
+def draw_squares(window, grid, squaresToDraw):
     """Takes a list of square positions in squareGrid which will be redrawn later"""
     for pos in squaresToDraw:
-        draw_square(window.gameDisplay, squareGrid[pos[0]][pos[1]])
+        draw_square(window.gameDisplay, grid.square_grid[pos[0]][pos[1]], grid.spawner_square)
 
     

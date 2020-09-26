@@ -56,8 +56,9 @@ def process_main_menu_click(window, mouseClickPos, grid):
                 # Adds a Numemy
                 grid.spawn_numemy(10, 10, 10, 10)
                 grid.spawn_numemy(20, 10, 10, 10)
+                grid.spawn_numemy(15, 10, 10, 10)
 
-                Draw.draw_initial_in_game_window(window, grid.square_grid)
+                Draw.draw_initial_in_game_window(window, grid)
 
                 window.state = GameState.IN_GAME
 
@@ -76,4 +77,4 @@ def process_in_game_click(window, mouseClickPos, grid):
                     grid.build_tower(3, 2, 1, "-", 5, (i, j))
                     grid.update_routes()
                     grid.update_forbidden_squares()
-                    Draw.draw_squares(window, grid.square_grid, [(i, j)])
+                    Draw.draw_squares(window, grid, [(i, j)])

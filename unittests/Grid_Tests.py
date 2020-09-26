@@ -16,7 +16,7 @@ class GridTests(unittest.TestCase):
         self.grid = Grid(None, None, None, None, None)
         self.display = Mock()
 
-    def test_initialise_dijk_grid_simple(self):
+    def test_initialise_dijk_grid_no_blocks(self):
         self.grid.width, self.grid.height, self.grid.blocks = 2, 2, []
         self.grid.initialise_dijk_grid()
         test_grid = Graph()
@@ -24,9 +24,26 @@ class GridTests(unittest.TestCase):
             test_grid.add_edge((i, 0), (i, 1), 1)
             test_grid.add_edge((i, 1), (i, 0), 1)
             test_grid.add_edge((0, i), (1, i), 1)
-            test_grid.add_edge((1, i), (0, 1), 1)
-        self.assertEqual(self.grid.dijk_grid.node, test_grid())
+            test_grid.add_edge((1, i), (0, i), 1)
+        self.assertEqual(self.grid.dijk_grid, test_grid)
 
+    def test_initialise_dijk_grid_simple(self):
+        self.grid.width, self.grid.height, self.grid.blocks = 2, 2, [(1, 1)]
+        self.grid.initialise_dijk_grid()
+        test_grid = Graph()
+        for i in range(2):
+            test_grid.add_edge((i, 0), (i, 1), 1)
+            test_grid.add_edge((i, 1), (i, 0), 1)
+            test_grid.add_edge((0, i), (1, i), 1)
+            test_grid.add_edge((1, i), (0, i), 1)
+        test_grid.remove_node((1, 1))
+        self.assertEqual(self.grid.dijk_grid, test_grid)
+
+    def test_initialise_dijk_all_blocks(self):
+        self.grid.width, self.grid.height, self.grid.blocks = 2, 2, [(0, 0), (0, 1), (1, 0), (1, 1)]
+        self.grid.initialise_dijk_grid()
+        test_grid = Graph()
+        self.assertEqual(self.grid.dijk_grid, test_grid)
 
     def test_initialise_exit(self):
         """Tests if the initialise_square_grid function initialises the square_grid variable in the given grid object correctly"""

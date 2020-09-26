@@ -128,8 +128,9 @@ class Grid:
             new_route_dict[num_loc] = find_route(self.dijk_grid, num_loc, self.exit_square)
         self.route_dict = new_route_dict
 
-    # Should be called after update_routes()
+    # Should be called after build_tower(), update_routes()
     def update_forbidden_squares(self):
+        """Updates the list of squares that cannot be built upon without isolating a Numemy"""
         self.forbidden_squares = []
         for num_loc in self.route_dict:
             for square in self.route_dict[num_loc]:
@@ -139,27 +140,3 @@ class Grid:
                     find_route(test_grid, num_loc, self.exit_square)
                 except:
                     self.forbidden_squares.append(square)
-
-
-    # def move_square(self, oldSquarePos, newSquarePos, display):
-    #     """Moves the square specified by oldSquarePos to newSquarePos"""
-    #
-    #     # Gets the length of each square in the grid and the x coordinate of the left most square in the grid
-    #     w, h = display.get_size()
-    #     squarelen = int(h / self.height)
-    #     gridStartingX = int(w / 2 - h / 2)
-    #
-    #     # Sets the specified square to its new position
-    #     sqr = self.square_grid[oldSquarePos[0]][oldSquarePos[1]]
-    #
-    #     if (isinstance(sqr, Numemy)):
-    #         print("Numemy")
-    #
-    #     # Sets the old position of the square to a square with a rectangle background
-    #     surface = pygame.Rect(sqr.surface.x, sqr.surface.y, sqr.surface.width, sqr.surface.height)
-    #     greySqr = Square(surface)
-    #     self.square_grid[oldSquarePos[0]][oldSquarePos[1]] = greySqr
-    #
-    #     sqr.surface = pygame.Rect(newSquarePos[1] * squarelen + gridStartingX, newSquarePos[0] * squarelen,
-    #                               sqr.surface.width, sqr.surface.height)
-    #     self.square_grid[newSquarePos[0]][newSquarePos[1]] = sqr

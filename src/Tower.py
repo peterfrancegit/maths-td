@@ -1,4 +1,3 @@
-from numpy import linalg
 from Square import Square
 from Numemy import Numemy
 import math
@@ -25,7 +24,7 @@ class Tower(Square):
     def attack(self, grid, numemy):
         """Damages a Numemy, and kills it if health is 0"""
         numemy.take_damage(self.operation, self.value)
-        if numemy.value <= 0:
+        if numemy.value == 0:
             grid.square_grid[numemy.location[0]][numemy.location[1]].remove(numemy)
 
     def find_targets(self, grid):

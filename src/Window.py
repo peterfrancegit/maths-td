@@ -118,7 +118,7 @@ class Window:
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_in_game_click(self, mouseClickPos, grid)
 
-    def move_numemies(self, grid):
+    def move_numemies(self, grid, player):
         """Moves the Numemies by one"""
         squaresToDraw = []
         new_num_loc_list = []
@@ -128,7 +128,7 @@ class Window:
                 if isinstance(object, Numemy):
                     grid.square_grid[num_loc[0]][num_loc[1]].remove(object)
                     if object.next_square(grid) == grid.exit_square:
-                        object.escape(grid)
+                        object.escape(player)
                     else:
                         object.location = object.next_square(grid)
                         new_num_loc_list.append(object.location)

@@ -1,16 +1,15 @@
 from Square import Square
-import pygame
 
 
 class Numemy(Square):
     # 'value' is the current health of the Numemy, initiated at
-    # 'start_val'; 'coins' is added to player wealth when Numemy
+    # 'start_val'; 'souls' is added to Player souls when Numemy
     # is killed; 'speed' is movement speed; 'weight' is subtracted
-    # from player lives if the Numemy escapes.
-    def __init__(self, surface, start_val, coins, speed, weight):
+    # from Player lives if the Numemy escapes.
+    def __init__(self, surface, start_val, souls, speed, weight):
         Square.__init__(self, surface)
         self.value = start_val
-        self.coins = coins
+        self.souls = souls
         self.speed = speed
         self.location = None
         self.weight = weight
@@ -23,12 +22,13 @@ class Numemy(Square):
             return grid.route_dict[self.location][1]
 
     # For when a Numemy reaches the exit_square
-    def escape(self, grid):
-        grid.lives -= self.weight
+    def escape(self, player):
+        """Reduces Player lives and deletes Numemy object upon escaping"""
+        player.lives -= self.weight
         del self
 
     def take_damage(self, operation, damage):
-        """When a Numemy is hit"""
+        """Changes the value of a Numemy"""
         if operation == '+':
             self.value += damage
         elif operation == '-':

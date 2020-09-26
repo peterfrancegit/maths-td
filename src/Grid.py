@@ -131,17 +131,14 @@ class Grid:
     # Should be called after update_routes()
     def update_forbidden_squares(self):
         self.forbidden_squares = []
-        for square in self.dijk_grid:
-            test_grid = copy.deepcopy(self.dijk_grid)
-            test_grid.remove_node(square)
-            for num_loc in self.num_loc_list:
+        for num_loc in self.route_dict:
+            for square in self.route_dict[num_loc]:
+                test_grid = copy.deepcopy(self.dijk_grid)
+                test_grid.remove_node(square)
                 try:
                     find_route(test_grid, num_loc, self.exit_square)
                 except:
                     self.forbidden_squares.append(square)
-
-
-
 
 
     # def move_square(self, oldSquarePos, newSquarePos, display):

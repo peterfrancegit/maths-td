@@ -125,11 +125,14 @@ class Window:
         movedNumemyFromSpawn = False
         for num_loc in grid.num_loc_list:
             if num_loc == grid.spawner_square:
+                
+                # Only allows one numemy move out of the spawn at a time
                 if not movedNumemyFromSpawn:
                     movedNumemyFromSpawn = True
                 else:
                     new_num_loc_list.append(num_loc)
                     continue
+
             for object in grid.square_grid[num_loc[0]][num_loc[1]]:
                 if isinstance(object, Numemy):
                     squaresToDraw.append(num_loc)

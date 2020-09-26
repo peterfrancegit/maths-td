@@ -24,7 +24,6 @@ class Grid:
         self.num_loc_list = []
         self.tower_list = []
         self.square_grid = []
-        self.lives = 20
         self.forbidden_squares = []
 
     def initialise_dijk_grid(self):

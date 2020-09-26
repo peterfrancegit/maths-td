@@ -74,7 +74,7 @@ def process_in_game_click(window, mouseClickPos, grid):
         for j, sqr in enumerate(row):
             if len(sqr) == 1 and (i, j) not in grid.forbidden_squares:
                 if sqr[0].surface.collidepoint(mouseClickPos):
-                    grid.build_tower(3, 2, 1, "-", 5, (i, j))
+                    grid.build_tower(3, 1, 1, "-", 5, (i, j))
                     grid.update_routes()
                     grid.update_forbidden_squares()
                     Draw.draw_squares(window, grid, [(i, j)])

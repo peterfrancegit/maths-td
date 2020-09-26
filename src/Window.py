@@ -122,11 +122,23 @@ class Window:
         """Moves the Numemies by one"""
         squaresToDraw = []
         new_num_loc_list = []
+        movedNumemyFromSpawn = False
         for num_loc in grid.num_loc_list:
-            squaresToDraw.append(num_loc)
             for object in grid.square_grid[num_loc[0]][num_loc[1]]:
                 if isinstance(object, Numemy):
+
+                    # Only allows one numemy move out of the spawn at a time
+                    if num_loc == grid.spawner_square:
+                        if not movedNumemyFromSpawn:
+                            movedNumemyFromSpawn = True
+                        else:
+                            new_num_loc_list.append(num_loc) # Re adds the numemy that waited for this round of movements
+                            continue
+
+                    squaresToDraw.append(num_loc)
                     grid.square_grid[num_loc[0]][num_loc[1]].remove(object)
+
+                    # Checks if the numemy is at the exit, if it is then the numemy is removed else numemy is moved by 1
                     if object.next_square(grid) == grid.exit_square:
                         object.escape(player)
                     else:
@@ -135,7 +147,7 @@ class Window:
                         squaresToDraw.append(object.location)
                         grid.square_grid[object.location[0]][object.location[1]].append(object)
         grid.num_loc_list = new_num_loc_list
-        Draw.draw_squares(self, grid.square_grid, squaresToDraw)
+        Draw.draw_squares(self, grid, squaresToDraw)
 
 
     def shoot_towers(self, grid, counter, framerate):
@@ -148,5 +160,5 @@ class Window:
                         tower.attack(grid, numemy)
                         squaresToDraw.append(numemy.location)
         if len(squaresToDraw) > 0:
-            Draw.draw_squares(self, grid.square_grid, squaresToDraw)
+            Draw.draw_squares(self, grid, squaresToDraw)
 

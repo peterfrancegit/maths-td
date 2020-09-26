@@ -122,11 +122,20 @@ class Window:
         """Moves the Numemies by one"""
         squaresToDraw = []
         new_num_loc_list = []
+        movedNumemyFromSpawn = False
         for num_loc in grid.num_loc_list:
-            squaresToDraw.append(num_loc)
+            if num_loc == grid.spawner_square:
+                if not movedNumemyFromSpawn:
+                    movedNumemyFromSpawn = True
+                else:
+                    new_num_loc_list.append(num_loc)
+                    continue
             for object in grid.square_grid[num_loc[0]][num_loc[1]]:
                 if isinstance(object, Numemy):
+                    squaresToDraw.append(num_loc)
                     grid.square_grid[num_loc[0]][num_loc[1]].remove(object)
+
+                    # Checks if the numemy is at the exit, if it is then the numemy is removed else numemy is moved by 1
                     if object.next_square(grid) == grid.exit_square:
                         object.escape(player)
                     else:

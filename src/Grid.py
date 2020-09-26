@@ -1,4 +1,4 @@
-from dijkstar import Graph, find_path
+from dijkstar import Graph, find_path, NoPathError
 from Square import Square, Block, Exit, Spawner
 from Numemy import Numemy
 from Tower import Tower
@@ -136,5 +136,5 @@ class Grid:
                 test_grid.remove_node(square)
                 try:
                     find_route(test_grid, num_loc, self.exit_square)
-                except:
+                except NoPathError:
                     self.forbidden_squares.append(square)

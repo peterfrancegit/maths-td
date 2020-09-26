@@ -7,6 +7,7 @@ from dijkstar import Graph
 sys.path.insert(1, '../src')
 from Grid import Grid, find_route
 from Square import Exit
+from dijkstar import NoPathError
 
 
 class GridTests(unittest.TestCase):
@@ -53,6 +54,12 @@ class GridTests(unittest.TestCase):
         spawner, exit = (0, 0), (9, 9)
         route = [(row, 0) for row in range(10)] + [(9, col) for col in range(1, 10)]
         self.assertEqual(find_route(self.grid.dijk_grid, spawner, exit), route)
+
+    def test_find_route_isolated_spawner(self):
+        self.grid.width, self.grid.height, self.grid.blocks = 10, 10, [(0, 1), (1, 0)]
+        self.grid.initialise_dijk_grid()
+        spawner, exit = (0, 0), (9, 9)
+        self.assertRaises(NoPathError, find_route, self.grid.dijk_grid, spawner, exit)
 
 # initialise_exit() tests
     def test_initialise_exit(self):

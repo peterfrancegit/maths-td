@@ -14,18 +14,19 @@ def find_route(dijk_grid, square, exit_square):
 
 class Grid:
     def __init__(self, height, width, blocks, spawner_square, exit_square, lives):
-        self.route_dict = {}
         self.height = height
         self.width = width
         self.blocks = blocks
         self.spawner_square = spawner_square
         self.exit_square = exit_square
+        self.lives = lives
         self.dijk_grid = Graph()
+        self.route_dict = {}
         self.num_loc_list = []
         self.tower_list = []
         self.square_grid = []
         self.forbidden_squares = []
-        self.lives = lives
+
 
     def initialise_dijk_grid(self):
         """Initialises the dijk_grid attribute for routing"""
@@ -84,17 +85,19 @@ class Grid:
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
             self.square_grid[self.spawner_square[0]][self.spawner_square[1]].append(Spawner(rect))
         except(IndexError):
-            print("Instance variable square_grid has not been initialised properly."
-                  "Please call the method initialise_square_grid to initialise it.")
+            print("Instance variable square_grid has not been initialised properly. Please call the method initialise_square_grid to initialise it.")
 
 
     def initialise_blocks(self):
-        """Adds the Blocks to its square_grid square"""
-        for block in self.blocks:
-            sqr = self.square_grid[block[0]][block[1]][0]
-            w, h = sqr.surface.width, sqr.surface.height
-            rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-            self.square_grid[block[0]][block[1]].append(Block(rect))
+        """Adds the Blocks to their square_grid squares"""
+        try:
+            for block in self.blocks:
+                sqr = self.square_grid[block[0]][block[1]][0]
+                w, h = sqr.surface.width, sqr.surface.height
+                rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
+                self.square_grid[block[0]][block[1]].append(Block(rect))
+        except(IndexError):
+            print("Instance variable square_grid has not been initialised properly. Please call the method initialise_square_grid to initialise it.")
 
 
     def build_tower(self, range, speed, value, operation, cost, location):
@@ -126,6 +129,7 @@ class Grid:
         for num_loc in self.num_loc_list:
             new_route_dict[num_loc] = find_route(self.dijk_grid, num_loc, self.exit_square)
         self.route_dict = new_route_dict
+
 
     # Should be called after build_tower(), update_routes()
     def update_forbidden_squares(self):

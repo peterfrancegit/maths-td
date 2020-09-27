@@ -25,7 +25,6 @@ class Numemy(Square):
     def escape(self, player):
         """Reduces Player lives and deletes Numemy object upon escaping"""
         player.lives -= self.weight
-        del self
 
     def take_damage(self, operation, damage):
         """Changes the value of a Numemy"""

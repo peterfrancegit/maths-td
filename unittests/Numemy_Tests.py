@@ -4,13 +4,16 @@ import sys
 sys.path.insert(1, '../src')
 from Grid import Grid
 from Numemy import Numemy
+from Player import Player
 
 
 class TestNextSquare(unittest.TestCase):
     def setUp(self):
         self.grid = Grid(None, None, None, None, None)
         self.numemy = Numemy(None, None, None, None, None)
+        self.player = Player(None, None)
 
+# next_square() tests
     def test_next_square_simple(self):
         self.numemy.location = (1, 1)
         self.grid.route_dict = {(1, 1): [(1, 1), (1, 2), (1, 3)]}
@@ -26,13 +29,14 @@ class TestNextSquare(unittest.TestCase):
         self.grid.route_dict = {(1, 2): [(1, 2), (1, 3)]}
         self.assertRaises(KeyError, self.numemy.next_square, self.grid)
 
-    def test_escape_simple(self):
-        self.grid.lives = 20
+# escape() tests
+    def test_escape_reduces_lives(self):
+        self.player.lives = 20
         self.numemy.weight = 5
-        self.grid.initialise_square_grid()
-        self.numemy.escape(self.grid)
-        self.assertEqual(self.grid.lives, 15)
+        self.numemy.escape(self.player)
+        self.assertEqual(self.player.lives, 15)
 
+# take_damage() tests
     def test_take_damage_add(self):
         self.numemy.value = 10
         self.numemy.take_damage('+', 10)

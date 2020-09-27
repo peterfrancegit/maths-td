@@ -22,9 +22,9 @@ class Numemy(Square):
             return grid.route_dict[self.location][1]
 
     # For when a Numemy reaches the exit_square
-    def escape(self, player):
+    def escape(self, grid):
         """Reduces Player lives and deletes Numemy object upon escaping"""
-        player.lives -= self.weight
+        grid.lives -= self.weight
 
     def take_damage(self, operation, damage):
         """Changes the value of a Numemy"""

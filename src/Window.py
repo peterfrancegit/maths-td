@@ -43,7 +43,7 @@ class Window:
         button1X = self.width / 10
         button1Y = self.height / 3
         fontSize = int(50 * screenRatio)
-        font = Draw.create_font_object(text, fontSize)
+        font = Draw.create_font_object(text, fontSize, 7)
         width = font.get_width()
         height = font.get_height()
         rect = pygame.Rect(button1X, button1Y, width, height)
@@ -56,7 +56,7 @@ class Window:
         button2X = button1X
         button2Y = button1Y + height
         fontSize = int(50 * screenRatio)
-        font = Draw.create_font_object(text, fontSize)
+        font = Draw.create_font_object(text, fontSize, 7)
         width = font.get_width()
         height = font.get_height()
         rect = pygame.Rect(button2X, button2Y, width, height)
@@ -119,7 +119,7 @@ class Window:
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_in_game_click(self, mouseClickPos, grid)
 
-    def move_numemies(self, grid, player):
+    def move_numemies(self, grid):
         """Moves the Numemies by one"""
         squaresToDraw = []
         new_num_loc_list = []
@@ -144,8 +144,8 @@ class Window:
                     if object.next_square(grid) == grid.exit_square:
 
                         # When a numemy escapes the exits value is decreases by the numemies value
-                        object.escape(player)
-                        exitSqr.value -= object.value
+                        object.escape(grid)
+                        exitSqr.value -= object.weight
                         if exitSqr.value < 0:
                             exitSqr.value = 0
                         squaresToDraw.append(grid.exit_square)

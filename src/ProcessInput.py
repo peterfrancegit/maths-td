@@ -55,9 +55,9 @@ def process_main_menu_click(window, mouseClickPos, grid):
                 grid.initialise_route_dict()
 
                 # Adds a Numemy
-                grid.spawn_numemy(10, 10, 10, 10)
-                grid.spawn_numemy(20, 10, 10, 10)
-                grid.spawn_numemy(15, 10, 10, 10)
+                grid.spawn_numemy(10, 10, 10, 1)
+                grid.spawn_numemy(20, 10, 10, 2)
+                grid.spawn_numemy(15, 10, 10, 3)
 
                 Draw.draw_initial_in_game_window(window, grid)
 

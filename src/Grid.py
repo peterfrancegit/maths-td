@@ -13,7 +13,7 @@ def find_route(dijk_grid, square, exit_square):
 
 
 class Grid:
-    def __init__(self, height, width, blocks, spawner_square, exit_square):
+    def __init__(self, height, width, blocks, spawner_square, exit_square, lives):
         self.route_dict = {}
         self.height = height
         self.width = width
@@ -25,6 +25,7 @@ class Grid:
         self.tower_list = []
         self.square_grid = []
         self.forbidden_squares = []
+        self.lives = lives
 
     def initialise_dijk_grid(self):
         """Initialises the dijk_grid attribute for routing"""

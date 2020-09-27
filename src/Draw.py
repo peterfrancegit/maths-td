@@ -60,21 +60,44 @@ def draw_menu(window, buttons):
     for button in buttons:
         draw_button(window, button)
 
+def font_colour(weight):
+    # For level 1 Numemy
+    if weight == 1:
+        return (153, 251, 55)
+    # For level 2 Numemy
+    elif weight == 2:
+        return (0, 128, 255)
+    # For level 3 Numemy
+    elif weight == 3:
+        return (0, 0, 102)
+    # For level 4 Numemy
+    elif weight == 4:
+        return (51, 0, 51)
+    # For level 5 Numemy
+    elif weight == 5:
+        return (0, 0, 0)
+    # For Exit and Towers
+    elif weight == 6:
+        return (251, 251, 251)
+    # The classic Maths TD colour
+    elif weight == 7:
+        return (0, 128, 0)
 
-def create_font_object(text, size):
+
+def create_font_object(text, size, weight):
     """Takes a string and produces a pygame text object with it and return that object"""
     font = pygame.font.Font("Data/Fonts/Oswald-Regular.ttf", size)
-    fontobj = font.render(text, True, (0, 128, 0))
+    fontobj = font.render(text, True, font_colour(weight))
     return fontobj
 
 
 def get_fitted_size(text, surface):
     """Takes a piece of text and a surface and gets the max size of text that can fit the surface"""
     counter = 1
-    font = create_font_object(text, counter)
+    font = create_font_object(text, counter, 1)
     w, h = font.get_size()
     while (w < surface.width and h < surface.height):
-        font = create_font_object(text, counter)
+        font = create_font_object(text, counter, 1)
         w, h = font.get_size()
         counter += 1
     
@@ -95,7 +118,7 @@ def draw_square(display, square, spawnerSqr):
             pygame.draw.rect(display, (32, 15, 100), square[0].surface)
             text = object.operation + str(object.value)
             size = get_fitted_size(text, square[0].surface)
-            font = create_font_object(text, size)
+            font = create_font_object(text, size, 6)
             w, h = font.get_size()
             textX = square[0].surface.x + ((square[0].surface.width - w) / 2)
             textY = square[0].surface.y + ((square[0].surface.height - h) / 2)
@@ -110,7 +133,7 @@ def draw_square(display, square, spawnerSqr):
                     continue
             text = str(object.value)
             size = get_fitted_size(text, square[0].surface)
-            font = create_font_object(text, size)
+            font = create_font_object(text, size, object.weight)
             w, h = font.get_size()
             widthLengthDiff = int(square[0].surface.width - w)
             heightLengthDiff = int(square[0].surface.height - h)
@@ -133,7 +156,7 @@ def draw_square(display, square, spawnerSqr):
             # Draws the value of the exit
             text = str(object.value)
             size = get_fitted_size(text, square[0].surface)
-            font = create_font_object(text, size)
+            font = create_font_object(text, size, 6)
             w, h = font.get_size()
             widthLengthDiff = int(square[0].surface.width - w)
             heightLengthDiff = int(square[0].surface.height - h)

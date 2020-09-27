@@ -9,7 +9,6 @@ import threading
 from Grid import Grid
 from GameState import GameState
 from Window import Window
-from Player import Player
 
 
 
@@ -41,12 +40,13 @@ def _initialise_pygame():
 def _game_loop():
     global current_window
 
-    player = Player(20, 100)
+
     gridSize = 10
     spawner_square = (5, 5)
     exit_square = (9, 9)
     blocks = [(5, 6), (6, 6), (6, 5)]
-    grid = Grid(gridSize, gridSize, blocks, spawner_square, exit_square)
+    lives = 20
+    grid = Grid(gridSize, gridSize, blocks, spawner_square, exit_square, lives)
     clock = pygame.time.Clock()
 
     # Creates a thread lock that will run the opening animation
@@ -89,7 +89,7 @@ def _game_loop():
 
             # Moves numemies
             if counter % 30 == 0 and counter != 0:
-                current_window.move_numemies(grid, player)
+                current_window.move_numemies(grid)
                 grid.update_routes()
                 
         counter += 1

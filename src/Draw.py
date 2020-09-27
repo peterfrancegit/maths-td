@@ -122,11 +122,23 @@ def draw_square(display, square, spawnerSqr):
             radius = int(square[0].surface.width / 2)
             pygame.draw.circle(display, (255, 255, 0), (circleX, circleY), radius, 0)
         elif isinstance(object, Exit):
+
+            # Draws the circle
             squareSideLen = square[0].surface.width
             circleX = int(square[0].surface.x + squareSideLen / 2)
             circleY = int(square[0].surface.y + squareSideLen / 2)
             radius = int(square[0].surface.width / 2)
             pygame.draw.circle(display, (255, 0, 0), (circleX, circleY), radius, 0)
+
+            # Draws the value of the exit
+            text = str(object.value)
+            size = get_fitted_size(text, square[0].surface)
+            font = create_font_object(text, size)
+            w, h = font.get_size()
+            widthLengthDiff = int(square[0].surface.width - w)
+            heightLengthDiff = int(square[0].surface.height - h)
+            display.blit(font, (square[0].surface.x + widthLengthDiff / 2, square[0].surface.y + heightLengthDiff / 2))
+
         elif isinstance(object, Square):
             # Draws background
             pygame.draw.rect(display, (128, 128, 128), square[0].surface)

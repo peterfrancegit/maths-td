@@ -9,7 +9,9 @@ class Block(Square):
 
 
 class Exit(Square):
-    pass
+    def __init__(self, surface, value):
+        self.surface = surface
+        self.value = value
 
 
 class Spawner(Square):

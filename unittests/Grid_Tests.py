@@ -3,11 +3,10 @@ from unittest.mock import Mock
 from io import StringIO
 import sys
 
-from dijkstar import Graph
 sys.path.insert(1, '../src')
 from Grid import Grid, find_route
 from Square import Exit
-from dijkstar import NoPathError
+from dijkstar import Graph, NoPathError
 
 
 class GridTests(unittest.TestCase):

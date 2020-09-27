@@ -5,6 +5,7 @@ import ProcessInput as ProcessInput
 from GameState import GameState
 from Button import Button
 from Numemy import Numemy
+from Square import Exit
 
 
 LEFT = 1
@@ -141,6 +142,9 @@ class Window:
                     # Checks if the numemy is at the exit, if it is then the numemy is removed else numemy is moved by 1
                     if object.next_square(grid) == grid.exit_square:
                         object.escape(player)
+                        exitSqr = grid.square_grid[grid.exit_square[0]][grid.exit_square[1]][1]
+                        exitSqr.value -= object.value
+                        squaresToDraw.append(grid.exit_square)
                     else:
                         object.location = object.next_square(grid)
                         new_num_loc_list.append(object.location)

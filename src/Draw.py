@@ -164,4 +164,16 @@ def draw_squares(window, grid, squaresToDraw):
     for pos in squaresToDraw:
         draw_square(window.gameDisplay, grid.square_grid[pos[0]][pos[1]], grid.spawner_square)
 
-    
+
+def draw_game_over(display, screenRatio):
+    """Draws the game over screen"""
+
+    # Draws the game of text
+    text = "Game Over"
+    size = int(200 * screenRatio)
+    font = create_font_object(text, size)
+    fontWidth, fontHeight = font.get_size()
+    screenWidth, screenHeight = display.get_size()
+    display.blit(font, (screenWidth / 2 - fontWidth / 2, screenHeight / 2 - fontHeight / 2))
+
+

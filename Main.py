@@ -84,10 +84,14 @@ def _game_loop():
 
         clock.tick(FRAMERATE)
         if current_window.state == GameState.IN_GAME:
+            # Shoots any towers that can shoot
             current_window.shoot_towers(grid, counter, FRAMERATE)
+
+            # Moves numemies
             if counter % 30 == 0 and counter != 0:
                 current_window.move_numemies(grid, player)
                 grid.update_routes()
+                
         counter += 1
 
 

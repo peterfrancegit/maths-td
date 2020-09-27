@@ -124,6 +124,7 @@ class Window:
         squaresToDraw = []
         new_num_loc_list = []
         movedNumemyFromSpawn = False
+        exitSqr = grid.square_grid[grid.exit_square[0]][grid.exit_square[1]][1]
         for num_loc in grid.num_loc_list:
             for object in grid.square_grid[num_loc[0]][num_loc[1]]:
                 if isinstance(object, Numemy):
@@ -141,9 +142,12 @@ class Window:
 
                     # Checks if the numemy is at the exit, if it is then the numemy is removed else numemy is moved by 1
                     if object.next_square(grid) == grid.exit_square:
+
+                        # When a numemy escapes the exits value is decreases by the numemies value
                         object.escape(player)
-                        exitSqr = grid.square_grid[grid.exit_square[0]][grid.exit_square[1]][1]
                         exitSqr.value -= object.value
+                        if exitSqr.value < 0:
+                            exitSqr.value = 0
                         squaresToDraw.append(grid.exit_square)
                     else:
                         object.location = object.next_square(grid)
@@ -153,8 +157,14 @@ class Window:
         grid.num_loc_list = new_num_loc_list
         Draw.draw_squares(self, grid, squaresToDraw)
 
+        # Checks if the exit square value is 0, if it is then game is over
+        if exitSqr.value == 0:
+            self.state = GameState.GAME_OVER
+            Draw.draw_game_over(self.gameDisplay, self.screenRatio)
+
 
     def shoot_towers(self, grid, counter, framerate):
+        """Checks if any of the towers on the grid can shoot a numemy"""
         squaresToDraw = []
         for tower in grid.tower_list:
             if counter % (framerate / tower.speed) == 0:
@@ -163,4 +173,5 @@ class Window:
                     tower.attack(grid, target)
                     squaresToDraw.append(tower.location)
         Draw.draw_squares(self, grid, squaresToDraw)
+
 

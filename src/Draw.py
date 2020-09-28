@@ -91,12 +91,12 @@ def create_font_object(text, size, weight):
     return fontobj
 
 
-def get_fitted_size(text, surface):
-    """Takes a piece of text and a surface and gets the max size of text that can fit the surface"""
+def get_fitted_size(text, width, height):
+    """Takes a piece of text and the side of an area and gets the max size of text that can fit the area"""
     counter = 1
     font = create_font_object(text, counter, 1)
     w, h = font.get_size()
-    while (w < surface.width and h < surface.height):
+    while (w < width and h < height):
         font = create_font_object(text, counter, 1)
         w, h = font.get_size()
         counter += 1
@@ -118,7 +118,9 @@ def draw_square(window, square, spawnerSqr):
         if isinstance(object, Tower):
             pygame.draw.rect(display, (32, 15, 100), square[0].surface)
             text = object.operation + str(object.value)
-            size = get_fitted_size(text, square[0].surface)
+            surfaceWidth = square[0].surface.width
+            surfaceHeight = square[0].surface.height
+            size = get_fitted_size(text, surfaceWidth, surfaceHeight)
             font = create_font_object(text, size, 6)
             w, h = font.get_size()
             textX = square[0].surface.x + ((square[0].surface.width - w) / 2)
@@ -133,7 +135,9 @@ def draw_square(window, square, spawnerSqr):
                 else:
                     continue
             text = str(object.value)
-            size = get_fitted_size(text, square[0].surface)
+            surfaceWidth = square[0].surface.width
+            surfaceHeight = square[0].surface.height
+            size = get_fitted_size(text, surfaceWidth, surfaceHeight)
             font = create_font_object(text, size, object.weight)
             w, h = font.get_size()
             widthLengthDiff = int(square[0].surface.width - w)
@@ -156,7 +160,9 @@ def draw_square(window, square, spawnerSqr):
 
             # Draws the value of the exit
             text = str(object.value)
-            size = get_fitted_size(text, square[0].surface)
+            surfaceWidth = square[0].surface.width
+            surfaceHeight = square[0].surface.height
+            size = get_fitted_size(text, surfaceWidth, surfaceHeight)
             font = create_font_object(text, size, 6)
             w, h = font.get_size()
             widthLengthDiff = int(square[0].surface.width - w)

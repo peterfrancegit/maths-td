@@ -22,6 +22,7 @@ class Window:
         self.screenRatio = self.height / 1080
         self.buttons = []
         self.state = None
+        self.selectedEntity = {"square" : None, "position" : None}
 
     def change_state_to(self, newState):
         """Changes the state of the window object to the given state and draws the appropriate window"""

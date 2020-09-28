@@ -109,9 +109,10 @@ def get_fitted_size(text, surface):
         return counter
     
 
-def draw_square(display, square, spawnerSqr):
+def draw_square(window, square, spawnerSqr):
     """Draws each object in a square unto the display object"""
 
+    display = window.gameDisplay
     numemyInSpawn = False
     for object in square:
         if isinstance(object, Tower):
@@ -163,10 +164,16 @@ def draw_square(display, square, spawnerSqr):
             display.blit(font, (square[0].surface.x + widthLengthDiff / 2, square[0].surface.y + heightLengthDiff / 2))
 
         elif isinstance(object, Square):
-            # Draws background
-            pygame.draw.rect(display, (128, 128, 128), square[0].surface)
-            pygame.draw.rect(display, (0, 0, 0), square[0].surface, 1)
 
+            colour = None
+            if not object is window.selectedEntity["square"]:
+                colour = (128, 128, 128)
+            else:
+                colour = (0,255,255)
+
+            # Draws background
+            pygame.draw.rect(display, colour, square[0].surface)
+            pygame.draw.rect(display, (0, 0, 0), square[0].surface, 1)
 
 def draw_initial_in_game_window(window, grid):
     """Draws the initial in game window"""
@@ -179,13 +186,13 @@ def draw_initial_in_game_window(window, grid):
     # Draws each of the squares in square_grid
     for i in range(len(grid.square_grid)):
         for j in range(len(grid.square_grid[0])):
-            draw_square(window.gameDisplay, grid.square_grid[i][j], grid.spawner_square)
+            draw_square(window, grid.square_grid[i][j], grid.spawner_square)
 
 
 def draw_squares(window, grid, squaresToDraw):
     """Takes a list of square positions in squareGrid which will be redrawn later"""
     for pos in squaresToDraw:
-        draw_square(window.gameDisplay, grid.square_grid[pos[0]][pos[1]], grid.spawner_square)
+        draw_square(window, grid.square_grid[pos[0]][pos[1]], grid.spawner_square)
 
 
 def draw_game_over(display, screenRatio):

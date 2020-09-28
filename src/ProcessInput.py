@@ -70,12 +70,18 @@ def process_main_menu_click(window, mouseClickPos, grid):
 
 def process_in_game_click(window, mouseClickPos, grid):
     """Processes any left mouse clicks while in game"""
-
     for i, row in enumerate(grid.square_grid):
         for j, sqr in enumerate(row):
-            if len(sqr) == 1 and (i, j) not in grid.forbidden_squares:
-                if sqr[0].surface.collidepoint(mouseClickPos):
-                    grid.build_tower(3, 1, 1, "-", 5, (i, j))
-                    grid.update_routes()
-                    grid.update_forbidden_squares()
-                    Draw.draw_squares(window, grid, [(i, j)])
+            if window.selectedEntity == None or not window.selectedEntity is sqr[0]:
+                if len(sqr) == 1 and (i, j) not in grid.forbidden_squares:
+                    if sqr[0].surface.collidepoint(mouseClickPos):
+                        squaresToDraw = []
+                        if window.selectedEntity["square"] != None:
+                            squaresToDraw.append(window.selectedEntity["position"])
+                        window.selectedEntity = {"square" : sqr[0], "position" : (i, j)}
+                        squaresToDraw.append(window.selectedEntity["position"])
+                        # grid.build_tower(3, 1, 1, "-", 5, (i, j))
+                        # grid.update_routes()
+                        # grid.update_forbidden_squares()
+                        # Draw.draw_squares(window, grid, [(i, j)])
+                        Draw.draw_squares(window, grid, squaresToDraw)

@@ -115,6 +115,7 @@ class Grid:
     def upgrade_tower(self, tower):
         """Increases the level of a Tower"""
         tower.upgrade()
+        self.souls -= max(1, tower.level * tower.cost // 3)
 
     def spawn_numemy(self, start_val, coins, speed, weight):
         """Adds a new Numemy object to the square_grid spawner_square"""

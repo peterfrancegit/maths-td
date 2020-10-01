@@ -5,17 +5,18 @@ import math
 
 class Tower(Square):
     # 'range' is the radius of the circle the Tower attacks within;
-    # 'speed' is how often it attacks; 'square' is the location;
-    # 'cost' is removed from player's wealth.
+    # 'speed' is how often it attacks;
+    # 'cost' is removed from player's wealth;
+    # 'level' is 1, 2 or 3 and increases range and speed.
     def __init__(self, surface, range, speed, value, operation, cost, location):
         Square.__init__(self, surface)
         self.range = range
         self.speed = speed
         self.value = value
         self.operation = operation
-        self.level = 1
         self.cost = cost
         self.location = location
+        self.level = 1
 
     def calculate_dist(self, numemyPos, towerPos):
         dist = math.sqrt((towerPos[0] - numemyPos[0])**2 + (towerPos[1] - numemyPos[1])**2)
@@ -38,3 +39,8 @@ class Tower(Square):
                     if dist <= self.range:
                         return entity
         return None
+
+    def upgrade(self):
+        self.level += 1
+        self.range *= 1.5
+        self.speed *= 1.5

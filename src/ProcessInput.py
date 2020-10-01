@@ -45,8 +45,7 @@ def process_main_menu_click(window, mouseClickPos, grid):
                 # Initialises any blocks
                 grid.initialise_blocks()
                 # Adds the Exit
-                value = 25
-                grid.initialise_exit(value)
+                grid.initialise_exit()
                 # Adds the Spawner
                 grid.initialise_spawner()
                 # Initialises the dijk_grid

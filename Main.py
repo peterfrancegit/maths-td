@@ -45,7 +45,7 @@ def _game_loop():
     spawner_square = (5, 5)
     exit_square = (9, 9)
     blocks = [(5, 6), (6, 6), (6, 5)]
-    lives = 20
+    lives = 25
     grid = Grid(gridSize, gridSize, blocks, spawner_square, exit_square, lives)
     clock = pygame.time.Clock()
 

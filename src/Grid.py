@@ -66,13 +66,13 @@ class Grid:
             self.square_grid.append(row)
 
 
-    def initialise_exit(self, value):
+    def initialise_exit(self):
         """Adds the Exit to its square_grid square"""
         try:
             sqr = self.square_grid[self.exit_square[0]][self.exit_square[1]][0]
             w, h = sqr.surface.width, sqr.surface.height
             rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-            self.square_grid[self.exit_square[0]][self.exit_square[1]].append(Exit(rect, value))
+            self.square_grid[self.exit_square[0]][self.exit_square[1]].append(Exit(rect, self.lives))
         except(IndexError):
             print("Instance variable square_grid has not been initialised properly. Please call the method initialise_square_grid to initialise it.")
 

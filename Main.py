@@ -46,7 +46,8 @@ def _game_loop():
     exit_square = (9, 9)
     blocks = [(5, 6), (6, 6), (6, 5)]
     lives = 25
-    grid = Grid(gridSize, gridSize, blocks, spawner_square, exit_square, lives)
+    souls = 50
+    grid = Grid(gridSize, gridSize, blocks, spawner_square, exit_square, lives, souls)
     clock = pygame.time.Clock()
 
     # Creates a thread lock that will run the opening animation

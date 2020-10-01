@@ -13,13 +13,14 @@ def find_route(dijk_grid, square, exit_square):
 
 
 class Grid:
-    def __init__(self, height, width, blocks, spawner_square, exit_square, lives):
+    def __init__(self, height, width, blocks, spawner_square, exit_square, lives, souls):
         self.height = height
         self.width = width
         self.blocks = blocks
         self.spawner_square = spawner_square
         self.exit_square = exit_square
         self.lives = lives
+        self.souls = souls
         self.dijk_grid = Graph()
         self.route_dict = {}
         self.num_loc_list = []
@@ -109,6 +110,7 @@ class Grid:
         self.square_grid[tower.location[0]][tower.location[1]].append(tower)
         self.dijk_grid.remove_node(tower.location)
         self.tower_list.append(tower)
+        self.souls -= cost
 
 
     def spawn_numemy(self, start_val, coins, speed, weight):

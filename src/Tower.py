@@ -26,6 +26,7 @@ class Tower(Square):
         numemy.take_damage(self.operation, self.value)
         if numemy.value == 0:
             grid.square_grid[numemy.location[0]][numemy.location[1]].remove(numemy)
+            grid.souls += souls
 
     def find_targets(self, grid):
         """Returns a Numemy within range, if one exists"""

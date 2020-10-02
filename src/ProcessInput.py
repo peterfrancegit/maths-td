@@ -53,6 +53,8 @@ def process_main_menu_click(window, mouseClickPos, grid):
                 # Initialises the route_dict
                 grid.initialise_route_dict()
 
+                grid.build_tower(3, 1, 1, "-", 5, (3, 3))
+
                 # Adds a Numemy
                 grid.spawn_numemy(10, 10, 10, 1)
                 grid.spawn_numemy(20, 10, 10, 2)
@@ -72,7 +74,7 @@ def process_in_game_click(window, mouseClickPos, grid):
     for i, row in enumerate(grid.square_grid):
         for j, sqr in enumerate(row):
             if window.selectedEntity == None or not window.selectedEntity is sqr[0]:
-                if len(sqr) == 1 and (i, j) not in grid.forbidden_squares:
+                if (i, j) not in grid.forbidden_squares:
                     if sqr[0].surface.collidepoint(mouseClickPos):
                         squaresToDraw = []
                         if window.selectedEntity["square"] != None:
@@ -84,4 +86,5 @@ def process_in_game_click(window, mouseClickPos, grid):
                         # grid.update_forbidden_squares()
                         # Draw.draw_squares(window, grid, [(i, j)])
                         Draw.draw_squares(window, grid, squaresToDraw)
+                        Draw.draw_side_menu(window, grid, (i, j))
 

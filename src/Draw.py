@@ -5,6 +5,7 @@ from GameState import GameState
 from Square import Square, Block, Exit, Spawner
 from Tower import Tower
 from Numemy import Numemy
+from Button import Button
 from Exceptions.TextTooBig import TextTooBig
 
 
@@ -215,28 +216,31 @@ def draw_game_over(display, screenRatio):
 def draw_side_menu(window, grid, square):
     square = grid.square_grid[square[0]][square[1]]
     menuHeight = window.gameDisplay.get_size()[1]
-    menuWidth = window.gameDisplay.get_size()[1] - (square.surface.width * grid.width) / 2
+    menuWidth = window.gameDisplay.get_size()[1] - (square[0].surface.width * grid.width) / 2
     buttons = []
-    if len(square) = 1:
+    if len(square) == 1:
         text = "Purchase"
-        buttonX = window.width / 10
+        buttonX = window.width / 20
         buttonY = window.height / 3
+        width = menuWidth / 2
+        height = menuHeight / 10
         fontSize = get_fitted_size(text, width, height)
-        font = Draw.create_font_object(text, fontSize, 7)
-        width = font.get_width()
-        height = font.get_height()
+        font = create_font_object(text, fontSize, 7)
+        colour = (0, 0, 0)
         rect = pygame.Rect(buttonX, buttonY, width, height)
         buttons.append(Button(rect, font, colour, text))
     elif isinstance(square[1], Tower):
-        for text in ["Upgrade", "Sell"]
-            buttonX = window.width / 10
-            if text = "Upgrade":
+        for text in ["Upgrade", "Sell"]:
+            buttonX = window.width / 20
+            if text == "Upgrade":
                 buttonY = window.height / 3
             else:
                 buttonY = window.height * 2 / 3
+            width = menuWidth / 2
+            height = menuHeight / 10
             fontSize = get_fitted_size(text, width, height)
-            font = Draw.create_font_object(text, fontSize, 7)
-            width = font.get_width()
-            height = font.get_height()
+            font = create_font_object(text, fontSize, 7)
+            colour = (0, 0, 0)
             rect = pygame.Rect(buttonX, buttonY, width, height)
             buttons.append(Button(rect, font, colour, text))
+    draw_menu(window, buttons)

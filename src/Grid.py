@@ -140,7 +140,7 @@ class Grid:
     # Should be called after build_tower(), update_routes()
     def update_forbidden_squares(self):
         """Updates the list of squares that cannot be built upon without isolating a Numemy"""
-        self.forbidden_squares = []
+        self.forbidden_squares = self.num_loc_list + [self.spawner_square, self.exit_square]
         for num_loc in self.route_dict:
             for square in self.route_dict[num_loc]:
                 test_grid = copy.deepcopy(self.dijk_grid)

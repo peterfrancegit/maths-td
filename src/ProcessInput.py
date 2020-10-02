@@ -83,7 +83,7 @@ def process_in_game_click(window, mouseClickPos, grid):
                         squaresToDraw.append(window.selectedEntity["position"])
                         # grid.build_tower(3, 1, 1, "-", 5, (i, j))
                         # grid.update_routes()
-                        # grid.update_forbidden_squares()
+                        grid.update_forbidden_squares()
                         # Draw.draw_squares(window, grid, [(i, j)])
                         Draw.draw_squares(window, grid, squaresToDraw)
                         Draw.draw_side_menu(window, grid, (i, j))

@@ -77,7 +77,7 @@ def _game_loop():
 
             # Deals with user input in the main menu
             elif current_window.state == GameState.MAIN_MENU:
-                current_window.process_main_menu_event(event, grid)
+                current_window.process_main_menu_event(event, grid)  
 
             # Deals with user input in game
             elif current_window.state == GameState.IN_GAME:

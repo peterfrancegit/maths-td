@@ -194,6 +194,7 @@ def draw_initial_in_game_window(window, grid):
     for i in range(len(grid.square_grid)):
         for j in range(len(grid.square_grid[0])):
             draw_square(window, grid.square_grid[i][j], grid.spawner_square)
+    draw_side_menu(window, grid)
 
 
 def draw_squares(window, grid, squaresToDraw):
@@ -214,60 +215,26 @@ def draw_game_over(display, screenRatio):
     display.blit(font, (screenWidth / 2 - fontWidth / 2, screenHeight / 2 - fontHeight / 2))
 
 def draw_side_menu(window, grid):
-    if window.selectedEntity["square"] != None:
-        square = grid.square_grid[window.selectedEntity["position"][0]][window.selectedEntity["position"][1]]
-        menuHeight = window.gameDisplay.get_size()[1] * 19 / 20
-        menuWidth = (window.gameDisplay.get_size()[1] - (square[0].surface.width * grid.width)) * 35
-        menuTop = menuHeight / 30
-        menuLeft = menuWidth / 35
-        menuColour = (0, 0, 0)
-        menuRect = pygame.Rect(menuLeft, menuTop, menuWidth, menuHeight)
-        pygame.draw.rect(window.gameDisplay, menuColour, menuRect)
-        if len(square) == 1:
-            draw_buy_menu(window, menuRect, menuColour)
-        else:
-            draw_sell_menu(window, menuRect, menuColour)
-
-def draw_buy_menu(window, menuRect, menuColour):
+    menuHeight = grid.square_grid[0][0][0].surface.height * grid.height
+    menuWidth = (window.gameDisplay.get_size()[1] - (grid.square_grid[0][0][0].surface.width * grid.width)) * 35
+    menuTop = grid.square_grid[0][0][0].surface.top
+    menuLeft = menuWidth / 35
+    menuColour = (100, 100, 100)
+    menuRect = pygame.Rect(menuLeft, menuTop, menuWidth, menuHeight)
+    pygame.draw.rect(window.gameDisplay, menuColour, menuRect)
     menuHeight = menuRect.height
     menuWidth = menuRect.width
     buttons = []
-    buttHeight = menuHeight / 10
-    labels = ["Purchase", "+", "-", "*", "/", "Value:"]
-    for i in range(6):
-        if i in [0, 5]:
-            buttWidth = menuWidth / 2
-            buttX = menuWidth / 4
-            if i == 0:
-                buttY = menuHeight / 5
-            else:
-                buttY = 3 * menuHeight / 5
-        else:
-            buttWidth = menuWidth / 8
-            buttX = i * menuWidth / 6
-            buttY = 4 * menuHeight / 5
-        text = labels[i]
-        fontSize = get_fitted_size(text, buttWidth, buttHeight)
-        font = create_font_object(text, fontSize, 7)
-        rect = pygame.Rect(buttX, buttY, buttWidth, buttHeight)
-        buttons.append(Button(rect, font, menuColour, text))
-    draw_menu(window, buttons)
-
-
-def draw_sell_menu(window, menuRect, menuColour):
-    menuHeight = menuRect.height
-    menuWidth = menuRect.width
-    buttons = []
-    colour = (0, 0, 0)
     buttHeight = menuHeight / 10
     buttWidth = menuWidth / 2
     buttX = menuWidth / 4
-    labels = ["Upgrade", "Sell"]
-    for i in range(2):
-        if i == 0:
-            buttY = menuHeight / 5
-        else:
-            buttY = 3 * menuHeight / 5
+    labels = ["Buy", "Upgrade", "Sell", "+", "-", "*", "/"]
+    for i in range(7):
+        buttY = (i + 1) * menuHeight / 5
+        if i >= 3:
+            buttWidth = menuWidth / 4
+            buttX = (i - 2) * menuWidth / 6
+            buttY = 4 * menuHeight / 5
         text = labels[i]
         fontSize = get_fitted_size(text, buttWidth, buttHeight)
         font = create_font_object(text, fontSize, 7)

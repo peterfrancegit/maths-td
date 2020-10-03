@@ -86,6 +86,4 @@ def process_in_game_click(window, mouseClickPos, grid):
                         grid.update_forbidden_squares()
                         # Draw.draw_squares(window, grid, [(i, j)])
                         Draw.draw_squares(window, grid, squaresToDraw)
-                        Draw.draw_side_menu(window, grid)
-                        break
                         

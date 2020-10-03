@@ -233,7 +233,7 @@ def draw_buy_menu(window, menuRect, menuColour):
     menuWidth = menuRect.width
     buttons = []
     buttHeight = menuHeight / 10
-    labels = ["Purchase", "+", "-", "*", "/", "Value"]
+    labels = ["Purchase", "+", "-", "*", "/", "Value:"]
     for i in range(6):
         if i in [0, 5]:
             buttWidth = menuWidth / 2

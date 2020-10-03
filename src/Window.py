@@ -20,7 +20,8 @@ class Window:
         self.width = width
         self.height = height
         self.screenRatio = self.height / 1080
-        self.buttons = []
+        self.mainButtons = []
+        self.sideButtons = []
         self.state = None
         self.selectedEntity = {"square" : None, "position" : None}
 
@@ -64,8 +65,8 @@ class Window:
 
         quitButton = Button(rect, font, green, text)
 
-        self.buttons = [startButton, quitButton]
-        Draw.draw_menu(self, self.buttons)
+        self.mainButtons = [startButton, quitButton]
+        Draw.draw_menu(self, self.mainButtons)
         Draw.draw_image(self.gameDisplay, "Numbers.jpg", self.width / 2, self.height / 3)
 
     def start_opening(self, lock):
@@ -92,7 +93,7 @@ class Window:
         # Checks if the mouse has hovered over any of the buttons on the main menu
         if event.type == pygame.MOUSEMOTION:
             mouseClickPos = pygame.mouse.get_pos()
-            ProcessInput.process_main_menu_hover(self, mouseClickPos)
+            ProcessInput.process_menu_hover(self, mouseClickPos, self.mainButtons)
         
         # Checks if a mouse click has clicked on any of the main menu buttons
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
@@ -115,8 +116,13 @@ class Window:
     def process_in_game_event(self, event, grid):
         """Processes an event that occurred while the window is in game"""
 
-        # Checks if a mouse click has clicked on any of the main menu buttons
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
+        # Checks if the mouse has hovered over any of the buttons on the side menu
+        if event.type == pygame.MOUSEMOTION and self.selectedEntity["square"] != None:
+            mouseClickPos = pygame.mouse.get_pos()
+            ProcessInput.process_menu_hover(self, mouseClickPos, self.sideButtons)
+
+        # Checks if a mouse click has clicked on any of the squares or side menu buttons
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_in_game_click(self, mouseClickPos, grid)
 
@@ -156,6 +162,7 @@ class Window:
                         squaresToDraw.append(object.location)
                         grid.square_grid[object.location[0]][object.location[1]].append(object)
         grid.num_loc_list = new_num_loc_list
+        grid.update_forbidden_squares()
         Draw.draw_squares(self, grid, squaresToDraw)
 
         # Checks if the exit square value is 0, if it is then game is over

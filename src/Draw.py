@@ -224,7 +224,6 @@ def draw_side_menu(window, grid):
     pygame.draw.rect(window.gameDisplay, menuColour, menuRect)
     menuHeight = menuRect.height
     menuWidth = menuRect.width
-    buttons = []
     buttHeight = menuHeight / 10
     buttWidth = menuWidth / 2
     buttX = menuWidth / 4
@@ -239,5 +238,5 @@ def draw_side_menu(window, grid):
         fontSize = get_fitted_size(text, buttWidth, buttHeight)
         font = create_font_object(text, fontSize, 7)
         rect = pygame.Rect(buttX, buttY, buttWidth, buttHeight)
-        buttons.append(Button(rect, font, menuColour, text))
-    draw_menu(window, buttons)
+        window.sideButtons.append(Button(rect, font, menuColour, text))
+    draw_menu(window, window.sideButtons)

@@ -4,10 +4,10 @@ from Button import Button
 from GameState import GameState
 
 
-def process_main_menu_hover(window, mouseClickPos):
+def process_menu_hover(window, mouseClickPos, button_list):
     """Processes the hover event on the main menu"""
 
-    for button in window.buttons:
+    for button in button_list:
         if button.rect.collidepoint(mouseClickPos):
             # Creates the highlighted button
             highlight = (255,140,0)
@@ -18,7 +18,8 @@ def process_main_menu_hover(window, mouseClickPos):
             button.highlighted = True
         elif button.highlighted:
             # Lowlights the button when the mouse is no longer hovering over it
-            highlight = (0, 0, 0)
+
+            highlight = button.colour
             rect = pygame.Rect(button.rect.x, button.rect.y, button.rect.width, button.rect.height)
             highlightedButton = Button(rect, button.font, highlight, button.text)
 
@@ -29,7 +30,7 @@ def process_main_menu_hover(window, mouseClickPos):
 def process_main_menu_click(window, mouseClickPos, grid):
     """Checks if any of the buttons in the window have been clicked on"""
 
-    for button in window.buttons:
+    for button in window.mainButtons:
         if button.rect.collidepoint(mouseClickPos):
 
             # Checks if the start button has been pressed
@@ -81,9 +82,9 @@ def process_in_game_click(window, mouseClickPos, grid):
                             squaresToDraw.append(window.selectedEntity["position"])
                         window.selectedEntity = {"square" : sqr[0], "position" : (i, j)}
                         squaresToDraw.append(window.selectedEntity["position"])
-                        # grid.build_tower(3, 1, 1, "-", 5, (i, j))
-                        # grid.update_routes()
-                        grid.update_forbidden_squares()
-                        # Draw.draw_squares(window, grid, [(i, j)])
                         Draw.draw_squares(window, grid, squaresToDraw)
+
+    # for button in window.sideButtons:
+    #     if button.rect.collidepoint(mouseClickPos):
+
                         

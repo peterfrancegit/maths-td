@@ -54,7 +54,7 @@ def process_main_menu_click(window, mouseClickPos, grid):
                 # Initialises the route_dict
                 grid.initialise_route_dict()
 
-                grid.build_tower(3, 1, 1, "-", 5, (3, 3))
+                grid.build_tower(1, "-", 5, (3, 3))
 
                 # Adds a Numemy
                 grid.spawn_numemy(10, 10, 10, 1)
@@ -85,27 +85,28 @@ def process_in_game_click(window, mouseClickPos, grid):
                         Draw.draw_squares(window, grid, squaresToDraw)
 
     if window.selectedEntity["square"] != None:
-        pos = self.selectedEntity["position"]
+        pos = window.selectedEntity["position"]
         if len(grid.square_grid[pos[0]][pos[1]]) > 1:
             for button in window.sellButtons:
                 if button.rect.collidepoint(mouseClickPos):
                     if button.text == 'Upgrade':
                         grid.upgrade_tower(grid.square_grid[pos[0]][pos[1]][1])
-                    # else:
-                    #     grid.sell_tower()
-        else:
-            for button in window.buyButtons:
-                if button.rect.collidepoint(mouseClickPos):
-                    if button.text == 'Buy':
-                        if window.buyOperation == None:
-                            break
-                        if window.buyValue == None:
-                            break
-                        grid.build_tower(3, 1, window.buyValue, window.buyOperation, 5, (pos[0], pos[1]))
-                    elif button.text in ['+', '-', '*', '/']:
-                        window.buyOperation = button.text
                     else:
-                        
+                        grid.sell_tower(grid.square_grid[pos[0]][pos[1]][1])
+                        Draw.draw_squares(window, grid, [pos])
+        # else:
+        #     for button in window.buyButtons:
+        #         if button.rect.collidepoint(mouseClickPos):
+        #             if button.text == 'Buy':
+        #                 if window.buyOperation == None:
+        #                     break
+        #                 if window.buyValue == None:
+        #                     break
+        #                 grid.build_tower(window.buyValue, window.buyOperation, 5, (pos[0], pos[1]))
+        #             elif button.text in ['+', '-', '*', '/']:
+        #                 window.buyOperation = button.text
+        #             else:
+
 
 
                         

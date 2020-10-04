@@ -8,10 +8,10 @@ class Tower(Square):
     # 'speed' is how often it attacks;
     # 'cost' is removed from player's wealth;
     # 'level' is 1, 2 or 3 and increases range and speed.
-    def __init__(self, surface, range, speed, value, operation, cost, location):
+    def __init__(self, surface, value, operation, cost, location):
         Square.__init__(self, surface)
-        self.range = range
-        self.speed = speed
+        self.range = 3
+        self.speed = 1
         self.value = value
         self.operation = operation
         self.cost = cost

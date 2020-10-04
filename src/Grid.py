@@ -101,12 +101,12 @@ class Grid:
             print("Instance variable square_grid has not been initialised properly. Please call the method initialise_square_grid to initialise it.")
 
 
-    def build_tower(self, range, speed, value, operation, cost, location):
+    def build_tower(self, value, operation, cost, location):
         """Adds a new Tower to a square_grid square and blocks off its dijk_grid square"""
         sqr = self.square_grid[location[0]][location[1]][0]
         w, h = sqr.surface.width, sqr.surface.height
         rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        tower = Tower(rect, range, speed, value, operation, cost, location)
+        tower = Tower(rect, value, operation, cost, location)
         self.square_grid[tower.location[0]][tower.location[1]].append(tower)
         self.dijk_grid.remove_node(tower.location)
         self.tower_list.append(tower)
@@ -117,8 +117,20 @@ class Grid:
         if tower.level * tower.cost // 3 >= self.souls:
             self.souls -= max(1, tower.level * tower.cost // 3)
             tower.upgrade()
-        
 
+    def sell_tower(self, tower):
+        """For selling a Tower and removing from square_grid and adding its square to dijk_grid"""
+        pos = (tower.location[0], tower.location[1])
+        self.tower_list.remove(tower)
+        self.square_grid[pos[0]][pos[1]].remove(tower)
+        for node in [(pos[0], pos[1] + 1), (pos[0], pos[1] - 1), (pos[0] + 1, pos[1]), (pos[0] - 1, pos[1])]:
+            if node in self.dijk_grid:
+                self.dijk_grid.add_edge(pos, node, 1)
+                self.dijk_grid.add_edge(node, pos, 1)
+        else:
+            self.dijk_grid.add_node((pos[0], pos[1]))
+        self.souls += tower.cost // 3
+        
     def spawn_numemy(self, start_val, coins, speed, weight):
         """Adds a new Numemy object to the square_grid spawner_square"""
         sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]][0]

@@ -84,7 +84,28 @@ def process_in_game_click(window, mouseClickPos, grid):
                         squaresToDraw.append(window.selectedEntity["position"])
                         Draw.draw_squares(window, grid, squaresToDraw)
 
-    # for button in window.sideButtons:
-    #     if button.rect.collidepoint(mouseClickPos):
+    if window.selectedEntity["square"] != None:
+        pos = self.selectedEntity["position"]
+        if len(grid.square_grid[pos[0]][pos[1]]) > 1:
+            for button in window.sellButtons:
+                if button.rect.collidepoint(mouseClickPos):
+                    if button.text == 'Upgrade':
+                        grid.upgrade_tower(grid.square_grid[pos[0]][pos[1]][1])
+                    # else:
+                    #     grid.sell_tower()
+        else:
+            for button in window.buyButtons:
+                if button.rect.collidepoint(mouseClickPos):
+                    if button.text == 'Buy':
+                        if window.buyOperation == None:
+                            break
+                        if window.buyValue == None:
+                            break
+                        grid.build_tower(3, 1, window.buyValue, window.buyOperation, 5, (pos[0], pos[1]))
+                    elif button.text in ['+', '-', '*', '/']:
+                        window.buyOperation = button.text
+                    else:
+                        
+
 
                         

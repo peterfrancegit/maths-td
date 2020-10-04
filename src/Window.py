@@ -21,7 +21,8 @@ class Window:
         self.height = height
         self.screenRatio = self.height / 1080
         self.mainButtons = []
-        self.sideButtons = []
+        self.buyButtons = []
+        self.sellButtons = []
         self.state = None
         self.selectedEntity = {"square" : None, "position" : None}
 
@@ -118,8 +119,14 @@ class Window:
 
         # Checks if the mouse has hovered over any of the buttons on the side menu
         if event.type == pygame.MOUSEMOTION and self.selectedEntity["square"] != None:
-            mouseClickPos = pygame.mouse.get_pos()
-            ProcessInput.process_menu_hover(self, mouseClickPos, self.sideButtons)
+            pos = self.selectedEntity["position"]
+            if len(grid.square_grid[pos[0]][pos[1]]) > 1:
+                mouseClickPos = pygame.mouse.get_pos()
+                ProcessInput.process_menu_hover(self, mouseClickPos, self.sellButtons)
+            else:
+                mouseClickPos = pygame.mouse.get_pos()
+                ProcessInput.process_menu_hover(self, mouseClickPos, self.buyButtons)
+
 
         # Checks if a mouse click has clicked on any of the squares or side menu buttons
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:

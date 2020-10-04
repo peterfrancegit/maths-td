@@ -238,5 +238,8 @@ def draw_side_menu(window, grid):
         fontSize = get_fitted_size(text, buttWidth, buttHeight)
         font = create_font_object(text, fontSize, 7)
         rect = pygame.Rect(buttX, buttY, buttWidth, buttHeight)
-        window.sideButtons.append(Button(rect, font, menuColour, text))
-    draw_menu(window, window.sideButtons)
+        if i in [1, 2]:
+            window.sellButtons.append(Button(rect, font, menuColour, text))
+        else:
+            window.buyButtons.append(Button(rect, font, menuColour, text))
+    draw_menu(window, window.sellButtons + window.buyButtons)

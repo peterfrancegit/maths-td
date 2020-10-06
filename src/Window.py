@@ -190,5 +190,3 @@ class Window:
                     tower.attack(grid, target)
                     squaresToDraw.append(tower.location)
         Draw.draw_squares(self, grid, squaresToDraw)
-
-

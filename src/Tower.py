@@ -3,20 +3,30 @@ from Numemy import Numemy
 import math
 
 
+def tower_cost(value, operation):
+    if operation in ['+', '-']:
+        factor = 1
+    elif operatin == '*':
+        factor = 1.5
+    else:
+        factor = 2
+    cost = (factor * value) // 2
+    return cost
+
 class Tower(Square):
     # 'range' is the radius of the circle the Tower attacks within;
     # 'speed' is how often it attacks;
     # 'cost' is removed from player's wealth;
     # 'level' is 1, 2 or 3 and increases range and speed.
-    def __init__(self, surface, value, operation, cost, location):
+    def __init__(self, surface, value, operation, location):
         Square.__init__(self, surface)
         self.range = 3
         self.speed = 1
         self.value = value
         self.operation = operation
-        self.cost = cost
         self.location = location
         self.level = 1
+        self.cost = tower_cost(value, operation)
 
     def calculate_dist(self, numemyPos, towerPos):
         dist = math.sqrt((towerPos[0] - numemyPos[0])**2 + (towerPos[1] - numemyPos[1])**2)
@@ -41,6 +51,8 @@ class Tower(Square):
         return None
 
     def upgrade(self):
+        """Increases the level of a Tower as well as associated attributes"""
         self.level += 1
         self.range *= 1.5
         self.speed *= 1.5
+        self.cost *= 1.5

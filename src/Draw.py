@@ -215,6 +215,7 @@ def draw_game_over(display, screenRatio):
     display.blit(font, (screenWidth / 2 - fontWidth / 2, screenHeight / 2 - fontHeight / 2))
 
 def draw_side_menu(window, grid):
+    """Draws the menu with buttons for in-game"""
     menuTop = grid.square_grid[1][0][0].surface.top
     menuLeft = grid.square_grid[0][0][0].surface.left / 10
     menuHeight = grid.square_grid[0][0][0].surface.height * (grid.height - 2)
@@ -222,8 +223,6 @@ def draw_side_menu(window, grid):
     menuColour = (100, 100, 100)
     menuRect = pygame.Rect(menuLeft, menuTop, menuWidth, menuHeight)
     pygame.draw.rect(window.gameDisplay, menuColour, menuRect)
-    menuHeight = menuRect.height
-    menuWidth = menuRect.width
     buttHeight = menuHeight / 10
     buttWidth = menuWidth / 2
     buttX = menuWidth / 4

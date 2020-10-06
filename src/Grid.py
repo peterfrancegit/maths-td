@@ -101,16 +101,16 @@ class Grid:
             print("Instance variable square_grid has not been initialised properly. Please call the method initialise_square_grid to initialise it.")
 
 
-    def build_tower(self, value, operation, cost, location):
+    def build_tower(self, value, operation, location):
         """Adds a new Tower to a square_grid square and blocks off its dijk_grid square"""
         sqr = self.square_grid[location[0]][location[1]][0]
         w, h = sqr.surface.width, sqr.surface.height
         rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        tower = Tower(rect, value, operation, cost, location)
+        tower = Tower(rect, value, operation, location)
         self.square_grid[tower.location[0]][tower.location[1]].append(tower)
         self.dijk_grid.remove_node(tower.location)
         self.tower_list.append(tower)
-        self.souls -= cost
+        self.souls -= tower.cost
 
     def upgrade_tower(self, tower):
         """Increases the level of a Tower"""

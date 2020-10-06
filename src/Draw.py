@@ -225,14 +225,21 @@ def draw_side_menu(window, grid):
     pygame.draw.rect(window.gameDisplay, menuColour, menuRect)
     buttHeight = menuHeight / 10
     buttWidth = menuWidth / 2
-    buttX = menuWidth / 4
+    buttX = menuLeft + menuWidth / 4
+    buttY = menuTop + 4 * menuHeight / 5
+    # Make empty Button for input of the value of a Tower to buy
+    fontSize = get_fitted_size("", buttWidth, buttHeight)
+    font = create_font_object("", fontSize, 7)
+    rect = pygame.Rect(buttX, buttY, buttWidth, buttHeight)
+    window.buyButtons.append(Button(rect, font, (0, 0, 0), ""))
+    # Make other Buttons
     labels = ["Buy", "Upgrade", "Sell", "+", "-", "*", "/"]
     for i in range(7):
-        buttY = (i + 1) * menuHeight / 5
+        buttY = menuTop + i * menuHeight / 5
         if i >= 3:
-            buttWidth = menuWidth / 6
-            buttX = (i - 2) * menuWidth / 6
-            buttY = 4 * menuHeight / 5
+            buttWidth = menuWidth / 8
+            buttX = menuLeft + (i - 1) * menuWidth / 8
+            buttY = menuTop + 3 * menuHeight / 5
         text = labels[i]
         fontSize = get_fitted_size(text, buttWidth, buttHeight)
         font = create_font_object(text, fontSize, 7)
@@ -241,4 +248,5 @@ def draw_side_menu(window, grid):
             window.sellButtons.append(Button(rect, font, menuColour, text))
         else:
             window.buyButtons.append(Button(rect, font, menuColour, text))
+    # Draw all the Buttons
     draw_menu(window, window.sellButtons + window.buyButtons)

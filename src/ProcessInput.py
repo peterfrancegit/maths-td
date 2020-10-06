@@ -105,26 +105,28 @@ def process_in_game_click(window, mouseClickPos, grid):
                         grid.sell_tower(tower)
                         Draw.draw_squares(window, grid, [pos])
                         return
-        # else:
-        #     for button in window.buyButtons:
-        #         if button.rect.collidepoint(mouseClickPos):
-        #             if button.text == 'Buy':
-        #                 if window.buyOperation == None:
-        #                   # should print 'must choose an operation'  
-        #                     return
-        #                 if window.buyValue == None:
-        #                   # should print 'must choose a value'
-        #                     return
-        #                 grid.build_tower(window.buyValue, window.buyOperation, 5, (pos[0], pos[1]))
-        #                 window.buyOperation = None
-        #                 window.buyValue = None
-        #                 Draw.draw_squares(window, grid, [pos])
-        #                 return
-        #             elif button.text in ['+', '-', '*', '/']:
-        #                 window.buyOperation = button.text
-        #                 return  
-        #             else:
+        else:
+            for button in window.buyButtons:
+                if button.rect.collidepoint(mouseClickPos):
+                    if button.text == 'Buy':
+                        if window.buyOperation == None:
+                          # should print 'must choose an operation'  
+                            return
+                        if window.buyValue == None:
+                          # should print 'must choose a value'
+                            return
+                        grid.build_tower(window.buyValue, window.buyOperation, 5, (pos[0], pos[1]))
+                        window.buyOperation = None
+                        window.buyValue = None
+                        Draw.draw_squares(window, grid, [pos])
+                        return
+                    elif button.text in ['+', '-', '*', '/']:
+                        window.buyOperation = button.text
+                        return  
+                    else:
+                        input_value(button)
 
+# def input_value(button):
 
 
                         

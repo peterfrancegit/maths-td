@@ -127,7 +127,8 @@ def process_in_game_click(window, mouseClickPos, grid):
                         window.selectedEntity["square"] = button
 
 def process_in_game_key(window, key):
-    text = window.buyButtons[0].text
+    button = window.buyButtons[0]
+    text = button.text
     if key == pygame.K_0:
         text += '0'
     elif key == pygame.K_1:
@@ -152,6 +153,9 @@ def process_in_game_key(window, key):
         if len(text) > 0:
             text = text[:-1]
     window.buyValue = int(text)
+    fontSize = Draw.get_fitted_size(text, button.rect.width, button.rect.height)
+    font = Draw.create_font_object(text, fontSize, 7)
+    window.buyButtons[0] = Button(button.rect, font, (0, 0, 0), text)
     Draw.draw_button(window, window.buyButtons[0])
 
                         

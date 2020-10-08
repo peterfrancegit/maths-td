@@ -6,7 +6,7 @@ import math
 def tower_cost(value, operation):
     if operation in ['+', '-']:
         factor = 1
-    elif operatin == '*':
+    elif operation == '*':
         factor = 1.5
     else:
         factor = 2

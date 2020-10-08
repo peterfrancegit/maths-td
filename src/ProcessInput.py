@@ -115,7 +115,7 @@ def process_in_game_click(window, mouseClickPos, grid):
                         if window.buyValue == None:
                           # should print 'must choose a value'
                             return
-                        grid.build_tower(window.buyValue, window.buyOperation, 5, (pos[0], pos[1]))
+                        grid.build_tower(window.buyValue, window.buyOperation, (pos[0], pos[1]))
                         window.buyOperation = None
                         window.buyValue = None
                         Draw.draw_squares(window, grid, [pos])
@@ -124,9 +124,34 @@ def process_in_game_click(window, mouseClickPos, grid):
                         window.buyOperation = button.text
                         return  
                     else:
-                        input_value(button)
+                        window.selectedEntity["square"] = button
 
-# def input_value(button):
-
+def process_in_game_key(window, key):
+    text = window.buyButtons[0].text
+    if key == pygame.K_0:
+        text += '0'
+    elif key == pygame.K_1:
+        text += '1'
+    elif key == pygame.K_2:
+        text += '2'
+    elif key == pygame.K_3:
+        text += '3'
+    elif key == pygame.K_4:
+        text += '4'
+    elif key == pygame.K_5:
+        text += '5'
+    elif key == pygame.K_6:
+        text += '6'
+    elif key == pygame.K_7:
+        text += '7'
+    elif key == pygame.K_8:
+        text += '8'
+    elif key == pygame.K_9:
+        text += '9'
+    elif key == pygame.K_BACKSPACE:
+        if len(text) > 0:
+            text = text[:-1]
+    window.buyValue = int(text)
+    Draw.draw_button(window, window.buyButtons[0])
 
                         

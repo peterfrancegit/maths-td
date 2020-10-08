@@ -231,7 +231,7 @@ def draw_side_menu(window, grid):
     fontSize = get_fitted_size("", buttWidth, buttHeight)
     font = create_font_object("", fontSize, 7)
     rect = pygame.Rect(buttX, buttY, buttWidth, buttHeight)
-    window.buyButtons.append(Button(rect, font, (0, 0, 0), ""))
+    window.input = Button(rect, font, (0, 0, 0), "")
     # Make other Buttons
     labels = ["Buy", "Upgrade", "Sell", "+", "-", "*", "/"]
     for i in range(7):
@@ -249,4 +249,4 @@ def draw_side_menu(window, grid):
         else:
             window.buyButtons.append(Button(rect, font, menuColour, text))
     # Draw all the Buttons
-    draw_menu(window, window.sellButtons + window.buyButtons)
+    draw_menu(window, window.sellButtons + window.buyButtons + [window.input])

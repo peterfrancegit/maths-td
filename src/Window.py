@@ -23,6 +23,7 @@ class Window:
         self.mainButtons = []
         self.buyButtons = []
         self.sellButtons = []
+        self.input = None
         self.state = None
         self.selectedEntity = {"square" : None, "position" : None}
         self.buyValue = None

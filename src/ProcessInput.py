@@ -119,15 +119,18 @@ def process_in_game_click(window, mouseClickPos, grid):
                         grid.build_tower(window.buyValue, window.buyOperation, (pos[0], pos[1]))
                         window.buyOperation = None
                         window.buyValue = None
+                        fontSize = Draw.get_fitted_size("", window.input.rect.width, window.input.rect.height)
+                        font = Draw.create_font_object("", fontSize, 7)
+                        window.input = Button(window.input.rect, font, (0, 0, 0), "")
                         Draw.draw_squares(window, grid, [pos])
+                        Draw.draw_button(window, window.input)
                         return
                     else:
                         window.buyOperation = button.text
                         return  
 
 def process_in_game_key(window, key):
-    button = window.buyButtons[0]
-    text = button.text
+    text = window.input.text
     if key == pygame.K_0:
         text += '0'
     elif key == pygame.K_1:
@@ -157,9 +160,9 @@ def process_in_game_key(window, key):
         window.buyValue = None
     else:
         window.buyValue = int(text)
-    fontSize = Draw.get_fitted_size(text, button.rect.width, button.rect.height)
+    fontSize = Draw.get_fitted_size(text, window.input.rect.width, window.input.rect.height)
     font = Draw.create_font_object(text, fontSize, 7)
-    window.buyButtons[0] = Button(button.rect, font, (0, 0, 0), text)
-    Draw.draw_button(window, window.buyButtons[0])
+    window.input = Button(window.input.rect, font, (0, 0, 0), text)
+    Draw.draw_button(window, window.input)
 
                         

@@ -135,7 +135,7 @@ class Window:
             mouseClickPos = pygame.mouse.get_pos()
             ProcessInput.process_in_game_click(self, mouseClickPos, grid)
 
-        elif self.selectedEntity["square"] == self.buyButtons[0] and event.type == pygame.KEYDOWN:
+        elif event.type == pygame.KEYDOWN:
             key = event.key
             ProcessInput.process_in_game_key(self, key)
 

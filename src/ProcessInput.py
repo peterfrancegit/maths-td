@@ -1,6 +1,7 @@
 import Draw as Draw
 import pygame
 from Button import Button
+from Square import Square
 from GameState import GameState
 
 
@@ -85,7 +86,7 @@ def process_in_game_click(window, mouseClickPos, grid):
                         Draw.draw_squares(window, grid, squaresToDraw)
                         return
 
-    if window.selectedEntity["square"] != None:
+    if isinstance(window.selectedEntity["square"], Square):
         pos = window.selectedEntity["position"]
         if len(grid.square_grid[pos[0]][pos[1]]) > 1:
             tower = grid.square_grid[pos[0]][pos[1]][1]
@@ -120,11 +121,9 @@ def process_in_game_click(window, mouseClickPos, grid):
                         window.buyValue = None
                         Draw.draw_squares(window, grid, [pos])
                         return
-                    elif button.text in ['+', '-', '*', '/']:
+                    else:
                         window.buyOperation = button.text
                         return  
-                    else:
-                        window.selectedEntity["square"] = button
 
 def process_in_game_key(window, key):
     button = window.buyButtons[0]
@@ -152,7 +151,12 @@ def process_in_game_key(window, key):
     elif key == pygame.K_BACKSPACE:
         if len(text) > 0:
             text = text[:-1]
-    window.buyValue = int(text)
+    else:
+        return
+    if len(text) == 0:
+        window.buyValue = None
+    else:
+        window.buyValue = int(text)
     fontSize = Draw.get_fitted_size(text, button.rect.width, button.rect.height)
     font = Draw.create_font_object(text, fontSize, 7)
     window.buyButtons[0] = Button(button.rect, font, (0, 0, 0), text)

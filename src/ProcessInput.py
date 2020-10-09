@@ -94,10 +94,10 @@ def process_in_game_click(window, mouseClickPos, grid):
                 if button.rect.collidepoint(mouseClickPos):
                     if button.text == 'Upgrade':
                         if tower.level >= 3:
-                            # should print 'max level reached'
+                            process_message_event(window, "Tower is already level 3")
                             return
                         elif tower.level * tower.cost // 3 < grid.souls:
-                            # should print 'not enough souls'
+                            process_message_event(window, "Not enough souls")
                             return
                         else:
                             grid.upgrade_tower(tower)
@@ -111,10 +111,10 @@ def process_in_game_click(window, mouseClickPos, grid):
                 if button.rect.collidepoint(mouseClickPos):
                     if button.text == 'Buy':
                         if window.buyOperation == None:
-                          # should print 'must choose an operation'  
+                            process_message_event(window, "Must choose operation for Tower")  
                             return
                         if window.buyValue == None:
-                          # should print 'must choose a value'
+                            process_message_event(window, "Must set value for Tower")
                             return
                         grid.build_tower(window.buyValue, window.buyOperation, (pos[0], pos[1]))
                         window.buyOperation = None
@@ -165,4 +165,9 @@ def process_in_game_key(window, key):
     window.input = Button(window.input.rect, font, (0, 0, 0), text)
     Draw.draw_button(window, window.input)
 
+def process_message_event(window, message):
+    fontSize = Draw.get_fitted_size(message, window.message_box.rect.width, window.message_box.rect.height)
+    font = Draw.create_font_object(message, fontSize, 8)
+    window.message_box = Button(window.message_box.rect, font, (100, 100, 100), message)
+    Draw.draw_button(window, window.message_box)
                         

@@ -83,6 +83,8 @@ def font_colour(weight):
     # The classic Maths TD colour
     elif weight == 7:
         return (0, 128, 0)
+    elif weight == 8:
+        return (255, 0, 0)
 
 
 def create_font_object(text, size, weight):
@@ -195,6 +197,7 @@ def draw_initial_in_game_window(window, grid):
         for j in range(len(grid.square_grid[0])):
             draw_square(window, grid.square_grid[i][j], grid.spawner_square)
     draw_side_menu(window, grid)
+    draw_message_box(window, grid)
 
 
 def draw_squares(window, grid, squaresToDraw):
@@ -250,3 +253,18 @@ def draw_side_menu(window, grid):
             window.buyButtons.append(Button(rect, font, menuColour, text))
     # Draw all the Buttons
     draw_menu(window, window.sellButtons + window.buyButtons + [window.input])
+
+def draw_message_box(window, grid):
+    boxTop = grid.square_grid[grid.height // 2][0][0].surface.bottom
+    boxLeft = grid.square_grid[0][0][0].surface.left / 10 + grid.square_grid[0][-1][0].surface.right
+    boxHeight = grid.square_grid[0][0][0].surface.height * (grid.height // 2 - 2)
+    boxWidth = 8 * grid.square_grid[0][0][0].surface.left / 10
+    boxColour = (100, 100, 100)
+    boxRect = pygame.Rect(boxLeft, boxTop, boxWidth, boxHeight)
+    pygame.draw.rect(window.gameDisplay, boxColour, boxRect)
+    fontSize = get_fitted_size("", boxWidth, boxHeight)
+    font = create_font_object("", fontSize, 8)
+    window.message_box = Button(boxRect, font, (100, 100, 100), "")
+    draw_button(window, window.message_box)
+
+#def draw_stats_box()

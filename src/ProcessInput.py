@@ -3,6 +3,7 @@ import pygame
 from Button import Button
 from Square import Square
 from GameState import GameState
+from Tower import tower_cost
 
 
 def process_menu_hover(window, mouseClickPos, button_list):
@@ -96,14 +97,17 @@ def process_in_game_click(window, mouseClickPos, grid):
                         if tower.level >= 3:
                             process_message_event(window, "Tower is already level 3")
                             return
-                        elif tower.level * tower.cost // 3 < grid.souls:
+                        elif tower.upgrade_cost > grid.souls:
                             process_message_event(window, "Not enough souls")
                             return
                         else:
-                            grid.upgrade_tower(tower)
+                            tower.upgrade(grid)
+                            process_soul_change(window, grid)
+                            Draw.draw_squares(window, grid, [pos])
                             return
                     else:
                         grid.sell_tower(tower)
+                        process_soul_change(window, grid)
                         Draw.draw_squares(window, grid, [pos])
                         return
         else:
@@ -116,7 +120,11 @@ def process_in_game_click(window, mouseClickPos, grid):
                         if window.buyValue == None:
                             process_message_event(window, "Must set value for Tower")
                             return
+                        if grid.souls < tower_cost(window.buyValue, window.buyOperation):
+                            process_message_event(window, "Not enough souls")
+                            return
                         grid.build_tower(window.buyValue, window.buyOperation, (pos[0], pos[1]))
+                        process_soul_change(window, grid)
                         window.buyOperation = None
                         window.buyValue = None
                         fontSize = Draw.get_fitted_size("", window.input.rect.width, window.input.rect.height)
@@ -170,4 +178,11 @@ def process_message_event(window, message):
     font = Draw.create_font_object(message, fontSize, 8)
     window.message_box = Button(window.message_box.rect, font, (100, 100, 100), message)
     Draw.draw_button(window, window.message_box)
+
+def process_soul_change(window, grid):
+    text = "Souls: " + str(grid.souls)
+    fontSize = Draw.get_fitted_size(text, window.souls_box.rect.width, window.souls_box.rect.height)
+    font = Draw.create_font_object(text, fontSize, 7)
+    window.souls_box = Button(window.souls_box.rect, font, (100, 100, 100), text)
+    Draw.draw_button(window, window.souls_box)
                         

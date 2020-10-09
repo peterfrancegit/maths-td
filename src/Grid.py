@@ -112,12 +112,6 @@ class Grid:
         self.tower_list.append(tower)
         self.souls -= tower.cost
 
-    def upgrade_tower(self, tower):
-        """Increases the level of a Tower"""
-        if tower.level * tower.cost // 3 >= self.souls:
-            self.souls -= max(1, tower.level * tower.cost // 3)
-            tower.upgrade()
-
     def sell_tower(self, tower):
         """For selling a Tower and removing from square_grid and adding its square to dijk_grid"""
         pos = (tower.location[0], tower.location[1])

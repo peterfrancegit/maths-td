@@ -25,6 +25,7 @@ class Window:
         self.sellButtons = []
         self.input = None
         self.message_box = None
+        self.souls_box = None
         self.state = None
         self.selectedEntity = {"square" : None, "position" : None}
         self.buyValue = None

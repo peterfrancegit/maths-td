@@ -85,6 +85,15 @@ def font_colour(weight):
         return (0, 128, 0)
     elif weight == 8:
         return (255, 0, 0)
+    # For Bronze level 1 Tower
+    elif weight == 9:
+        return (173, 138, 86)
+    # For silver level 2 Tower
+    elif weight == 10:
+        return (180, 180, 180)
+    # For gold level 3 Tower
+    elif weight == 11:
+        return (201, 176, 55)
 
 
 def create_font_object(text, size, weight):
@@ -119,7 +128,7 @@ def draw_square(window, square, spawnerSqr):
     numemyInSpawn = False
     for object in square:
         if isinstance(object, Tower):
-            pygame.draw.rect(display, (32, 15, 100), square[0].surface)
+            pygame.draw.rect(display, font_colour(object.level + 8), square[0].surface)
             text = object.operation + str(object.value)
             surfaceWidth = square[0].surface.width
             surfaceHeight = square[0].surface.height
@@ -198,6 +207,7 @@ def draw_initial_in_game_window(window, grid):
             draw_square(window, grid.square_grid[i][j], grid.spawner_square)
     draw_side_menu(window, grid)
     draw_message_box(window, grid)
+    draw_souls_box(window, grid)
 
 
 def draw_squares(window, grid, squaresToDraw):
@@ -219,7 +229,7 @@ def draw_game_over(display, screenRatio):
 
 def draw_side_menu(window, grid):
     """Draws the menu with buttons for in-game"""
-    menuTop = grid.square_grid[1][0][0].surface.top
+    menuTop = grid.square_grid[0][0][0].surface.bottom
     menuLeft = grid.square_grid[0][0][0].surface.left / 10
     menuHeight = grid.square_grid[0][0][0].surface.height * (grid.height - 2)
     menuWidth = menuLeft * 8
@@ -261,10 +271,20 @@ def draw_message_box(window, grid):
     boxWidth = 8 * grid.square_grid[0][0][0].surface.left / 10
     boxColour = (100, 100, 100)
     boxRect = pygame.Rect(boxLeft, boxTop, boxWidth, boxHeight)
-    pygame.draw.rect(window.gameDisplay, boxColour, boxRect)
     fontSize = get_fitted_size("", boxWidth, boxHeight)
     font = create_font_object("", fontSize, 8)
     window.message_box = Button(boxRect, font, (100, 100, 100), "")
     draw_button(window, window.message_box)
 
-#def draw_stats_box()
+def draw_souls_box(window, grid):
+    boxTop = grid.square_grid[0][0][0].surface.bottom
+    boxLeft = grid.square_grid[0][0][0].surface.left / 10 + grid.square_grid[0][-1][0].surface.right
+    boxHeight = grid.square_grid[0][0][0].surface.height
+    boxWidth = 8 * grid.square_grid[0][0][0].surface.left / 10
+    boxColour = (100, 100, 100)
+    boxRect = pygame.Rect(boxLeft, boxTop, boxWidth, boxHeight)
+    text = "Souls: " + str(grid.souls)
+    fontSize = get_fitted_size(text, boxWidth, boxHeight)
+    font = create_font_object(text, fontSize, 7)
+    window.souls_box = Button(boxRect, font, (100, 100, 100), text)
+    draw_button(window, window.souls_box)

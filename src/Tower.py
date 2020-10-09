@@ -10,7 +10,7 @@ def tower_cost(value, operation):
         factor = 1.5
     else:
         factor = 2
-    cost = (factor * value) // 2
+    cost = max((factor * value) // 2, 1)
     return cost
 
 class Tower(Square):
@@ -27,6 +27,7 @@ class Tower(Square):
         self.location = location
         self.level = 1
         self.cost = tower_cost(value, operation)
+        self.upgrade_cost = max(self.level * self.cost // 3, 1)
 
     def calculate_dist(self, numemyPos, towerPos):
         dist = math.sqrt((towerPos[0] - numemyPos[0])**2 + (towerPos[1] - numemyPos[1])**2)
@@ -50,9 +51,10 @@ class Tower(Square):
                         return entity
         return None
 
-    def upgrade(self):
+    def upgrade(self, grid):
         """Increases the level of a Tower as well as associated attributes"""
+        grid.souls -= self.upgrade_cost
         self.level += 1
         self.range *= 1.5
         self.speed *= 1.5
-        self.cost *= 1.5
+        self.upgrade_cost = max(self.level * self.cost // 3, 1)

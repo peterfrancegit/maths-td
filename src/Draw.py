@@ -83,6 +83,7 @@ def font_colour(weight):
     # The classic Maths TD colour
     elif weight == 7:
         return (0, 128, 0)
+    # Red for messages
     elif weight == 8:
         return (255, 0, 0)
     # For Bronze level 1 Tower
@@ -265,6 +266,7 @@ def draw_side_menu(window, grid):
     draw_menu(window, window.sellButtons + window.buyButtons + [window.input])
 
 def draw_message_box(window, grid):
+    """Draws the box where messages will be displayed"""
     boxTop = grid.square_grid[grid.height // 2][0][0].surface.bottom
     boxLeft = grid.square_grid[0][0][0].surface.left / 10 + grid.square_grid[0][-1][0].surface.right
     boxHeight = grid.square_grid[0][0][0].surface.height * (grid.height // 2 - 2)
@@ -277,6 +279,7 @@ def draw_message_box(window, grid):
     draw_button(window, window.message_box)
 
 def draw_souls_box(window, grid):
+    """Draws a box to display the current amount of souls"""
     boxTop = grid.square_grid[0][0][0].surface.bottom
     boxLeft = grid.square_grid[0][0][0].surface.left / 10 + grid.square_grid[0][-1][0].surface.right
     boxHeight = grid.square_grid[0][0][0].surface.height
@@ -288,3 +291,11 @@ def draw_souls_box(window, grid):
     font = create_font_object(text, fontSize, 7)
     window.souls_box = Button(boxRect, font, (100, 100, 100), text)
     draw_button(window, window.souls_box)
+
+def draw_range(window, grid, position):
+    """Draws a circle representing the range of a Tower"""
+    square = grid.square_grid[position[0]][position[1]]
+    squareSideLen = square[0].surface.width
+    circleX = int(square[0].surface.x + squareSideLen / 2)
+    circleY = int(square[0].surface.y + squareSideLen / 2)
+    pygame.draw.circle(window.gameDisplay, (255, 0 , 0), (circleX, circleY), square[1].range)

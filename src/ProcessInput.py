@@ -183,6 +183,7 @@ def process_soul_change(window, grid):
     text = "Souls: " + str(grid.souls)
     fontSize = Draw.get_fitted_size(text, window.souls_box.rect.width, window.souls_box.rect.height)
     font = Draw.create_font_object(text, fontSize, 7)
-    window.souls_box = Button(window.souls_box.rect, font, (100, 100, 100), text)
+    boxColour = (100, 0, 0)
+    window.souls_box = Button(window.souls_box.rect, font, boxColour, text)
     Draw.draw_button(window, window.souls_box)
                         

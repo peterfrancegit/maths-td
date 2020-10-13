@@ -228,13 +228,14 @@ def draw_game_over(display, screenRatio):
     screenWidth, screenHeight = display.get_size()
     display.blit(font, (screenWidth / 2 - fontWidth / 2, screenHeight / 2 - fontHeight / 2))
 
+    
 def draw_side_menu(window, grid):
     """Draws the menu with buttons for in-game"""
     menuTop = grid.square_grid[0][0][0].surface.bottom
     menuLeft = grid.square_grid[0][0][0].surface.left / 10
     menuHeight = grid.square_grid[0][0][0].surface.height * (grid.height - 2)
     menuWidth = menuLeft * 8
-    menuColour = (100, 100, 100)
+    menuColour = (0, 0, 100)
     menuRect = pygame.Rect(menuLeft, menuTop, menuWidth, menuHeight)
     pygame.draw.rect(window.gameDisplay, menuColour, menuRect)
     buttHeight = menuHeight / 10
@@ -265,6 +266,7 @@ def draw_side_menu(window, grid):
     # Draw all the Buttons
     draw_menu(window, window.sellButtons + window.buyButtons + [window.input])
 
+    
 def draw_message_box(window, grid):
     """Draws the box where messages will be displayed"""
     boxTop = grid.square_grid[grid.height // 2][0][0].surface.bottom
@@ -284,12 +286,12 @@ def draw_souls_box(window, grid):
     boxLeft = grid.square_grid[0][0][0].surface.left / 10 + grid.square_grid[0][-1][0].surface.right
     boxHeight = grid.square_grid[0][0][0].surface.height
     boxWidth = 8 * grid.square_grid[0][0][0].surface.left / 10
-    boxColour = (100, 100, 100)
+    boxColour = (100, 0, 0)
     boxRect = pygame.Rect(boxLeft, boxTop, boxWidth, boxHeight)
     text = "Souls: " + str(grid.souls)
     fontSize = get_fitted_size(text, boxWidth, boxHeight)
     font = create_font_object(text, fontSize, 7)
-    window.souls_box = Button(boxRect, font, (100, 100, 100), text)
+    window.souls_box = Button(boxRect, font, boxColour, text)
     draw_button(window, window.souls_box)
 
 def draw_range(window, grid, position):

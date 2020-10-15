@@ -27,7 +27,7 @@ class Window:
         self.message_box = None
         self.souls_box = None
         self.state = None
-        self.selectedEntity = {"square" : None, "position" : None}
+        self.selectedEntity = None
         self.buyValue = None
         self.buyOperation = None
 
@@ -123,8 +123,8 @@ class Window:
         """Processes an event that occurred while the window is in game"""
 
         # Checks if the mouse has hovered over any of the buttons on the side menu
-        if event.type == pygame.MOUSEMOTION and self.selectedEntity["square"] != None:
-            pos = self.selectedEntity["position"]
+        if event.type == pygame.MOUSEMOTION and self.selectedEntity != None:
+            pos = self.selectedEntity
             if len(grid.square_grid[pos[0]][pos[1]]) > 1:
                 mouseClickPos = pygame.mouse.get_pos()
                 ProcessInput.process_menu_hover(self, mouseClickPos, self.sellButtons)

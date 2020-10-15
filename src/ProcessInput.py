@@ -76,21 +76,21 @@ def process_in_game_click(window, mouseClickPos, grid):
     """Processes any left mouse clicks while in game"""
     for i, row in enumerate(grid.square_grid):
         for j, sqr in enumerate(row):
-            if window.selectedEntity == None or not window.selectedEntity is sqr[0]:
+            if window.selectedEntity != (i, j):
                 if (i, j) not in grid.forbidden_squares:
                     if sqr[0].surface.collidepoint(mouseClickPos):
                         squaresToDraw = []
-                        if window.selectedEntity["square"] != None:
-                            squaresToDraw.append(window.selectedEntity["position"])
-                        window.selectedEntity = {"square" : sqr[0], "position" : (i, j)}
+                        if window.selectedEntity != None:
+                            squaresToDraw.append(window.selectedEntity)
+                        window.selectedEntity = (i, j)
                         squaresToDraw.append((i, j))
                         Draw.draw_squares(window, grid, squaresToDraw)
                         if len(grid.square_grid[i][j]) > 1:
                             Draw.draw_range_circle(window, grid, (i, j))
                         return
 
-    if isinstance(window.selectedEntity["square"], Square):
-        pos = window.selectedEntity["position"]
+    if window.selectedEntity != None:
+        pos = window.selectedEntity
         if len(grid.square_grid[pos[0]][pos[1]]) > 1:
             tower = grid.square_grid[pos[0]][pos[1]][1]
             for button in window.sellButtons:

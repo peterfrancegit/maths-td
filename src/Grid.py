@@ -125,12 +125,12 @@ class Grid:
             self.dijk_grid.add_node((pos[0], pos[1]))
         self.souls += tower.cost // 3
         
-    def spawn_numemy(self, start_val, coins, speed, weight):
+    def spawn_numemy(self, start_val, speed, weight):
         """Adds a new Numemy object to the square_grid spawner_square"""
         sqr = self.square_grid[self.spawner_square[0]][self.spawner_square[1]][0]
         w, h = sqr.surface.width, sqr.surface.height
         rect = pygame.Rect(sqr.surface.x, sqr.surface.y, w, h)
-        numemy = Numemy(rect, start_val, coins, speed, weight)
+        numemy = Numemy(rect, start_val, speed, weight)
         numemy.location = self.spawner_square
         self.square_grid[numemy.location[0]][numemy.location[1]].append(numemy)
         self.num_loc_list.append(numemy.location)

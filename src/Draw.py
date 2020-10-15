@@ -294,7 +294,7 @@ def draw_souls_box(window, grid):
     window.souls_box = Button(boxRect, font, boxColour, text)
     draw_button(window, window.souls_box)
 
-def draw_range(window, grid, position):
+def draw_range_circle(window, grid, position):
     """Draws a circle representing the range of a Tower"""
     square = grid.square_grid[position[0]][position[1]]
     squareSideLen = square[0].surface.width

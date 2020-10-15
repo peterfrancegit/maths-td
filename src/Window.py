@@ -190,11 +190,13 @@ class Window:
 
     def shoot_towers(self, grid, counter, framerate):
         """Checks if any of the towers on the grid can shoot a numemy"""
-        squaresToDraw = []
+        soulsChanged = False
         for tower in grid.tower_list:
             if counter % (framerate / tower.speed) == 0:
                 target = tower.find_targets(grid)
                 if target is not None:
                     tower.attack(grid, target)
-                    squaresToDraw.append(tower.location)
-        Draw.draw_squares(self, grid, squaresToDraw)
+                    if target.value == 0:
+                        soulsChanged = True
+        if soulsChanged:
+            ProcessInput.process_soul_change(self, grid)

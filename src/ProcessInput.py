@@ -59,9 +59,9 @@ def process_main_menu_click(window, mouseClickPos, grid):
                 grid.build_tower(1, "-", (3, 3))
 
                 # Adds a Numemy
-                grid.spawn_numemy(10, 10, 10, 1)
-                grid.spawn_numemy(20, 10, 10, 2)
-                grid.spawn_numemy(15, 10, 10, 3)
+                grid.spawn_numemy(10, 10, 1)
+                grid.spawn_numemy(20, 10, 2)
+                grid.spawn_numemy(15, 10, 3)
 
                 Draw.draw_initial_in_game_window(window, grid)
 
@@ -83,8 +83,10 @@ def process_in_game_click(window, mouseClickPos, grid):
                         if window.selectedEntity["square"] != None:
                             squaresToDraw.append(window.selectedEntity["position"])
                         window.selectedEntity = {"square" : sqr[0], "position" : (i, j)}
-                        squaresToDraw.append(window.selectedEntity["position"])
+                        squaresToDraw.append((i, j))
                         Draw.draw_squares(window, grid, squaresToDraw)
+                        if len(grid.square_grid[i][j]) > 1:
+                            Draw.draw_range_circle(window, grid, (i, j))
                         return
 
     if isinstance(window.selectedEntity["square"], Square):

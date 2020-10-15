@@ -6,10 +6,10 @@ class Numemy(Square):
     # 'start_val'; 'souls' is added to Player souls when Numemy
     # is killed; 'speed' is movement speed; 'weight' is subtracted
     # from Player lives if the Numemy escapes.
-    def __init__(self, surface, start_val, souls, speed, weight):
+    def __init__(self, surface, start_val, speed, weight):
         Square.__init__(self, surface)
         self.value = start_val
-        self.souls = souls
+        self.souls = abs(start_val) * weight
         self.speed = speed
         self.location = None
         self.weight = weight

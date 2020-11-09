@@ -123,7 +123,7 @@ class Grid:
                 self.dijk_grid.add_edge(node, pos, 1)
         else:
             self.dijk_grid.add_node((pos[0], pos[1]))
-        self.souls += tower.cost // 3
+        self.souls += max(tower.cost // 3, 1)
         
     def spawn_numemy(self, start_val, speed, weight):
         """Adds a new Numemy object to the square_grid spawner_square"""

@@ -79,11 +79,11 @@ def process_in_game_click(window, mouseClickPos, grid):
             if window.selectedEntity != (i, j):
                 if (i, j) not in grid.forbidden_squares:
                     if sqr[0].surface.collidepoint(mouseClickPos):
-                        squaresToDraw = []
+                        squaresToDraw = set()
                         if window.selectedEntity != None:
-                            squaresToDraw.append(window.selectedEntity)
+                            squaresToDraw |= {window.selectedEntity}
                         window.selectedEntity = (i, j)
-                        squaresToDraw.append((i, j))
+                        squaresToDraw |= {(i, j)}
                         Draw.draw_squares(window, grid, squaresToDraw)
                         if len(grid.square_grid[i][j]) > 1:
                             Draw.draw_range_circle(window, grid, (i, j))

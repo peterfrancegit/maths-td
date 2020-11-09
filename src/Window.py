@@ -145,7 +145,7 @@ class Window:
 
     def move_numemies(self, grid):
         """Moves the Numemies by one"""
-        squaresToDraw = []
+        squaresToDraw = set()
         new_num_loc_list = []
         movedNumemyFromSpawn = False
         exitSqr = grid.square_grid[grid.exit_square[0]][grid.exit_square[1]][1]
@@ -161,7 +161,7 @@ class Window:
                             new_num_loc_list.append(num_loc) # Re adds the numemy that waited for this round of movements
                             continue
 
-                    squaresToDraw.append(num_loc)
+                    squaresToDraw |= {num_loc}
                     grid.square_grid[num_loc[0]][num_loc[1]].remove(object)
 
                     # Checks if the numemy is at the exit, if it is then the numemy is removed else numemy is moved by 1
@@ -172,11 +172,11 @@ class Window:
                         exitSqr.value -= object.weight
                         if exitSqr.value < 0:
                             exitSqr.value = 0
-                        squaresToDraw.append(grid.exit_square)
+                        squaresToDraw |= {grid.exit_square}
                     else:
                         object.location = object.next_square(grid)
                         new_num_loc_list.append(object.location)
-                        squaresToDraw.append(object.location)
+                        squaresToDraw |= {object.location}
                         grid.square_grid[object.location[0]][object.location[1]].append(object)
         grid.num_loc_list = new_num_loc_list
         grid.update_forbidden_squares()
